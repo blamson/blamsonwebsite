@@ -1,0 +1,536 @@
+---
+title: MTH-3210 Written Homework 9
+author: Brady Lamson
+date: '2021-12-05'
+slug: mth-3210-written-homework-9
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="section-12.1-2-5-7-8" class="section level1">
+<h1>Section 12.1: 2-5, 7-8</h1>
+<div id="exercise-2" class="section level2">
+<h2>Exercise 2:</h2>
+<p>Considering the following observations create a scatter plot of <span class="math inline">\(NO_x\)</span> emissions versus age. What appears to be the relationship between these two variables?</p>
+<pre class="r"><code>engine &lt;- c(1,2,3,4,5,6,7,8,9,10)
+age &lt;- c(0,0,2,11,7,16,9,0,12,4)
+baseline &lt;- c(1.72,4.38,4.06,1.26,5.31,.57,3.37,3.44,.74,1.24)
+reform &lt;- c(1.88,5.93,5.54,2.67,6.53,.74,4.94,4.89,.69,1.42)
+
+df &lt;- data.frame(&#39;engine&#39; = engine, &#39;age&#39; = age, &#39;baseline&#39; = baseline, &#39;reformulated&#39; = reform)
+
+ggplot(data = df, aes(x = age, y = baseline)) +
+  geom_point() +
+  theme_gray()
+
+ggplot(data = df, aes(x = age, y = reform)) +
+  geom_point() +
+  theme_gray()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/exercise2-1.png" width="50%" /><img src="{{< blogdown/postref >}}index_files/figure-html/exercise2-2.png" width="50%" /></p>
+<p>There <strong>appears</strong> to be a slight negative relationship between the two variables. I say slight because there is a lot of apparent variance in the data here, and with such a small sample size it’s hard to draw any definitive conclusions from the scatter plot alone.</p>
+<hr />
+</div>
+<div id="exercise-3." class="section level2">
+<h2>Exercise 3.</h2>
+<p>Construct a scatterplot of the given bivariate data. Let x = hydrogen concentration (ppm) using a gas chromatography method and y = concentration using a new sensor method. Does there appear to be a very strong relationship between the two types of concentration measurement? Do the two methods appear to be measuring the same quantity?</p>
+<pre class="r"><code>x &lt;- c(47, 62, 65, 70, 70, 78, 95, 100, 114, 118, 124, 127, 140, 140, 
+       140, 150, 152, 164, 198, 221)
+
+y &lt;- c(38, 62, 53, 67, 84, 79, 93, 106, 117, 116, 127, 114, 134, 139, 
+       142, 170, 149, 154, 200, 215)
+
+df &lt;- data.frame(x,y)
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  xlab(&#39;Gas Chromatography Method&#39;) +
+  ylab(&#39;New Sensor Method&#39;) +
+  labs(title = &#39;Hydrogen Concentration (ppm)&#39;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="80%" /></p>
+<p>The two methods appear to have a strong relationship. Judging exclusively from the scatterplot, the measurements also seem to not have that much deviation. There is some slight variance of course, but the measurements appear to be roughly equivalent in their quality.</p>
+<hr />
+</div>
+<div id="exercise-4." class="section level2">
+<h2>Exercise 4.</h2>
+<p>The accompanying data on y = ammonium concentration (mg/L) and x = transpiration (ml/h) was read from a graph. Based on the data and the scatterplot generated, describe the relationship between the variables. Does a simple linear regression appear to be an appropriate modeling strategy?</p>
+<pre class="r"><code>x &lt;- c(5.8,8.8,11.0,13.6,18.5,21.0,23.7,26.0,28.3,31.9,36.5,38.2,40.4)
+y &lt;- c(7.8,8.2,6.9,5.3,4.7,4.9,4.3,2.7,2.8,1.8,1.9,1.1,.4)
+
+df &lt;- data.frame(x,y)
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  xlab(&#39;Transpiration (ml/h)&#39;) +
+  ylab(&#39;Ammonium Concentration (mg/L)&#39;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="80%" /></p>
+<p>There appears to be a negative linear relationship between the amount of transpiration and the ammonium concentration. I feel a linear regression model here would absolutely suffice.</p>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+<div id="exercise-5" class="section level2">
+<h2>Exercise 5:</h2>
+<p>An experiment was done to investigate how the behavior of mozzarella cheese varied with temperature. Consider the accompanying data on x = temperature and y = elongation(%) at failure of the cheese.</p>
+<pre class="r"><code>x &lt;- c(59, 63, 68, 72, 74, 78, 83)
+y &lt;- c(118, 182, 247, 208, 197, 135, 132)
+df &lt;- data.frame(x,y)
+
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  xlab(&#39;Temperature&#39;) +
+  ylab(&#39;Elongation (%)&#39;) +
+  xlim(0,90) +
+  ylim(0,250)
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  xlab(&#39;Temperature&#39;) +
+  ylab(&#39;Elongation (%)&#39;) +
+  xlim(55,90) +
+  ylim(100,250)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/exercise5-1.png" width="50%" /><img src="{{< blogdown/postref >}}index_files/figure-html/exercise5-2.png" width="50%" /></p>
+<p>The plot with the axes intersecting at (0, 0) appears to be quite misleading. Because all of the data is in the upper right it may be easy to assume a linear relationship where there may not be one. With the second plot which is zoomed into that area, it becomes more clear that there doesn’t seem to be much of a linear relationship going on at all. The second, zoomed in, plot is preferable as it presents the data points with more clarity.</p>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+<div id="exercise-7." class="section level2">
+<h2>Exercise 7.</h2>
+<p>The cited article considered regressing y = 28-day standard-cured strength (psi) against x = accelerated strength (psi). Suppose the equation of the true regression line is <span class="math inline">\(y = 1800 + 1.3x\)</span></p>
+<div id="a." class="section level3">
+<h3><strong>a.</strong></h3>
+<p>What is the expected value of 28-day strength when accelerated strength = 2500?<br />
+- Plugging 2500 into our regression formula gives <span class="math inline">\(y = 1800 + 1.3(2500) = 5050\)</span>.</p>
+</div>
+<div id="b." class="section level3">
+<h3><strong>b.</strong></h3>
+<p>By how much can we expect 28-day strength to change when accelerated strength increases by 1 psi?<br />
+- Plugging 1 into our regression formula will show us an increase for accelerated strength of <strong>1.3</strong></p>
+</div>
+<div id="c." class="section level3">
+<h3><strong>c.</strong></h3>
+<p>Answer part (b) for an increase of 100 psi.<br />
+- Following the logic of part (b) we will see an <strong>increase</strong> of <strong>130</strong> for accelerated strength.</p>
+</div>
+<div id="d." class="section level3">
+<h3><strong>d.</strong></h3>
+<p>Answer part (b) for a decrease of 100 psi.<br />
+- This, much like part (c), will see a <strong>decrease</strong> of 130 for accelerated strength. In other words, a change of <strong>-130</strong>.</p>
+<hr />
+</div>
+</div>
+<div id="exercise-8" class="section level2">
+<h2>Exercise 8</h2>
+<p>Referring to exercise 7, suppose that the standard deviation of the random deviation <span class="math inline">\(\epsilon\)</span> is 350 psi.</p>
+<div id="a.-1" class="section level3">
+<h3><strong>a.</strong></h3>
+<p>What is the probability that the observed value of 28-day strength will exceed 5000 psi when the value of accelerated strength is 2000?<br />
+- We are looking for <span class="math inline">\(P(Y &gt; 5000 | x^* = 2000)\)</span>. We know that <span class="math inline">\(\sigma = 350\)</span> and that <span class="math inline">\(f(x) = 1800 + 1.3x\)</span>. The following calculation will be shown and then represented with code.
+<span class="math display">\[\begin{align}
+    P(Y &gt; 5000 | x^* = 2000) &amp;= P \left( Z &gt; \frac{f(2000) - 5000}{350}\right) \\
+    &amp;= 1 - \text{normalcdf(-100, -1.714)} \\
+    &amp;\approx .957
+    \end{align}\]</span></p>
+<pre class="r"><code>func_ex8 &lt;- function(x) {
+  ret_val &lt;- 1800 + (1.3*x)
+  return(ret_val)
+}
+
+z &lt;- (func_ex8(2000) - 5000) / 350
+cat(&quot;The probability of observing this is approximately&quot;, round(1 - pnorm(z),3))</code></pre>
+<pre><code>## The probability of observing this is approximately 0.957</code></pre>
+</div>
+<div id="b.-1" class="section level3">
+<h3><strong>b.</strong></h3>
+<p>Repeat part (a) with 2500 in place of 2000.<br />
+- The same code will be utilized again.</p>
+<pre class="r"><code>z &lt;- (func_ex8(2500) - 5000) / 350
+cat(&quot;The probability of observing this is approximately&quot;, round(1 - pnorm(z),3))</code></pre>
+<pre><code>## The probability of observing this is approximately 0.443</code></pre>
+</div>
+<div id="c.-1" class="section level3">
+<h3><strong>c.</strong></h3>
+<p>Consider making two independent observations on 28-day strength, the first for <span class="math inline">\(x = 2000\)</span> and the second for <span class="math inline">\(x = 2500\)</span>. What is the probability that the second observation will exceed the first by more than 1000psi?<br />
+- For this we need to calculate things a little bit differently. We have the following formula:
+<span class="math display">\[\begin{align}
+    P(Y_2 - Y_1 &gt; 1000) &amp;= P( Y_2 - Y_1 - 1000 &gt; 0 ) \\[2mm]
+    &amp;= P\left(Z &gt; \frac{f(x_2) - f(x_1) - 1000}{V(Y_1 - Y_2)} \right) \\[2mm]
+    &amp;= P \left(Z &gt; \frac{f(2500) - f(2000) - 1000}{\sqrt{350^2 + 350^2}} \right) \\[2mm]
+    &amp;= P(Z &gt; -0.71) \approx .76
+    \end{align}\]</span></p>
+<pre class="r"><code>num &lt;- func_ex8(2500) - func_ex8(2000) - 1000
+den &lt;- sqrt(2*350^2)
+quotient &lt;- num / den
+round(pnorm(quotient, lower.tail = FALSE),3)</code></pre>
+<pre><code>## [1] 0.76</code></pre>
+</div>
+<div id="d.-1" class="section level3">
+<h3><strong>d.</strong></h3>
+<p>Let <span class="math inline">\(Y_1\)</span> and <span class="math inline">\(Y_2\)</span> denote observations on 28-day strength when <span class="math inline">\(x = x_1\)</span> and <span class="math inline">\(x = x_2\)</span>, respectively. By how much would <span class="math inline">\(x_2\)</span> have to exceed <span class="math inline">\(x_1\)</span> in order that <span class="math inline">\(P(Y_2 &gt; Y_1) = .95\)</span>?<br />
+- This isn’t as complex as it sounds. We simply flip around our unknown variables. Instead of knowing that <span class="math inline">\(\Delta_0 = 1000\)</span> and not knowing <span class="math inline">\(Z\)</span>, we now know that <span class="math inline">\(Z = \text{invNorm}(.95) \approx 1.64\)</span> and do not know <span class="math inline">\(\Delta_0\)</span>. We can rewrite the formula the following way:</p>
+<p><span class="math display">\[\begin{align}
+Z &gt; -\frac{ \Delta_0}{V(Y_1 - Y_2)} \\[2mm]
+1.64 &gt; - \frac{\Delta_0}{\sqrt{350^2 + 350^2}} \\[2mm]
+1.64 \cdot -\sqrt{350^2 + 350^2} &lt; \Delta_0 \\[2mm]
+-811.76 &lt; \Delta_0
+\end{align}\]</span></p>
+<p>This shows that <span class="math inline">\(x_2\)</span> would have to be at least 811 larger than <span class="math inline">\(x_1\)</span> for <span class="math inline">\(P(Y_2 &gt; Y_1) = .95\)</span>.</p>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div id="section-12.2-13-17-24" class="section level1">
+<h1>Section 12.2: 13-17, 24</h1>
+<div id="exercise-13" class="section level2">
+<h2>Exercise 13</h2>
+<p>The accompanying data on x = current density (mA / cm^2) and y = rate of deposition (<span class="math inline">\(\mu\)</span>m / min) is provided. Do you agree with the claim by the article’s author that “a linear relationship was obtained from the tin-lead rate of deposition as a function of current density”? Explain your reasoning.</p>
+<pre class="r"><code>x &lt;- c(20,40,60,80)
+y &lt;- c(.24,1.20,1.71,2.22)
+df &lt;- data.frame(x, y)
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="80%" /></p>
+<pre class="r"><code>cat(&quot;The r^2 value for this data is&quot;, cor(x,y)^2)</code></pre>
+<pre><code>## The r^2 value for this data is 0.9716238</code></pre>
+<p>I think we have a decent case of a linear relationship here. Based on the generated scatterplot and calculated <span class="math inline">\(r^2\)</span> value being very close to 1 it seems like a fair statement to make. I, as always, worry about the tiny sample size provided. Though the numbers seem to indicate a perfect example of a linear relationship I feel I can’t confidently say one has been found given so few data points. There is always the chance these values were acquired by random chance and may not be indicative of anything beyond that.</p>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+<div id="exercise-14" class="section level2">
+<h2>Exercise 14</h2>
+<p>Refer to the tank temperature-efficiency ratio data given in Exercise 1.</p>
+<div id="a.-2" class="section level3">
+<h3><strong>a.</strong></h3>
+<p>Determine the equation of the estimated regression line.</p>
+<pre class="r"><code>temp &lt;- c(170,172,173,174,174,175,176,177,180,180,180,180,180,181,181,
+          182,182,182,182,184,184,185,186,188)
+ratio &lt;- c(.84,1.31,1.42,1.03,1.07,1.08,1.04,1.80,1.45,1.60,1.61,2.13,
+           2.15,.84,1.43,.90,1.81,1.94,2.68,1.49,2.52,3.00,1.87,3.08)
+
+df &lt;- data.frame(temp, ratio)
+
+ggplot(data = df, aes(x = temp, y = ratio)) +
+  geom_point() +
+  theme_gray() +
+  stat_smooth(method = lm, se=FALSE)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="40%" /></p>
+<pre class="r"><code>lm(ratio~temp)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = ratio ~ temp)
+## 
+## Coefficients:
+## (Intercept)         temp  
+##   -15.24497      0.09424</code></pre>
+<p>lm() is equivalent to LinReg(a + bx) on my Ti-84 Calculator. (ratio~temp) indicates that ratio here is the response variable and that temp is a predictor.</p>
+<p>The output of my code resulted in <span class="math inline">\(\beta_0 = -15.24\)</span> and <span class="math inline">\(\beta_1 = 0.09\)</span>. This gives the equation: <span class="math display">\[\boxed{f(x) = -15.24 + 0.09x}\]</span>
+</p>
+</div>
+<div id="b.-2" class="section level3">
+<h3><strong>b.</strong></h3>
+<p>Calculate a point estimate for true average efficiency ratio when tank temperature is 182.
+- Plugging 182 into our equation gets <span class="math display">\[f(182) = -15.24 + 0.094*182 \approx \boxed{1.868}\]</span></p>
+</div>
+<div id="c.-2" class="section level3">
+<h3><strong>c.</strong></h3>
+<p>Calculate the values of the residuals from the least squares line for the four observations for which temperature is 182. Why do they not all have the same sign?</p>
+<p>What we know is that we need to compare our actual observations at 182 to what 182s output would be given our equation. We calculated the second part already, <span class="math inline">\(f(182) \approx 1.868\)</span>, so we just need to pull out our observed ratios and subtract 1.14 from them.</p>
+<pre class="r"><code># Below code creates a list of ratios at the same index where the temp is 182
+# We then just subtract 1.868 from those values. 
+x &lt;- df$ratio[which(df$temp == 182)] 
+x - 1.868</code></pre>
+<pre><code>## [1] -0.968 -0.058  0.072  0.812</code></pre>
+<p>What we see is a fairly decent range of values. This is unsurprising as our observations still have randomness to them. Some of those ratios will fall above the line of best fit, others will fall below it. If it falls above the line the residual will be positive, if it’s below the residual will be negative.</p>
+</div>
+<div id="d.-2" class="section level3">
+<h3><strong>d.</strong></h3>
+<p>What proportion of the observed variation in efficiency ratio can be attributed to the simple linear regression relationship between the two variables?
+- This is not as intimidating as it sounds. What this problem wants is <span class="math inline">\(r^2\)</span> which is the proportion of variability in y that is explained by the x value. We can calculate this easily. First we calculate the correlation, ‘r’, using cor() and then we square it.</p>
+<pre class="r"><code>cat(&quot;r^2 is approximately&quot;, round(stats::cor(temp, ratio)^2,3))</code></pre>
+<pre><code>## r^2 is approximately 0.451</code></pre>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="exercise-15." class="section level2">
+<h2>Exercise 15.</h2>
+<p>Values of modulus of elasticity (MOE, the ratio of stress, i.e., force per unit area, to strain, i.e., deformation per unit length, in GPa) and flexural strength (a measure of the ability to resist failure in bending, in MPa) were determined for a sample of concrete beams of a certain type, resulting in the following data.</p>
+<div id="a.-3" class="section level3">
+<h3><strong>a.</strong></h3>
+<p>Construct a stem-and-leaf display of the MOE values, and comment on any interesting features.</p>
+<pre class="r"><code>moe &lt;- c(29.8, 33.2, 33.7, 35.3, 35.5, 36.1, 36.2, 36.3, 37.5, 37.7, 38.7, 38.8, 39.6, 41.0,
+         42.8, 42.8, 43.5, 45.6, 46.0, 46.9, 48.0, 49.3, 51.7, 62.6, 69.8, 79.5, 80)
+stem(moe, scale = 2)</code></pre>
+<pre><code>## 
+##   The decimal point is 1 digit(s) to the right of the |
+## 
+##   2 | 
+##   3 | 034
+##   3 | 566668899
+##   4 | 01334
+##   4 | 66789
+##   5 | 2
+##   5 | 
+##   6 | 3
+##   6 | 
+##   7 | 0
+##   7 | 
+##   8 | 00</code></pre>
+<p>Judging by the plot, it seems there is a huge amount of concentration of values between 35 and 40. There is an immediate drop off in frequency once 50 has been reached, with only 5 moe values at or above 50.</p>
+</div>
+<div id="b.-3" class="section level3">
+<h3><strong>b.</strong></h3>
+<p>Is the value of strength completely and uniquely determined by the value of MOE? Explain.
+Without looking at a plot I would say no. Looking at the data in the book, there is a wide spread in strength values whereas the moe values are pretty tightly grouped. I highly doubt that the value of strength is only determined by the value of moe.</p>
+<pre class="r"><code>strength &lt;- c(5.9, 7.2, 7.3, 6.3, 8.1, 6.8, 7.0, 7.6, 6.8, 6.5, 7.0, 6.3, 7.9, 9.0, 
+              8.2, 8.7, 7.8, 9.7, 7.4, 7.7, 9.7, 7.8, 7.7, 11.6, 11.3, 11.8, 10.7)
+df &lt;- data.frame(moe, strength)
+ggplot(data = df, aes(x = moe, y = strength)) +
+  geom_point() +
+  theme_gray()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="80%" /></p>
+<p>Judging from the scatterplot we can definitely see there is a chance of a relationship here. It’s still too scattered to say that strength is <strong>only</strong> being impacted by moe though.</p>
+<p>###<strong>c.</strong>
+Use the accompanying minitab output (now shown here) to obtain:
+- The equation of the least squares line
+- prediction of strength given a moe of 40.</p>
+<p>Would you feel comfortable using the least squares line to predict strength when moe is 100? Explain.</p>
+<p>The minitab output would give us an equation of <span class="math display">\[f(x) = 3.2925 + 0.10748x\]</span></p>
+<p>Plugging 40 into our formula gives us <span class="math inline">\(f(40) \approx 7.5917\)</span>. As for if I would feel comfortable using this equation for predictions of strength given a moe of 100, I would not. We can fairly well predict values around 30 to 50 as we have many samples in that zone. We do not know for sure though if this relationship continues on like this as shown by the higher strength values. We only have 5 above 50 moe, and only 2 near 80. Predcictions in that region would already be unreliable, going beyond that would likely give us inaccurate predictions.</p>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="exercise-16." class="section level2">
+<h2>Exercise 16.</h2>
+<p>The article gave a scatterplot, along with the least squares line, of x = rainfall volume (<span class="math inline">\(m^3\)</span>) and y = runoff volume (<span class="math inline">\(m^3\)</span>) for a particular locatiion. The accompanying values were read from the plot.</p>
+<pre class="r"><code>x &lt;- c(5,12,14,17,23,30,40,47,55,67,72,81,96,112,127)
+y &lt;- c(4,10,13,15,15,25,27,46,38,46,53,70,82,99,100)
+
+df &lt;- data.frame(x,y)
+ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="80%" /></p>
+<div id="a.-4" class="section level3">
+<h3><strong>a.</strong></h3>
+<p>Does a scatterplot of the data support the use of the simple linear regression model?
+- I would say yes. Based on the scatterplot there seems to be a very strong linear relationship here so it seems to be an appropriate model.</p>
+</div>
+<div id="b.-4" class="section level3">
+<h3><strong>b.</strong></h3>
+<p>Calculate the point estimates of the slope and intercept of the population regression line.</p>
+<pre class="r"><code>model &lt;- lm(y~x, data = df)
+model</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = df)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      -1.128        0.827</code></pre>
+<p>Based on the lm() functions output, our intercept is -1.128 and our slope is .827. This gives the equation
+<span class="math display">\[f(x) = -1.128 + .827x\]</span></p>
+</div>
+<div id="c.-3" class="section level3">
+<h3><strong>c.</strong></h3>
+<p>Calculate a point estimate of the true average runoff volume when rainfall volume is 50.</p>
+<p>Plugging 50 into our formula gives <span class="math inline">\(f(50) = -1.128 + .827 \cdot 50 \approx \boxed{40.22}\)</span></p>
+</div>
+<div id="d.-3" class="section level3">
+<h3><strong>d.</strong></h3>
+<p>Calculate a point estimate of the standard deviation <span class="math inline">\(\sigma\)</span>.</p>
+<p>For this we’re going to use some code. The formulas for the desired values are as follows:
+<span class="math display">\[\begin{align}
+  \sigma &amp;= \sqrt{\frac{SSE}{n-2}} \\[2mm]
+  SSE &amp;= \sum(\hat{y_i} - y_i)^2
+\end{align}\]</span></p>
+<pre class="r"><code>sse &lt;- sum((stats::predict(model) - df$y)^2)
+sigma &lt;- sqrt(sse / (length(y) - 2))
+cat(&quot;The sum of squares of residuals is&quot;, round(sse,2),
+    &quot;\nThe point estimate of the standard deviation is&quot;, round(sigma,2))</code></pre>
+<pre><code>## The sum of squares of residuals is 357.01 
+## The point estimate of the standard deviation is 5.24</code></pre>
+</div>
+<div id="e." class="section level3">
+<h3><strong>e.</strong></h3>
+<p>What proportion of the observed variation in runoff volume can be attributed to the simple linear regression relationship between runoff and rainfall?</p>
+<pre class="r"><code>cat(&quot;r^2 is approximately&quot;, round(cor(x,y)^2,3) )</code></pre>
+<pre><code>## r^2 is approximately 0.975</code></pre>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="exercise-17." class="section level2">
+<h2>Exercise 17.</h2>
+<p>No-fines concrete, made from a uniformly graded coarse aggregate and a cement-water paste, is beneficial in areas prone to excessive rainfaill because of its excellent drainage properties. The article cited in the book employed a least squares analysis in studying how y = porosity (%) is related to x = unit weight (pcf) in concrete specimens. Consider the following representative data.</p>
+<pre class="r"><code>x &lt;- c(99,101.1,102.7,103,105.4,107,108.7,110.8,
+112.1,112.4,113.6,113.8,115.1,115.4,120)
+
+y &lt;- c(28.8,27.9,27,25.2,22.8,21.5,20.9,19.6,
+17.1,18.9,16,16.7,13,13.6,10.8)
+
+df &lt;- data.frame(x,y)</code></pre>
+<div id="a.-5" class="section level3">
+<h3><strong>a.</strong></h3>
+<p>Obtain the equation of the estimated regression line. Then create a scatterplot of the data and graph the estimated line. Does it appear that the model relationship will explain a great deal of the observed variation in y?</p>
+<pre class="r"><code>model = lm(y~x, data = df)
+model</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = df)
+## 
+## Coefficients:
+## (Intercept)            x  
+##    118.9099      -0.9047</code></pre>
+<p>Based on the output of the function we get the following equation:
+<span class="math display">\[f(x) = 118.9 - 0.9047x\]</span></p>
+<pre class="r"><code>ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  stat_smooth(method = lm, se = FALSE)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="80%" /></p>
+<p>It appears that a lot, if not most, of the variation in y can be explained by x here.</p>
+</div>
+<div id="b.-5" class="section level3">
+<h3><strong>b.</strong></h3>
+<p>Interpret the slope of the least squares line.</p>
+<p>The slope indicates that, if there is a relationship, that it’s negative. In other words, as the predictor grows the dependent variable decreases. In this case, it decreases by quite a lot!</p>
+</div>
+<div id="c.-4" class="section level3">
+<h3><strong>c.</strong></h3>
+<p>What happens if the estimated line is used to predict porosity when unit weight is 135? Why is this not a good idea.</p>
+<pre class="r"><code>new &lt;- data.frame(x=c(135))
+my_func &lt;- function(x) {
+  118.9 - 0.9048*x
+}
+cat(&quot;The prediction for porosity when unit weight is 135 is&quot;, 
+    round(predict(model, newdata = new),3),
+    &quot;\nNote: Above uses the predict function&quot;,
+    &quot;\n\nThe same prediction done manually gives&quot;, my_func(135))</code></pre>
+<pre><code>## The prediction for porosity when unit weight is 135 is -3.229 
+## Note: Above uses the predict function 
+## 
+## The same prediction done manually gives -3.248</code></pre>
+<p>Two methods for predicting are shown to be roughly equivalent here. The manual calculation utilized some rounding earlier on that explains the discrepancy. I did both methods just to sate my own curiosity.</p>
+<p>As for why this prediction is a bad idea, the explanation is similar to an earlier question. We don’t have any x values that go that high, as such we don’t know if that behavior continues on indefinitely or if it shifts at some point.</p>
+</div>
+<div id="d.-4" class="section level3">
+<h3><strong>d.</strong></h3>
+<p>Calculate the residuals corresponding to the first two observations.</p>
+<pre class="r"><code>z &lt;- df$y[1:2] - my_func(df$x[1:2])
+cat(&quot;The first two residuals are&quot;, z[1], &quot;and&quot;, z[2])</code></pre>
+<pre><code>## The first two residuals are -0.5248 and 0.47528</code></pre>
+</div>
+<div id="e" class="section level3">
+<h3><strong>e</strong></h3>
+<p>Calculate and interpret a point estimate of <span class="math inline">\(\sigma\)</span>.</p>
+<pre class="r"><code>sse &lt;- sum((stats::predict(model) - df$y)^2)
+sigma &lt;- sqrt(sse / (length(y) - 2))
+cat(&quot;The sum of squares of residuals is&quot;, round(sse,2),
+    &quot;\nThe point estimate of the standard deviation is&quot;, round(sigma,2))</code></pre>
+<pre><code>## The sum of squares of residuals is 11.44 
+## The point estimate of the standard deviation is 0.94</code></pre>
+<p>The standard deviation is actually quite close to that of a standardized normal distribution. That’s pretty interesting.</p>
+</div>
+<div id="f." class="section level3">
+<h3><strong>f.</strong></h3>
+<p>What proportion of observed variation in porosity can be attributed to the approximate linear relationship between unit weight and porosity?</p>
+<pre class="r"><code>cat(&quot;r^2 is approximately&quot;, round(cor(x,y)^2,3) )</code></pre>
+<pre><code>## r^2 is approximately 0.974</code></pre>
+<hr />
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="exercise-24." class="section level2">
+<h2>Exercise 24.</h2>
+<p>The invasive diatom species <em>Didymosphenia geminata</em> has the potential to inflict substantial ecological and economic damage in rivers. The article cited in the textbook described an investigation of colonization behavior. One aspect of particular interest was whether y = colony density was related to x = rock surface area. The article contained a scatterplot and summary of a regression analysis. Below is the representative data.</p>
+<pre class="r"><code>x &lt;- c(50, 71, 55, 50, 33, 58, 79, 26,
+    69, 44, 37, 70, 20, 45, 49)
+y &lt;- c(152, 1929, 48, 22, 2, 5, 35, 7, 
+    269, 38, 171, 13, 43, 185, 25)
+
+df &lt;- data.frame(x,y)
+
+model &lt;- lm(y~x, data = df)</code></pre>
+<pre class="r"><code>ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  stat_smooth(method = lm, se = FALSE)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-24-1.png" width="80%" /></p>
+<div style="page-break-after: always;"></div>
+<div id="a.-6" class="section level3">
+<h3>a.</h3>
+<p>Fit the simple linear regression model to this data, predict colony density when surface area = 70 and 71, and calculate the corresponding residuals. How do they compare?</p>
+<pre class="r"><code>model</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = df)
+## 
+## Coefficients:
+## (Intercept)            x  
+##    -305.881        9.963</code></pre>
+<pre class="r"><code>my_generalized_func &lt;- function(a,b,x) {
+  a + b * x
+}
+prediction &lt;- my_generalized_func(-305.881, 9.963, 70:71)
+actual_value1 &lt;- df$y[which(df$x == 70)]
+actual_value2 &lt;- df$y[which(df$x == 71)]
+actual_value &lt;- c(actual_value1, actual_value2)
+resid &lt;- c(actual_value[1:2] - prediction[1:2])
+
+cat(&quot;The predicted colony density when surface area&quot;,
+    &quot;= 70 is&quot;, prediction[1],
+    &quot;\nThe predicted colony density when surface area&quot;,
+    &quot;= 71 is&quot;, prediction[2],
+    &quot;\nThe calculated residuals are&quot;, resid[1], &quot;and&quot;, resid[2])</code></pre>
+<pre><code>## The predicted colony density when surface area = 70 is 391.529 
+## The predicted colony density when surface area = 71 is 401.492 
+## The calculated residuals are -378.529 and 1527.508</code></pre>
+<p>The equation we get from this model is:
+<span class="math display">\[f(x) = -305.881 + 9.963x\]</span></p>
+</div>
+<div id="b.-6" class="section level3">
+<h3>b.</h3>
+<p>Calculate the coefficient of determination.</p>
+<pre class="r"><code>cat(&quot;The r^2 value for this data is&quot;, round(cor(x,y)^2, 3))</code></pre>
+<pre><code>## The r^2 value for this data is 0.124</code></pre>
+</div>
+<div id="c.-5" class="section level3">
+<h3>c. </h3>
+<p>The second observation has a very extreme y value. This observation may have a substantial impact on the fit of the model and subsequent calculations. Eliminate it and recalculate the equation of the estimated regression line. Does it appear to differ substantially from the equation before the deletion? What is the impact on <span class="math inline">\(r^2\)</span> and <span class="math inline">\(s\)</span>?</p>
+<pre class="r"><code>df &lt;- df[-c(2),]</code></pre>
+<pre class="r"><code>model = lm(y~x, df)
+model</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = df)
+## 
+## Coefficients:
+## (Intercept)            x  
+##     34.3734       0.7792</code></pre>
+<p>The new equation we get from this is:
+<span class="math display">\[f(x) = 34.3734 + 0.7792x\]</span>
+This is, of course, very different from the previous equation.</p>
+<pre class="r"><code>cat(&quot;The r^2 value is&quot;, round(cor(df$x,df$y)^2,3) )</code></pre>
+<pre><code>## The r^2 value is 0.024</code></pre>
+<p>The new <span class="math inline">\(r^2\)</span> value is far less than previously! There doesn’t seem to be much of a linear relationship at all. For curiosity’s sake let us generate a new scatterplot with the new fitted line.
+</p>
+<pre class="r"><code>ggplot(data = df, aes(x = x, y = y)) +
+  geom_point() +
+  theme_gray() +
+  stat_smooth(method = lm, se = FALSE)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-31-1.png" width="80%" /></p>
+<p>As we can see from this plot, now that the outlier is removed the values seem far more scattered than it appeared when it was zoomed out.</p>
+</div>
+</div>
+</div>

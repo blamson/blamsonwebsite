@@ -1,0 +1,130 @@
+---
+title: MTH-3210 Project 2
+author: 'Brady Lamson'
+date: '2021-12-07'
+slug: mth-3210-project-2
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="exercise-1-10-points" class="section level2">
+<h2>Exercise 1 (10 points):</h2>
+<p>The <strong>response variable</strong> value of this project was an estimation of the measurement of an angle created using a protractor. This estimation, denoted <span class="math inline">\(y_j\)</span>, was done in degrees.</p>
+<p>The <strong>predictor variable</strong> value, denoted <span class="math inline">\(x_j\)</span>, is the exact measurement of that angle as given by that same protractor. This protractor provided accuracy down to individual integer values of degrees.</p>
+<p>The <strong>subject</strong> for this assignment was Michael Runnels who was handed sheets of paper with the 18 different angles drawn on them.</p>
+<p>The <strong>sampling method</strong> is one area where the author feels better care could have been taken. 18 angles were chosen arbitrarily to be drawn and as such were not truly random. For the sake of the project this is likely fine, though it would have been better to randomly generate 18 angles properly before drawing them.</p>
+<p>A <span class="math inline">\(90^{\circ}\)</span> angle was provided as a reference at the top of the page, but no other tools were provided for the subject during the prediction stage.</p>
+</div>
+<div id="exercise-2-20-points-evaluating-model-assumptions." class="section level2">
+<h2>Exercise 2 (20 points): Evaluating model assumptions.</h2>
+<p>The collected data is below.</p>
+<pre class="r"><code>actual &lt;- c(65, 32, 115, 128, 210, 310, 10, 170, 83, 130, 50, 240, 280,
+            74, 106, 90, 17, 70)
+guess &lt;- c(79, 36, 110, 121, 222, 303, 21, 167, 86, 135, 43, 235,
+                281, 77, 109, 90, 13, 75)
+df &lt;- data.frame(actual, guess)
+model &lt;- lm(guess ~ actual, df)
+residual_list &lt;- residuals(model)</code></pre>
+<pre class="r"><code>ggplot(data = df, aes(x = actual, y = guess)) +
+  geom_point() +
+  theme_gray() +
+  labs(x = &quot;Actual Measurements&quot;,
+       y = &quot;Guessed Measurements&quot;,
+       title = &quot;Scatterplot of Guessed Measurements vs. Actual Measurements (Degrees)&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="does-the-data-appear-to-satisfy-the-criterion-for-a-linear-regression" class="section level3">
+<h3>(2.1) Does the data appear to satisfy the criterion for a linear regression?</h3>
+<p>The data seems to be clearly exhibiting a linear relationship. Based on the scatterplot it seems appropriate to use a linear model here.</p>
+</div>
+<div id="were-the-observations-of-the-response-variable-collected-independently-is-there-any-part-of-your-data-collection-process-that-is-intended-to-safeguard-this-assumption" class="section level3">
+<h3>(2.2) Were the observations of the response variable collected independently? Is there any part of your data collection process that is intended to safeguard this assumption?</h3>
+<p>This is a difficult question to answer. It is possible that the estimations were not independent from one another. Though care was taken to ensure the correct measurements were hidden from the subject until the experiment was completely over, it is possible that previous estimations could have been used to inform future ones. This does not necessarily mean future estimations would be more accurate to the real measurement, as poor estimations informing future estimations would yield poor results, but the chance for true independence could have been hurt.</p>
+<p>The author wonders if this is could be reasonably circumvented. Truly, even in psychometric evaluations one runs into the problem of previous answers potentially influencing future ones. Regardless, enough care was taken that the necessary assumptions are likely still valid.</p>
+</div>
+<div id="residual-plots" class="section level3">
+<h3>(2.3) Residual Plots</h3>
+<pre class="r"><code>residual_df &lt;- data.frame(residual_list)
+ggplot(residual_df, aes(x=residual_list)) +
+    geom_histogram(bins = 18, color = &quot;black&quot;) +
+    theme_gray() +
+    labs(x = &quot;Residual Values&quot;, 
+         y = &quot;Frequency&quot;, 
+         title = &quot;Frequency Histogram of Residual Values&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code># Normal probability plot of the residual values
+stand_df &lt;- data.frame(y = rstandard(model))
+ggplot(stand_df, aes(sample = y)) +
+    stat_qq() + 
+    stat_qq_line() +
+    theme_gray() +
+    labs(title = &quot;Normal Probability Plot of Residual Values&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Based on the plots the normality assumption seems to be satisfied. The histogram appears relatively normal especially given a sample size of 18, and the normal probability plot of the residual values seems very linear as well.</p>
+</div>
+<div id="residual-plots-ctn.-constant-variance-assumption" class="section level3">
+<h3>(2.4) Residual Plots ctn. Constant Variance Assumption</h3>
+<pre class="r"><code>ggplot(data = df, aes(x = actual, y = residuals(model))) +
+  geom_point() +
+  theme_gray() +
+  stat_smooth(method = lm, se=FALSE) +
+  labs(x = &quot;Actual Measurement&quot;, 
+       y = &quot;Residual Values&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+Based on the plot it does appear that constant variance assumption is satisfied. The amount of variance doesn’t really increase or decrease based on how big the actual measurement is. It is of note though, that none of the residuals after an actual angle measurement of 150 get quite as close as the small bundle of measurements around 80. Those measurements were very precise, but it is unclear if that precision is due to the size of the provided angle or not.</p>
+</div>
+<div id="least-squares-regression-line" class="section level3">
+<h3>(3.1) Least Squares Regression Line</h3>
+<p>To calculate <span class="math inline">\(\hat{\beta_0}\)</span> and <span class="math inline">\(\hat{\beta_1}\)</span> we can pull up our model which thankfully has those values for us already.</p>
+<pre class="r"><code>model</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = guess ~ actual, data = df)
+## 
+## Coefficients:
+## (Intercept)       actual  
+##      3.8565       0.9787</code></pre>
+<p>This gives us <span class="math inline">\(\hat{\beta_0} = 3.8565\)</span> and <span class="math inline">\(\hat{\beta_1} = 0.9787\)</span>. Therefore, we get the following equation.
+<span class="math display">\[f(x) = 3.8565 + 0.9787x\]</span></p>
+<pre class="r"><code># scatterplot of the data WITH a regression line
+ggplot(data = df, aes(x = actual, y = guess)) +
+  geom_point() +
+  theme_gray() +
+  stat_smooth(method = lm, se=FALSE) +
+  labs(x = &quot;Actual Measurements&quot;,
+       y = &quot;Guessed Measurements&quot;,
+       title = &quot;Scatterplot of Guessed Measurements vs. Actual Measurements (Degrees)&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="calculating-a-point-estimate-for-the-variance." class="section level3">
+<h3>(3.2) Calculating a point estimate for the variance.</h3>
+<p>To calculate <span class="math inline">\(\hat{\sigma^2}\)</span> we can utilize the following code. This value will also be, by construction, equal to <span class="math inline">\(\frac{SSE}{n-2}\)</span>.</p>
+<pre class="r"><code>sse &lt;- sum((stats::predict(model) - df$guess)^2)
+sigma_squared &lt;- sse / (length(df$guess) - 2)
+
+cat(&quot;The point estimate for sigma^2 is&quot;, round(sigma_squared,2))</code></pre>
+<pre><code>## The point estimate for sigma^2 is 42.98</code></pre>
+</div>
+<div id="calculating-r2" class="section level3">
+<h3>(3.3) Calculating <span class="math inline">\(r^2\)</span></h3>
+<p>To calculate <span class="math inline">\(r^2\)</span> we can use the correlation function in R and square it. An alternative method to pull <span class="math inline">\(r^2\)</span> directly from the models summary statistics without the rest of the summary’s clutter will also be used for the sake of comparison.</p>
+<pre class="r"><code>r_squared &lt;- cor(df$actual, df$guess)^2
+cat(&quot;R squared calculated using stats::cor() is&quot;,
+    round(r_squared, 2))</code></pre>
+<pre><code>## R squared calculated using stats::cor() is 0.99</code></pre>
+<pre class="r"><code>cat(&quot;\nR squared as calculated by the model is&quot;,
+    round(summary(model)$r.squared,2))</code></pre>
+<pre><code>## 
+## R squared as calculated by the model is 0.99</code></pre>
+<p>From this, it can stated that the proportion of variability in the actual measurements that is explained by the linear model relating estimated measurements to actual measurements is <span class="math inline">\(.99\)</span>. This value being so close to 1 means that almost all of the variability is explained by the linear model. This is as close to a perfect fit as one can reasonably expect to get.</p>
+</div>
+<div id="constructing-the-estimated-response-value" class="section level3">
+<h3>(3.4) Constructing the Estimated Response Value</h3>
+<p>For this exercise we will let <span class="math inline">\(x^* = 270\)</span>. Plugging that value of x into our formula gives:
+<span class="math display">\[f(270) = 3.8565 + 0.9787 \cdot 270 \approx \boxed{268.1}\]</span></p>
+</div>
+</div>
