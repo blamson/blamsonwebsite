@@ -5,6 +5,7 @@ date: '2021-12-05'
 slug: mth-3210-written-homework-9
 categories: []
 tags: []
+katex: true
 ---
 
 ```{r setup, include=FALSE}
@@ -147,11 +148,10 @@ Referring to exercise 7, suppose that the standard deviation of the random devia
 ### **a.** 
 What is the probability that the observed value of 28-day strength will exceed 5000 psi when the value of accelerated strength is 2000?    
     - We are looking for $P(Y > 5000 | x^* = 2000)$. We know that $\sigma = 350$ and that $f(x) = 1800 + 1.3x$. The following calculation will be shown and then represented with code.
-    \begin{align}
-    P(Y > 5000 | x^* = 2000) &= P \left( Z > \frac{f(2000) - 5000}{350}\right) \\
-    &= 1 - \text{normalcdf(-100, -1.714)} \\
-    &\approx .957
-    \end{align}
+    
+\[P(Y > 5000 | x^* = 2000) = P \left( Z > \frac{f(2000) - 5000}{350}\right)\] 
+\[= 1 - \text{normalcdf(-100, -1.714)}\]
+\[\approx .957\]
     
 ```{r}
 func_ex8 <- function(x) {
@@ -175,12 +175,13 @@ cat("The probability of observing this is approximately", round(1 - pnorm(z),3))
 ### **c.** 
 Consider making two independent observations on 28-day strength, the first for $x = 2000$ and the second for $x = 2500$. What is the probability that the second observation will exceed the first by more than 1000psi?   
     - For this we need to calculate things a little bit differently. We have the following formula:
-    \begin{align}
-    P(Y_2 - Y_1 > 1000) &= P( Y_2 - Y_1 - 1000 > 0 ) \\[2mm]
-    &= P\left(Z > \frac{f(x_2) - f(x_1) - 1000}{V(Y_1 - Y_2)} \right) \\[2mm]
-    &= P \left(Z > \frac{f(2500) - f(2000) - 1000}{\sqrt{350^2 + 350^2}} \right) \\[2mm]
-    &= P(Z > -0.71) \approx .76
-    \end{align}
+    
+\begin{aligned}
+P(Y_2 - Y_1 > 1000) &= P( Y_2 - Y_1 - 1000 > 0 ) \\\\\\[2mm]
+&= P\left(Z > \frac{f(x_2) - f(x_1) - 1000}{V(Y_1 - Y_2)} \right) \\\\\\[2mm]
+&= P \left(Z > \frac{f(2500) - f(2000) - 1000}{\sqrt{350^2 + 350^2}} \right) \\\\\\[2mm]
+&= P(Z > -0.71) \approx .76
+\end{aligned}
     
 ```{r}
 num <- func_ex8(2500) - func_ex8(2000) - 1000
@@ -194,12 +195,12 @@ round(pnorm(quotient, lower.tail = FALSE),3)
 Let $Y_1$ and $Y_2$ denote observations on 28-day strength when $x = x_1$ and $x = x_2$, respectively. By how much would $x_2$ have to exceed $x_1$ in order that $P(Y_2 > Y_1) = .95$?   
     - This isn't as complex as it sounds. We simply flip around our unknown variables. Instead of knowing that $\Delta_0 = 1000$ and not knowing $Z$, we now know that $Z = \text{invNorm}(.95) \approx 1.64$ and do not know $\Delta_0$. We can rewrite the formula the following way:
 
-\begin{align}
-Z > -\frac{ \Delta_0}{V(Y_1 - Y_2)} \\[2mm]
-1.64 > - \frac{\Delta_0}{\sqrt{350^2 + 350^2}} \\[2mm]
-1.64 \cdot -\sqrt{350^2 + 350^2} < \Delta_0 \\[2mm]
+\begin{aligned}
+Z > -\frac{ \Delta_0}{V(Y_1 - Y_2)} \\\\\\[2mm]
+1.64 > - \frac{\Delta_0}{\sqrt{350^2 + 350^2}} \\\\\\[2mm]
+1.64 \cdot -\sqrt{350^2 + 350^2} < \Delta_0 \\\\\\[2mm]
 -811.76 < \Delta_0
-\end{align}
+\end{aligned}
     
 This shows that $x_2$ would have to be at least 811 larger than $x_1$ for $P(Y_2 > Y_1) = .95$.
 
@@ -368,10 +369,10 @@ Plugging 50 into our formula gives $f(50) = -1.128 + .827 \cdot 50 \approx \boxe
 Calculate a point estimate of the standard deviation $\sigma$.
 
 For this we're going to use some code. The formulas for the desired values are as follows: 
-\begin{align}
-  \sigma &= \sqrt{\frac{SSE}{n-2}} \\[2mm]
+\begin{aligned}
+  \sigma &= \sqrt{\frac{SSE}{n-2}} \\\\\\[2mm]
   SSE &= \sum(\hat{y_i} - y_i)^2
-\end{align}
+\end{aligned}
 
 ```{r}
 sse <- sum((stats::predict(model) - df$y)^2)
