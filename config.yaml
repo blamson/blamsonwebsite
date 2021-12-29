@@ -1,4 +1,4 @@
-baseURL: https://example.com
+baseURL: "/"
 languageCode: en-us
 defaultContentLanguage: en
 title: Brady Lamson
@@ -6,6 +6,7 @@ theme: cupper-hugo-theme
 googleAnalytics: UA-123456789-1
 disqusShortname: yourdiscussshortname
 enableGitInfo: true
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 
 taxonomies:
   tag: tags
