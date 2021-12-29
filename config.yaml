@@ -1,4 +1,4 @@
-baseURL: https://example.com
+baseURL: https://confident-bell-a49339.netlify.app/post/
 languageCode: en-us
 defaultContentLanguage: en
 title: Brady Lamson
@@ -29,7 +29,7 @@ params:
   showThemeSwitcher: true
   defaultDarkTheme: true
   moveFooterToHeader: false
-  # navTitleText: Cupper Theme
+  #navTitleText: Cupper Theme
   logoAlt: An alternative text description of the logo
   customCss:
     - css/custom_01.css
