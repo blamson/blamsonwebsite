@@ -1,0 +1,400 @@
+---
+title: 'MTH-2520 Homework 8: Group Manipulation, User Input and Dating'
+author: Brady Lamson
+date: '2021-03-25'
+slug: mth-2520-homework-8-group-manipulation-user-input-and-dating
+categories: []
+tags: [Homework]
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+
+library(rmarkdown, tinytex)
+library(markdown)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(reshape)
+library(lubridate)
+```
+
+
+## Problem 1
+The \textbf{geometric mean} of a vector of numbers $c(a1, a2, a3, ..., an)$ is given by 
+
+\[\text{gmean} = (a_1 \cdot a_2 \cdot a_3 \cdot ... \cdot a_n)^{\frac{1}{n}}\]
+
+### Problem 1a
+Write a user-defined function "gmean" that computes the geometric mean of a vector of numbers.
+
+```{r}
+gmean <- function(vector) {
+  vec_len <- length(vector)
+  
+  ret_val <- prod(vector)^(1 / vec_len)
+  
+  ret_val
+}
+```
+
+
+### Problem 1b
+Test your function on the following vectors
+```{r}
+pr1a <- c(4,9)
+gmean(pr1a)
+```
+
+```{r}
+pr1b <- c(2,8)
+gmean(pr1b)
+```
+
+```{r}
+pr1c <- c(5,9)
+gmean(pr1c)
+```
+
+```{r}
+pr1d <- c(4,1,1/32)
+gmean(pr1d)
+```
+
+```{r}
+pr1e <- c(8,10,51.2)
+gmean(pr1e)
+```
+
+```{r}
+pr1f <- c(1,3,9,27,81)
+gmean(pr1f)
+```
+
+
+\pagebreak
+
+
+## Problem 2
+
+### Problem 2a
+Construct a random 5x6 matrix with $n=30$ elements:
+
+```{r}
+A <- matrix(sample(30, replace = TRUE), nrow = 5)
+```
+
+### Problem 2b
+Use the apply() to find the geometric mean of each column
+
+```{r}
+cat("The mean of each column is [", round(apply(A, MARGIN = 2, FUN = gmean), digits = 3), "] \n")
+```
+
+
+\pagebreak
+
+
+## Problem 3 
+
+### Problem 3a
+Construct a list containing the following three matrices as elements:
+
+```{r}
+a3 <- matrix(1:9, nrow = 3)
+b3 <- matrix(4:15, nrow = 4)
+c3 <- matrix(8:13, nrow = 3)
+
+pr3_list <- list(a3, b3, c3)
+```
+
+```{r}
+pr3_list
+```
+
+
+### Problem 3b
+Use lapply() to extract the 2nd column of each matrix from the list
+
+```{r}
+lapply(pr3_list, FUN = "[", , 2) #Essentially: lapply(data, FUN = "[", rows=all, columns=2)
+```
+To briefly explain what's happening here, the function I'm using within lapply is "[". This function takes in two arguments. It takes in rows, and then columns. So I left an empty space within the commas to include all rows and then specified the second column. This feels a little gross and I can't help but feel as if I'm missing a far more intuitive solution. 
+
+
+### Problem 3c
+Use lapply() to extract the 1st row of each matrix from the list
+
+```{r}
+lapply(pr3_list, FUN = "[", 1, ) #Essentially: lapply(data, FUN = "[", rows=1, columns=all)
+```
+
+
+### Problem 3d
+Use sapply() to find the row sums of each matrix in the list.
+
+```{r}
+sapply(pr3_list, rowSums)
+```
+
+
+### Problem 3e
+Use sapply() to find the geometric mean of each matrix in the list.
+
+```{r}
+cat("The geometric mean of each matrix is [", 
+    round(sapply(pr3_list, gmean), digits=3), 
+    "] \n")
+```
+
+
+\pagebreak
+
+
+## Problem 4
+From the Frogger data frame created in the Week 9 lab, compute the mean score and the geometric mean score. 
+
+```{r}
+# Create the frogger data frame
+frogger <- data.frame(
+	Player=rep(c("Alice", "Bob", "Connor"), times=c(2,5,3)), 
+	Score=round(rlnorm(n=10,10), -1))
+```
+
+```{r}
+# Compute mean score
+mean(frogger$Score)
+```
+
+```{r}
+# Compute geometric mean score
+cat("The geometric mean of the frogger scores is",
+  gmean(frogger$Score),
+  "\n")
+```
+
+
+\pagebreak
+
+
+## Problem 5
+Import the built-in dataset mtcars.
+
+```{r}
+data("mtcars")
+```
+
+### Problem 5a
+Check the data types and names of the columns. Check for NAs.
+
+```{r}
+colnames(mtcars)
+```
+
+```{r}
+sapply(mtcars, typeof)
+```
+
+```{r}
+sapply(mtcars, function(x) sum(is.na(x)))
+```
+
+
+### Problem 5b
+Split the mpg data based on the number of cylinders.
+
+```{r}
+# with(mtcars, split(mpg, cyl))
+split(mtcars$mpg, mtcars$cyl) # I much prefer the syntax on this one.
+```
+
+
+### Problem 5c
+Use tapply() to compute the mpg based on the number of cylinders.
+
+```{r}
+tapply(mtcars$mpg, mtcars$cyl, mean)
+# with(mtcars, tapply(mpg, cyl, mean)) Here just to show alternate solution
+```
+
+
+### Problem 5d
+Use tapply() to compute the mean horse power hp basedd on the number of cylinders.
+
+```{r}
+tapply(mtcars$hp, mtcars$cyl, mean)
+```
+
+
+### Problem 5e
+Use apply() combined with tapply() to compute the mean of each column based on the number of cylinders
+
+```{r}
+apply(mtcars, MARGIN = 2, function(x) tapply(x, mtcars$cyl, mean))
+```
+
+
+\pagebreak
+
+
+## Problem 6
+Write your own Mad Lib that takes in at least 5 input words or numbers, and is at least a few sentences long. (Use a fixed input vector in the .rmd printout that you turn in) You can use a well-known poem, passage, or speech, or make up your own story.
+
+
+```{r}
+# Inputs: noun, color, noun2, verb, color
+
+x <- list(noun = "velociraptor", color = "lavender", pluralnoun = "puppies", verb = "vibin", verb = "nuzzle", color = "vanilla", verb = "cuddle")
+
+cat("Sometimes that", x[[1]], "looks right at ya. Right into your eyes. And the thing about a", x[[1]], "is he's got lifeless eyes,", x[[2]], "eyes. Like a", x[[3]], "eyes. \n", "When he comes at ya, he doesn't even seem to be", x[[4]], "till he", x[[5]], " ya and those", x[[2]], "eyes roll over white and then ah then you hear that terrible high-pitched screamin'. The ocean turns", x[[6]], "and despite all your poundin' and your hollerin' those", x[[1]], "come in and they", x[[7]], "you to pieces. \n")
+```
+
+\pagebreak
+
+
+## Problem 7
+Use the appropriate libridate function to parse each of the following dates. Also, find the weekday for each date. 
+
+### Problem 7a
+
+```{r}
+d1 <- "February 2, 2021"
+
+d1_x <- mdy(d1)
+d1_x
+
+wday(d1_x, label=TRUE)
+```
+
+
+### Problem 7b
+
+```{r}
+d2 <- "4/1/2025" #American date. Goal is April 1st
+
+d2_x <- mdy(d2)
+d2_x
+
+wday(d2_x, label=TRUE)
+month(d2_x, label=TRUE)
+```
+
+
+### Problem 7c
+
+```{r}
+d3 <- "4/1/2025" #European date. Goal is Jan 4th
+
+d3_x <- dmy(d2)
+d3_x
+
+wday(d3_x, label=TRUE)
+month(d3_x, label=TRUE)
+```
+
+
+### Problem 7d
+
+```{r}
+d4 <- "2019-Jun-30"
+
+d4_x <- ymd(d4)
+d4_x
+
+wday(d4_x, label = TRUE)
+month(d4_x, label = TRUE)
+```
+
+
+### Problem 7e
+
+```{r}
+d5 <- "11 Nov 2011"
+
+d5_x <- dmy(d5)
+d5_x
+
+wday(d5_x, label = TRUE)
+month(d5_x, label = TRUE)
+```
+
+
+\pagebreak
+
+
+## Problem 8
+
+
+### Problem 8a
+Compute the time since the first moon landing. Covert this output to years. 
+
+```{r}
+age <- today() - mdy("7/20/1969")
+as.duration(age)
+```
+
+
+### Problem b
+Create the following data frame. 
+
+```{r}
+# We're given an example data frame that I need to recreate before I can get started. 
+
+Apollo_Mission <- c(11, 12, 14, 15, 16, 17)
+
+Launch_Date <- c("16 July 1969", "14 Nov 1969", "31 Jan 1971", "26 July 1971", "16 Apr 1972", "07 Dec 1972")
+
+Launch_Time <- c("13:32", "16:22", "21:03", "13:34", "17:54", "05:33")
+
+Moon_L_Date <- c("7/20/1969", "11/19/1969", "2/5/1971", "7/30/1972", "4/21/1972", "12/11/1972")
+
+Moon_L_Time <- c("20:17:40", "06:54:35", "09:18:11", "22:16:29", "02:23:35", "19:54:57")
+
+Splashdown_L_Date <- c("Jul 24, 1969", "Nov 24, 1969", "Feb 9, 1971", "Aug 7, 1971", "Apr 29, 1972", "Dec 19, 1972")
+
+Splashdown_L_Time <- c("16:50:35", "20:58:24", "21:05:00", "21:45:53", "19:45:05", "19:24:59")
+
+apollo <- dplyr::tibble(Apollo_Mission, Launch_Date, Launch_Time, Moon_L_Date, Moon_L_Time, Splashdown_L_Date, Splashdown_L_Time)
+apollo
+```
+
+
+### Problem c
+Convert all the information to standard lubridate dates and times
+```{r}
+# unite columns to get date/hour/minute/second format-------------------
+apollo <- tidyr::unite(apollo, "Moon_Landing", Moon_L_Date:Moon_L_Time)
+apollo <- tidyr::unite(apollo, "Launch", Launch_Date:Launch_Time)
+apollo <- tidyr::unite(apollo, "Splashdown", Splashdown_L_Date:Splashdown_L_Time)
+
+# Convert times to something usable-------------------------------------
+apollo$Launch <- dmy_hm(apollo$Launch)
+apollo$Moon_Landing <- mdy_hms(apollo$Moon_Landing)
+apollo$Splashdown <- mdy_hms(apollo$Splashdown)
+```
+
+```{r}
+apollo
+```
+
+
+### Problem d
+Compute the duration of each mission in days.
+(Splashdown time - Launch time)
+```{r}
+mission_duration <- apollo$Splashdown - apollo$Launch
+mission_table <- dplyr::tibble(apollo$Apollo_Mission, mission_duration)
+```
+
+```{r}
+mission_table
+```
+
+
+### Problem 8e
+Compute the average duration of a mission
+
+```{r}
+cat("The average mission has a time difference of", mean(mission_table$mission_duration), "days \n")
+```
+

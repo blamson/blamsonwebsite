@@ -1,0 +1,286 @@
+---
+title: 'MTH 2520 Homework 9: Graphing with Base R'
+author: Brady Lamson
+date: '2021-04-04'
+slug: mth-2520-homework-9-graphing-with-base-r
+categories: []
+tags: [Homework]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="problem-1." class="section level2">
+<h2>Problem 1.</h2>
+<p>Load in the colorado covid-19 stats taken from the Colorado Department of Public Health and Environment.</p>
+<pre class="r"><code>covid &lt;- read.csv(&quot;CO_COVID19.csv&quot;)</code></pre>
+<div id="problem-1a" class="section level3">
+<h3>Problem 1a</h3>
+<p>Compute summary statistics for the daily number of cases and the daily number of deaths.</p>
+<pre class="r"><code>summary(covid$DailyCases)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      33     324     576    1216    1541    6439</code></pre>
+<pre class="r"><code>summary(covid$DailyDeaths)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  -10.00    3.00    9.00   16.29   20.00  267.00</code></pre>
+</div>
+<div id="problem-1b" class="section level3">
+<h3>Problem 1b</h3>
+<p>Draw a boxplot for the cumulative number of cases.</p>
+<pre class="r"><code>boxplot(covid$CumulativeCases, main=&quot;Cumulative Covid Cases&quot;,
+        xlab=&quot;Number of Cases&quot;, horizontal=TRUE, col = &quot;blue&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="problem-1c" class="section level3">
+<h3>Problem 1c</h3>
+<p>Draw a boxplot for the cumulative number of deaths.</p>
+<pre class="r"><code>boxplot(covid$CumulativeDeaths, main=&quot;Cumulative Covid Deaths&quot;,
+        xlab=&quot;Number of Deaths&quot;, horizontal=TRUE, col = &quot;red&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="problem-1d" class="section level3">
+<h3>Problem 1d</h3>
+<p>Draw a time series plot for the daily number of cases.</p>
+<pre class="r"><code>covid_cases &lt;- ts(covid$DailyCases, start = 1, end = 373, frequency=1)
+# This feels a little hacky but it mostly works. 
+class(covid_cases)</code></pre>
+<pre><code>## [1] &quot;ts&quot;</code></pre>
+<pre class="r"><code>plot(covid_cases, type = &quot;l&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="problem-1e" class="section level3">
+<h3>Problem 1e</h3>
+<p>Draw a time series plot for the daily number of deaths.</p>
+<pre class="r"><code>covid_deaths &lt;- ts(covid$DailyDeaths, start = 1, end = 373, frequency=1)
+plot(covid_deaths, type = &quot;l&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="problem-1f" class="section level3">
+<h3>Problem 1f</h3>
+<p>Draw a scatterplot of the daily number of cases versus the daily number of deaths.</p>
+<pre class="r"><code># Read in the data
+covid19 &lt;- read.csv(&quot;CovidMonthlyData.csv&quot;)</code></pre>
+<pre class="r"><code># Plot the data
+plot(covid19$Cases, covid19$Deaths, main = &quot;Daily Cases vs. Daily Deaths&quot;, 
+     xlab=&quot;Cases&quot;, ylab=&quot;Deaths&quot;)
+abline(lm(covid19$Deaths ~ covid19$Cases), col = &quot;red&quot;, lwd=2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="problem-1g" class="section level3">
+<h3>Problem 1g</h3>
+<p>Draw a bar graph for the monthly number of cases.</p>
+<pre class="r"><code>barplot(covid19$Cases, names=covid19$Date, xlab= &quot;Month&quot;, ylab = &quot;# of cases&quot;, 
+        col = &quot;pink&quot;, main =&quot;Monthly Cases&quot;, border=&quot;black&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="problem-1f-1" class="section level3">
+<h3>Problem 1f</h3>
+<p>Draw a bar graph for the monthly number of deaths.</p>
+<pre class="r"><code>barplot(covid19$Deaths, names=covid19$Date, xlab= &quot;Month&quot;, ylab = &quot;# of deaths&quot;, 
+        col = &quot;yellow&quot;, main =&quot;Monthly Deaths&quot;, border=&quot;black&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="problem-1i" class="section level3">
+<h3>Problem 1i</h3>
+<p>Draw a pie chart for the monthly number of cases</p>
+<pre class="r"><code>pie(covid19$Cases, labels = covid19$Date, main = &quot;Covid19 Cases by Month&quot;, radius = 1)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="problem-1j" class="section level3">
+<h3>Problem 1j</h3>
+<p>Draw a pie chart for the monthly number of deaths.</p>
+<pre class="r"><code>pie(covid19$Deaths, labels = covid19$Date, main = &quot;Covid19 Deaths by Month&quot;, radius = 1)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>These poor pie charts are so smushed together. Hopefully ggplot pie charts are a little more robust.</p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-2" class="section level2">
+<h2>Problem 2</h2>
+<p>Graph the following functions.</p>
+<div id="problem-2a" class="section level3">
+<h3>Problem 2a</h3>
+<p><span class="math display">\[f(x) = \frac{2x}{x^2 - x - 6} \; \text{on} \; [-7, 7]\]</span></p>
+<pre class="r"><code>x &lt;- seq(-7, 7, 1)
+y &lt;- ((2 * x) / (x^2 - x - 6))
+plot(x, y, pch=5, type=&quot;l&quot;)
+abline(v=0, h=0)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+This plot is really trying to be what it’s supposed to be. I have to commend it for the effort at the very least.</p>
+</div>
+<div id="problem-2b" class="section level3">
+<h3>Problem 2b</h3>
+<p><span class="math display">\[
+f(x) = \begin{cases}
+sin(x), &amp; x &lt; 0 \\
+0.5x + 2, &amp; x \geq 0 \\
+\end{cases}
+\]</span></p>
+<pre class="r"><code>x &lt;- seq(-10, 10, 1)
+y &lt;- function(x) {
+  ifelse( 
+    (x &lt; 0), sin(x), 
+    ifelse(
+      (x &gt;= 0), (0.5 * x + 2), NA)
+  )}
+
+plot(y, xlim = c(-10, 10), ylim = c(-2, 5), col=&quot;red&quot;, lwd=2)
+abline(v=0, h=0)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-3" class="section level2">
+<h2>Problem 3</h2>
+<p>Run the following code.</p>
+<pre class="r"><code>t &lt;- seq(from=0, to=12*pi, by=0.001)
+x &lt;- 4.5*sin(t) - sin(3*t) + 0.8*sin(15.25*t)
+y &lt;- 4*cos(t) - 1.5*cos(2*t) - 0.6*cos(3*t) - 0.3*cos(4*t) + 0.8*cos(15.25*t)
+plot(x, y, type = &quot;l&quot;, lwd = 2, col = &quot;red&quot;, xlab = &quot;&quot;, ylab = &quot;&quot;, axes = FALSE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="problem-4-parametric-equations" class="section level2">
+<h2>Problem 4 [Parametric Equations]</h2>
+<p>Lissajous or Bowditch curves.
+<span class="math display">\[x = A \sin(\alpha t + \delta), \; y = B \sin(bt) \; \text{on} \; [0, 2\pi]\]</span></p>
+<p>Graph two (or more) Lissajous curves for different values of <span class="math inline">\(A, B, a, b, \delta\)</span>.</p>
+<pre class="r"><code>lissajous &lt;- function(A, B, alpha, beta, delta, color){
+  t &lt;- seq(0, 2*pi, 0.01)
+  x &lt;- A*sin(alpha * t + delta)
+  y &lt;- B*sin(beta * t)
+  
+  plot(x, y, type = &quot;l&quot;, col = color, main = &quot;Lissajous Curve&quot;, lwd = 2)
+}</code></pre>
+<pre class="r"><code>lissajous(A=1, B=1, alpha=2, beta=3, delta=0, &quot;purple&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>lissajous(A=2, B=1, alpha=3, beta=5, delta=2, &quot;red&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>lissajous(A=7, B=3, alpha=20, beta=4, delta=7, &quot;green&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="problem-5-parametric-graphs" class="section level2">
+<h2>Problem 5 [Parametric Graphs]</h2>
+<div id="problem-5a" class="section level3">
+<h3>Problem 5a</h3>
+<p>Write a function Parametric(B, r, color) that will plot the following graphs given the period B, the function r, and a color such as “red”.</p>
+<pre class="r"><code># So I accidentally already made a function nearly identical to this. So we&#39;ll take that and very slightly tweak it to match. Mine was a little gnarly with how many arguments it took in anyhow. 
+
+Parametric &lt;- function(B, r, color){
+  t &lt;- seq(0, B, 0.001)
+  x &lt;- r*cos(t)
+  y &lt;- r*sin(t)
+  
+  plot(x, y, type = &quot;l&quot;, lwd = 2, col = color, xlab = &quot;&quot;,
+  ylab = &quot;&quot;, axes = FALSE)
+}</code></pre>
+</div>
+<div id="problem-5b" class="section level3">
+<h3>Problem 5b</h3>
+<p>Graph the following using your function.</p>
+<pre class="r"><code># b1
+Parametric(B=(2*pi), r=(1+4*cos(5*t)), color=&quot;red&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre class="r"><code># b2
+Parametric(B=(2*pi), r=(1+4*cos(10*t)), color=&quot;purple&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<pre class="r"><code># b3
+Parametric(B=(10*pi), r=(sin((2*t)/5)), color=&quot;green&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<pre class="r"><code># b4
+Parametric(B=(10*pi), r=(sin((4*t)/5)), color=&quot;green&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<pre class="r"><code># b5
+Parametric(B=(10*pi), r=(sin((8*t)/5)), color=&quot;black&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code># b6
+Parametric(B=(12*pi), r=(2 - 5*sin(t/6)), color=&quot;black&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="r"><code># b7
+Parametric(B=(12*pi), r=(2 - 5*sin(5*t/6)), color=&quot;black&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<pre class="r"><code># b8
+Parametric(B=(2*pi), r=(exp(1)^(cos(t)) - 2*cos(4*t)), color=&quot;purple&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code># b9
+Parametric(B=(2*pi), r=(exp(1)^(cos(t)) - 2*cos(4*t) + sin(t/12)^5), color=&quot;red&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<pre class="r"><code># b10_1
+Parametric(B=(20*pi), r=(17 - 12*sin(20*t/12)), color=&quot;black&quot;)</code></pre>
+<pre><code>## Warning in r * cos(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## Warning in r * sin(t): longer object length is not a multiple of shorter object
+## length</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="r"><code># b10_2
+Parametric(B=(3*pi), r=(3 - 5*sin(5*t/6)), color=&quot;black&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-6-epicycloids" class="section level2">
+<h2>Problem 6 [Epicycloids]</h2>
+<p>An epicycloid is the curve that is traced out by a fixed point on a circle of radius r when this circle is rolled around a circle of radius <span class="math inline">\(R\)</span>.</p>
+<p>The parametric equations for the epicycloid on <span class="math inline">\([0, (R + r)\pi]\)</span> are:</p>
+<p><span class="math display">\[x = (R + r) \cos t - r \cdot \cos \left( \frac{R + r}{r} \cdot t \right)\]</span>
+<span class="math display">\[y = (R + r) \sin t - r \cdot \sin \left( \frac{R + r}{r} \cdot t \right)\]</span></p>
+<div id="problem-6a" class="section level3">
+<h3>Problem 6a</h3>
+<p>Write a function Epicycloid(r, R) that will plot the epicycloid.</p>
+<pre class="r"><code>Epicycloid &lt;- function(r, R){
+  t &lt;- seq(from=0, to=(R + r)*2*pi, len=10000)
+  
+  x &lt;- (R + r)*cos(t) - (r * cos(((R+r)/r)*t))
+  # print(x)
+  
+  y&lt;- (R + r)*sin(t) - (r * sin(((R+r)/r)*t)) 
+  # print(y)
+  
+  plot(x, y, type = &quot;l&quot;, lwd = 2, )
+  }</code></pre>
+<pre class="r"><code>Epicycloid(r=1, R=1)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r=1, R=2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r=1, R=4)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r=6, R=5)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r=10, R=21)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r=15, R=20)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r=300, R=500)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
+</div>
