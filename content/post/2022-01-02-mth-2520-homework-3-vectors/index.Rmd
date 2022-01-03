@@ -1,0 +1,262 @@
+---
+title: 'MTH-2520 Homework 3: Vectors'
+author: Brady Lamson
+date: '2021-02-08'
+slug: mth-2520-homework-3-vectors
+categories: []
+tags: [Homework, R, Intro to R]
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,comment="")
+library(rmarkdown, tinytex)
+```
+
+***
+<!-- We can compute R in-line in the document. Be sure to use the 
+back-quote on the upper left of the keyboard. This is useful for
+creating nice documents. The in-line R commands are computed in the
+knitted document. 
+
+I need to see your code, so be sure to put your commands in an R
+chunk, and also you'll be able to check your computations by
+running each R chunk as you work.
+
+You can also print comments in the R chunk to describe the
+output-->
+
+### Pr. 1a
+The character string "3.1415926" can be converted to a number using the as.numeric() function: `r as.numeric("3.1415926")`
+
+```{r}
+#Pr. 1a - Convert to number
+as.numeric("3.1415926")
+
+```
+
+
+***
+### Pr. 1b
+Form the vector: seq(1, 99, 3) + c(1, e, $\pi$). Round each element to 3 decimal places.
+Before I begin let me state my plan of attack. I intend to assign this vector to x and then round x to 3 decimal places.
+
+```{r}
+#Pr. 1b - Round the vector
+
+x <- seq(from = 1, to = 99, by = 3) + c(1, exp(1), pi)
+round(x, digits = 3)
+
+seq(from = 1, to = 99, by = 3)
+```
+So, what do we see here? I was a little confused at first but it started to click after I looked at how the original vector operated. Essentially, this problem is a perfect example of the recycling process. The first value gets a +1, so $1 + 1 = 2$. Easy stuff. The second value, which would be 4, gets e added to it. Since e has an approximate value of 2.718 we get 6.718. The same happens for the third value but with $\pi$ instead of e. Then, the fourth value cycles back to getting +1 added to it. The cycle continues all the way till the end! 
+
+
+***
+### Pr. 1c 
+The sum of every third element of the sequence {1,2,3,...100} is
+```{r} 
+sum(seq(1,100,3))
+```
+
+
+***
+### Pr. 1d
+Replace every third element in the sequence 1:99 with its negative starting with the **1st** element.
+```{r}
+seq(from = 1, to = 99, by = 1) * c(1, 1, -1)
+
+x <- 1:99 * c(1, 1, -1)
+x[1] = x[1] * -1
+x
+
+1:99 * c(-1, 1, 1)
+```
+The wording here confused me just a bit so I decided to do three different solutions to the problem. Personally, I think the third of my answers is the closest to what you wanted. I used both a standard vector and the more detailed sequence to test if they were equivalent which they seem to be for this situation. How exciting! Of course this is only the case because we were incrementing by 1. There is likely a better way to replace the third element with a negative but I think multiplying by -1 is a tried and true classic. It's kind of cool to see how efficient the recycling method is. 
+
+
+***
+### Pr. 1e
+Replace every third element in the sequence 1:99 with its negative starting with the **3rd** element.
+```{r}
+seq(from = 1, to = 99, by = 1) * c(1, 1, -1)
+
+1:99 * c(1, 1, -1)
+```
+This one is incredibly straightforward. Same method as last time I just have the -1 in the third spot of my smaller vector. 
+
+
+***
+### Pr. 1f
+Construct a vector of integers from 1 to 100 that are not divisible by 2, 3 or 7.
+
+```{r}
+x <- 1:100
+
+a <- which((x %% 2 != 0) & (x %% 3 != 0) & (x %% 7 != 0))
+a
+```
+Okay, this one was surprisingly insane to figure out. The solution I found I think is quite clean and readable, but it is a rearranging of an answer that I swear is equivalent yet for some reason totally breaks down. Let me include it in a code block below. Please give me feedback on why that version does not work. I am so curious because the logic seems totally sound to me. I spent an embarrassing amount of time bashing my face against this one. 
+
+```{r}
+# Failed code
+list <- 1:100
+
+d <- which(list %% 2 != 0)
+e <- which(d %% 3 != 0)
+f <- which(e %% 6 != 0)
+
+f
+```
+What I found here is that the individual lines seem to work fine. If, for example, you replace "d" or "e" after the open paran in lines 107 and 108 with "list" it works great. There seems to be some sort of breakdown when I attempt to build the logic on itself like I did. Why does this method break down? Like I said, if there's any kind of insight you could provide I would love to hear it.
+
+Note: I actually figured it out. I just lack basic reading comprehension skills. the which() function gives you "the indices where a logical statement is TRUE". Straight from the lab notes. Reading is hard. That completely explains why the function worked like I thought at times and broke down the further we extended the logic. I was using the wrong tool for the job. I'm keeping my incorrect thoughts in the homework anyway. 
+
+
+***
+### Pr. 1g
+Create a vector of 57 values equally spaced between 2.1 and 3.75
+
+```{r}
+x <- seq(from = 2.1, to = 3.75, by = 0.029)
+x
+length(x)
+```
+For this problem it took a little messing around with the by value. I'm not entirely sure if there is a more efficient way to figure out the right interval. 
+
+***
+### Pr. 1h
+Give R code that will create the vector(1,2,3,4,5,6,7,8,7,6,5,4,3,2,1)
+
+```{r}
+c(1:8, seq(7, 1, -1))
+```
+
+
+***
+### Pr. 1i
+Give R code that will create the vector (1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5).
+
+```{r}
+rep(1:5, times = 1:5)
+```
+So this works out pretty conveniently. Essentially what's happening under the hood is that we have a list of 1,2,3,4,5 and it repeats an amount of 1 to 5. How that is determined is based on placement in the list, so 5 is in the fifth spot so it gets repeated 5 times. 
+
+
+***
+### Pr. 1j
+Give R code that will create the vector (1, 2, 3, 4, 5, 2, 3, 4, 5, 6, 3, 4, 5, 6, 7, 4, 5, 6, 7, 8, 5, 6, 7, 8, 9).
+
+Before we start let's figure out what's happening. So, this list seems to be in batches of five numbers and it shifts one over with every repetition. So, the first loop has 1:5, the second goes 2:6, the third is 3:7 and so on. This could be done using the rep() function, and a lamer though valid solution can be done utilizing the same methodology as problem 1h.
+
+```{r}
+c(1:5, 2:6, 3:7, 4:8, 5:9)
+```
+This feels like cheating but it works. 
+
+
+***
+### Pr. 2 
+Convert degrees Fahrenheit to degrees Celsius rounded to two decimal places.
+
+```{r}
+Fahrenheit <- c(42,77,20,104,-25,32,212,-40)
+Celsius <- (5/9)*(Fahrenheit - 32)
+round(Celsius,2)
+
+```
+
+
+***
+### Pr. 3
+Create a single vector that contains the following information:
+  i) The integers from 6 to 12 (inclusive).
+  ii) The value 5.3 repeated 3 times.
+  iii) The number -3.
+  iv) A sequence of 9 integers starting at 42.
+  
+```{r}  
+# Pr. 3a
+x <- c(6:12, rep(5.3, times = 3), -3, 42:50)
+x
+# Pr. 3b Verify length is 20
+length(x)
+
+#Sort in ascending order
+y <- sort(x)
+y
+
+# Sort y in reverse order
+z <- rev(y)
+z
+
+# Remove 1st, 5th and 7th terms of y
+answer <- y[-c(1, 5, 7)]
+answer
+```
+
+
+***
+### Pr. 4
+```{r}
+# Pr. A: Construct a sequence of the 1st 24 triangular numbers
+n <- 1:24
+
+triangular_numbers <- n * (n+1) / 2
+triangular_numbers
+
+# Pr. B: Compute the sum of the 1st 24 triangular numbers
+sum(triangular_numbers)
+
+# Pr. C: This is the formula for stacking dots in a triangular arrangement. All 3 sides are of equal length and as such have equal dots. This of course grows exponentially as the triangle gets larger.
+
+# Pr. D: Compute the sum of the 1st 10 instead.
+sum(triangular_numbers[1:10])
+
+# Pr. E: Append zeroes until our list "a" is 26 elements long. Now, take note it currently has length 24 so we need to add two. 
+adding_zeroes <- rep(0, times = 2)
+w <- append(triangular_numbers, adding_zeroes, after = 24)
+w
+length(w)
+
+# Pr. F: Name the elements in the vector from part c using the letters of the alphabet. 
+titles <- c(letters)
+names(w) <- titles
+w
+
+# Pr. G: Form a new vector of triangular numbers that are named with the 5 vowels. 
+one_to_five <- 1:5
+five_triangular_numbers <- one_to_five * (one_to_five+1) / 2
+
+vowels <- c("a", "e", "i", "o", "u")
+names(five_triangular_numbers) <- vowels
+five_triangular_numbers
+```
+
+
+***
+### Pr. 5
+
+```{r}
+# Pr. A: 
+set.seed(50)
+xvec <- sample(0:999, 250, replace = TRUE)
+
+xvec
+
+# Pr. B: 
+big_number <- subset(xvec, xvec > 600)
+big_number  
+
+length(big_number)
+
+# Pr. C
+indices <- which(xvec > 600)
+indices
+
+# Pr. D
+ sort(xvec)
+
+# Pr. E
+remove_third <- xvec[-seq(from = 1, to = 112, by = 3)]
+remove_third
+```

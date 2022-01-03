@@ -1,0 +1,322 @@
+---
+title: 'MTH-2520 Homework 4: Vectors Part II'
+author: Brady Lamson
+date: '2021-02-15'
+slug: mth-2520-homework-4-vectors-part-ii
+categories: []
+tags: [Homework, R]
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+library(rmarkdown, tinytex)
+library(pracma)
+library(markdown)
+```
+
+***
+
+
+## Pr. 1
+
+```{r}
+data <- c(1.2,-3.5,4.3,8.6,-5.1)
+summary(data)
+cat("The sample mean is",mean(data),"\n")
+cat("The sample standard deviation is",sd(data),"\n")
+cat("The interquartile range is",IQR(data),"\n")
+```
+<!-- The following commands are computing R inline. You won't see these executed until you knit the document-->
+
+The mean of the data set is `r mean(data)`.
+
+The median of the data set is `r median(data)`.
+
+The sample standard deviation is `r sd(data)`.
+
+The interquartile range is `r IQR(data)`
+
+
+***
+## Pr. 2
+
+```{r}
+data2 <- c(4.1, 4.3, 4.7, 3.4, 3.9, 5.6, 4.6, NA, 6.6, 5.1, 4.3, 49, NA, 4.4, 6.1)
+
+# I really like this method of formatting. It looks so clean! 
+
+cat("The sample mean is", mean(data2, na.rm = TRUE), "\n")
+cat("The standard deviation of this sample is", sd(data2, na.rm = TRUE), "\n")
+cat("The median of this sample is", median(data2, na.rm = TRUE), "\n")
+cat("The interquartile range of this sample is", IQR(data2, na.rm = TRUE), "\n")
+```
+
+
+***
+## Pr. 3
+
+```{r}
+xdata <- read.csv("hw4_x.csv",sep="")
+cat("The type of data is", typeof(xdata), "\n")
+
+summary(xdata)
+cat("The standard deviation of ydata is", sd(xdata$x, na.rm = TRUE), "\n")
+cat("The interquartile rnage of ydata is", IQR(xdata$x, na.rm = TRUE), "\n")
+
+```
+
+
+```{r, fig.width = 4, fig.height = 4}
+hist(xdata$x,main="Histogram of the Data Set x",xlab="x",col="magenta")
+```
+
+
+***
+## Pr. 4
+
+```{r}
+ydata <- read.csv("hw4_y.csv",sep="")
+cat("The type of data is", typeof(ydata), "\n")
+
+summary(ydata)
+cat("The standard deviation of ydata is", sd(ydata$y), "\n")
+cat("The interquartile rnage of ydata is", IQR(ydata$y), "\n")
+
+```
+
+
+```{r, fig.width = 4, fig.height = 4}
+hist(ydata$y,main="Histogram of the Data Set y", xlab="y",col="yellow")
+```
+
+
+***
+## Pr. 5
+
+### Pr. 5a
+```{r}
+# Problem 5a. 
+
+x <- c(1, 2, 5, 9, 11)
+y <- c(2, 5, 1, 0, 23)
+
+intersect(x, y)
+```
+
+### Pr. 5b
+```{r}
+# Problem 5b. 
+union(x, y)
+c(x, y)
+
+# The difference is that while c(x, y) includes all of the data from both vectors, union removes the duplicates. So, there's only one instance of "2" inside of the union made vector for instance. 
+```
+
+### Pr. 5c and 5d
+```{r}
+# Problem 5c and 5d 
+cat("The set difference of x and y is", setdiff(x, y), "\n"); cat("The set difference of y and x is", setdiff(y, x), "\n")
+```
+
+### Pr. 5e
+```{r}
+# Problem 5e.
+# Symmetric difference in my understanding can be described as the union of the two above set difference calculations. So if I was to do this by hand it would look like c(9, 11, 0, 23).
+
+diff_X_Y <- setdiff(x, y); diff_Y_X <- setdiff(y, x) 
+
+cat("The symmetric difference is", union(diff_X_Y, diff_Y_X), "\n")
+```
+
+ 
+***
+## Pr. 6
+
+### 6a
+```{r}
+# Pr. 6a: Adding the vectors
+cat("x plus y is", x + y, "\n")
+```
+
+### 6b
+```{r}
+# Pr. 6b: Subtracting the vectors
+cat("4x minus 5y is", (4*x) - (5*y), "\n")
+```
+
+### 6c
+```{r}
+# Pr. 6c: Multiplying the vectors
+cat("x multiplied by y is ", x * y, "\n")
+```
+
+### 6d
+```{r}
+# Pr. 6d: Dividing the vectors
+cat("x divided by y is", x / y, "\n")
+```
+
+### 6e
+```{r}
+# Pr. 6e: Dot product of vectors
+cat("The dot product of x and y is", dot(x,y), "\n")
+```
+
+### 6f
+```{r}
+# Pr. 6f: Magnitude of x
+cat("The magnitude of x is", sqrt(dot(x, x)), "\n")
+```
+
+### 6g
+```{r}
+# Pr. 6g: Cumulative sum of x
+cat("The cumulative sum of x is", cumsum(x), "\n")
+```
+
+### 6h
+```{r}
+# Pr. 6h: Cumulative product of x
+cat("The cumulative product of x is", cumprod(x), "\n")
+```
+
+
+***
+## Pr. 7
+
+### 7a
+```{r}
+# Pr. 7a
+xint <- unlist(xdata); yint <- unlist(ydata)
+```
+
+### 7b
+```{r}
+# Pr. 7b: Intersection of xint and yint
+intersect(xint, yint)
+```
+
+### 7c
+```{r}
+# Pr. 7c: Set difference of xint and yint
+setdiff(xint, yint)
+```
+
+### 7d
+```{r}
+# Pr. 7d: Set difference of yint and xint
+setdiff(yint, xint)
+```
+
+### 7e
+```{r}
+# Pr. 7e: Finding specific integers in xint or yint.
+problem_7e <- c(42, 373, 678)
+problem_7e %in% xint
+problem_7e %in% yint
+```
+The results show that c(42, 373, 678) is nowhere to be found in xint. 373 and 678 are found in yint though. 
+
+
+***
+## Pr. 8 
+
+### 8a
+```{r}
+# Pr. 8a
+i_a <- 1:200
+sum(i_a^2)
+
+n <- 200
+n * (n + 1) * ((2 * n) + 1) / 6
+```
+
+### 8b
+```{r}
+# Pr. 8b
+i_b <- 10:100
+sum(i_b^3 + (4 * i_b^2))
+```
+
+### 8c
+```{r}
+# Pr. 8c
+i_c <- 1:15
+sum((2^{i_c} / i_c) + (3^{i_c} / i_c^2))
+```
+
+### 8d
+```{r}
+# Pr. 8d
+i_d <- 0:15
+sum(2^{i_d} / factorial(i_d))
+
+# To check that this actually converges with e^2 we can just do this.
+cat("This is eulers number squared", exp(2), "\n")
+
+```
+
+### 8e
+```{r}
+# Pr. 8e
+i_e <- 1:10^6
+4 * sum(((-1)^{i_e + 1}) / ((2 * i_e) - 1))
+
+# Checking the value of pi. This is mostly a formality. 
+cat("The value of pi is", pi, "\n")
+```
+
+### 8f
+```{r}
+# Pr. 8f 
+# We can actually just use i_e again. 
+
+sum(1 / (i_e^2))
+
+# Checking our answers.
+cat("pi squared divided by six is", (pi^2) / 6, "\n")
+```
+
+### 8g
+```{r}
+# Pr. 8g
+
+sum(((-1)^{i_e + 1}) * (1 / i_e))
+
+# Checking our answers.
+cat("ln(2) is", log(2), "\n")
+```
+
+### 8h
+```{r}
+# Pr. 8h
+# First let's set our various values of n.
+n_5 <- 1:10^5
+n_6 <- 1:10^6
+n_7 <- 1:10^7
+n_8 <- 1:10^8
+n_9 <- 1:10^9
+
+# Time to hopefully not kill my computer.
+sum(1 / n_5)
+sum(1 / n_6)
+sum(1 / n_7)
+sum(1 / n_8)
+# sum(1 / n_9) gave the error: cannot allocate vector of size 7.5 Gb. 
+```
+This series approaches infinity incredibly slowly. Which makes sense when you think about it. As n is in the denominator the fraction continues to shrink as n iterates further along. 
+
+
+***
+### Pr. 9
+
+```{r}
+# First we need to define our n and our numerator and denominator.
+i_9 <- 1:50
+num <- cumprod((2 * i_9) - 1)
+den <- cumprod((3 * i_9) - 2)
+
+# All we do now is plug and chug. 
+
+sum(num / den)
+```

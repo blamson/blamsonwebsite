@@ -1,0 +1,224 @@
+---
+title: 'MTH-2520 Homework 2: Using R as a Scientific Calculator'
+author: Brady Lamson
+date: '2021-01-27'
+slug: mth-2520-homework-2-using-r-as-a-scientific-calculator
+categories: []
+tags: [Homework, R]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p><strong>Homework 2: Using R as a Scientific Calculator</strong></p>
+<hr />
+<p>Homework 2 Instructions:</p>
+<ol style="list-style-type: decimal">
+<li>This is a skeleton .rmd notebook for HW 2. Fill in the code for the
+other problems and write a summary statement on the answers. Some
+Latex code is included below (see pr. 5).</li>
+</ol>
+<hr />
+<p>Pr. 1: Use R to compute the following</p>
+<pre class="r"><code>#Pr. 1a
+10**2 + 3*60/8-3</code></pre>
+<pre><code>[1] 119.5</code></pre>
+<p><span class="math display">\[\boxed{10^2 + \frac{3*60}{8} - 3 = 119.5}\]</span></p>
+<pre class="r"><code>#Pr. 1b
+(5**3*(6-2))/(61-3+4)</code></pre>
+<pre><code>[1] 8.064516</code></pre>
+<p><span class="math display">\[\boxed{\frac{5^3 * (6 - 2)}{61 -3 + 4} = 8.06}\]</span></p>
+<pre class="r"><code>#Pr. 1c
+((0.44 * (1 - 0.44)) / 34)^{1/2}</code></pre>
+<pre><code>[1] 0.08512966</code></pre>
+<p><span class="math display">\[\boxed{\left( \frac{0.44 * (1 - 0.44)}{34} \right) ^{1/2}}\]</span></p>
+<pre class="r"><code>#Pr. 1d
+x &lt;- c(2, 2.5, 3, 3.5, 4)
+2^x</code></pre>
+<pre><code>[1]  4.000000  5.656854  8.000000 11.313708 16.000000</code></pre>
+<pre class="r"><code>#Pr. 1e
+x &lt;- c(10:15)
+log(x)</code></pre>
+<pre><code>[1] 2.302585 2.397895 2.484907 2.564949 2.639057 2.708050</code></pre>
+<pre class="r"><code>#Pr. 1f
+n &lt;- c(5:10)
+factorial(n)</code></pre>
+<pre><code>[1]     120     720    5040   40320  362880 3628800</code></pre>
+<pre class="r"><code>#Pr. 1g
+cos((2 * pi) / 3)</code></pre>
+<pre><code>[1] -0.5</code></pre>
+<p><span class="math display">\[\boxed{cos\frac{2\pi}{3} = -0.5}\]</span></p>
+<pre class="r"><code>#Pr. 1h
+# So, based on my reading it seems R operates in radians by default for stuff like cos.
+# We can fix that by converting our given degrees to radians in-line!
+# r = d * pi / 180
+cos((30*pi) / 180)</code></pre>
+<pre><code>[1] 0.8660254</code></pre>
+<p><span class="math display">\[\boxed{cos(30^{\circ}) = 0.866}\]</span></p>
+<pre class="r"><code>#Pr. 1i
+r &lt;- c(0:5)
+choose(5, r)</code></pre>
+<pre><code>[1]  1  5 10 10  5  1</code></pre>
+<span class="math display">\[\frac{n!}{r! (n - r)!}\]</span>
+<pre class="r"><code>#Pr. 1j
+r &lt;- c(0:6)
+choose(6, r)</code></pre>
+<pre><code>[1]  1  6 15 20 15  6  1</code></pre>
+<span class="math display">\[\frac{n!}{r! (n - r)!}\]</span>
+<hr />
+<p>Pr. 2 Use the quadratic formula to compute the roots of the quadratic equations.</p>
+<p>2a.
+<span class="math inline">\(3x^2 +2x - 1\)</span></p>
+<pre class="r"><code>#Pr. 2a
+a = 3
+b = 2
+c = -1
+(-b + sqrt(b**2 - 4*a*c))/(2*a)</code></pre>
+<pre><code>[1] 0.3333333</code></pre>
+<pre class="r"><code>(-b - sqrt(b**2 - 4*a*c))/(2*a)</code></pre>
+<pre><code>[1] -1</code></pre>
+<p>The roots of the quadratic equation <span class="math inline">\(3x^2+2x-1=0\)</span> are <span class="math inline">\(\boxed{x=-1}\)</span> and <span class="math inline">\(\boxed{x=\frac{1}{3}}\)</span>.</p>
+<hr />
+<p>2b.
+<span class="math inline">\(x^2 - x - 6 = 0\)</span></p>
+<pre class="r"><code>#Pr. 2b
+a = 1
+b = -1
+c = -6
+(-b + sqrt(b**2 - 4*a*c))/(2*a)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>(-b - sqrt(b**2 - 4*a*c))/(2*a)</code></pre>
+<pre><code>[1] -2</code></pre>
+<p>The roots of the quadratic equation <span class="math inline">\(x^2-x-6=0\)</span> are <span class="math inline">\(\boxed{x=3}\)</span> and <span class="math inline">\(\boxed{x=-2}\)</span>.</p>
+<hr />
+<p>2c.
+<span class="math inline">\(x^2 + x + 1 = 0\)</span></p>
+<pre class="r"><code>#Pr. 2b
+a = 1
+b = 1
+c = 1
+(-b + sqrt(as.complex(b**2 - 4*a*c)))/(2*a)</code></pre>
+<pre><code>[1] -0.5+0.8660254i</code></pre>
+<pre class="r"><code>(-b - sqrt(as.complex(b**2 - 4*a*c)))/(2*a)</code></pre>
+<pre><code>[1] -0.5-0.8660254i</code></pre>
+<p>The roots of the quadratic equation <span class="math inline">\(x^2+x+1=0\)</span> are <span class="math inline">\(\boxed{x = -0.5 + 0.866i}\)</span> and <span class="math inline">\(\boxed{x = -0.5 - 0.866i}\)</span>.</p>
+<hr />
+<p>Pr. 3</p>
+<pre class="r"><code>pi</code></pre>
+<pre><code>[1] 3.141593</code></pre>
+<pre class="r"><code>round(pi)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>round(pi,4)</code></pre>
+<pre><code>[1] 3.1416</code></pre>
+<pre class="r"><code>signif(pi,5)</code></pre>
+<pre><code>[1] 3.1416</code></pre>
+<pre class="r"><code>signif(pi,10)</code></pre>
+<pre><code>[1] 3.141593</code></pre>
+<pre class="r"><code>signif(pi,50)</code></pre>
+<pre><code>[1] 3.141593</code></pre>
+<pre class="r"><code>#After some messing around it seems 10 significant figures is the max I&#39;m able to get out of this.
+trunc(pi)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>ceiling(pi)</code></pre>
+<pre><code>[1] 4</code></pre>
+<pre class="r"><code>floor(pi)</code></pre>
+<pre><code>[1] 3</code></pre>
+<hr />
+<p>Pr. 4</p>
+<pre class="r"><code>trunc(4.87)</code></pre>
+<pre><code>[1] 4</code></pre>
+<pre class="r"><code>trunc(-4.87)</code></pre>
+<pre><code>[1] -4</code></pre>
+<pre class="r"><code>trunc(17.973)</code></pre>
+<pre><code>[1] 17</code></pre>
+<pre class="r"><code>round(4.87)</code></pre>
+<pre><code>[1] 5</code></pre>
+<p>trunc() seems to just outright turn the given value into an integer with no regard to what the decimals are valued at. That’s very different from rounding which does take that into consideration.</p>
+<hr />
+<p>Pr. 5</p>
+<pre class="r"><code>#5a.How many times does 11 divide into 2387 evenly?
+2387 / 11</code></pre>
+<pre><code>[1] 217</code></pre>
+<pre class="r"><code>2387 %/%11</code></pre>
+<pre><code>[1] 217</code></pre>
+<pre class="r"><code>#5b. Compute 2387 mod 11.
+2387 %% 11</code></pre>
+<pre><code>[1] 0</code></pre>
+<p>Pr. 5c<br />
+Express 2387 in the form 11 * q + r<br />
+Let q be quotient and let r be remainder.<br />
+<span class="math inline">\(\boxed{2387 = 11 * 217 + 0}\)</span></p>
+<pre class="r"><code>#Pr. 5d quotient
+2387 %/% 42</code></pre>
+<pre><code>[1] 56</code></pre>
+<pre class="r"><code>#Pr. 5e 2387 mod 42
+2387 %% 42</code></pre>
+<pre><code>[1] 35</code></pre>
+<p>Pr. 5f</p>
+<p><span class="math inline">\(2387 = 56*42 +35\)</span></p>
+<pre class="r"><code>#Pr. 5g quotient
+170166719 %/% 31079</code></pre>
+<pre><code>[1] 5475</code></pre>
+<pre class="r"><code>#Pr. 5h 2387 mod 42
+170166719 %% 31079</code></pre>
+<pre><code>[1] 9194</code></pre>
+<p>Pr. 5i<br />
+Express 170,166,719 in the form 31,079 * q + r<br />
+Let q be quotient and let r be remainder.<br />
+<span class="math inline">\(\boxed{170166719 = 5475*31079 + 9194}\)</span></p>
+<hr />
+<p>Pr. 6 How can you use %% to compute the units digit of a given integer n. Use this process to have R give the units digit for <span class="math inline">\(n = 1234\)</span> and <span class="math inline">\(n = 517\)</span>.</p>
+<pre class="r"><code>1234 %% 10</code></pre>
+<pre><code>[1] 4</code></pre>
+<pre class="r"><code>517 %% 10</code></pre>
+<pre><code>[1] 7</code></pre>
+<p>Why does this work? To find out let’s just look at the math!<br />
+<span class="math inline">\(1234 \mod 10 = 123 R 4\)</span><br />
+The %% function only shows the remainder and so that’s how we get our answer.</p>
+<hr />
+<p>Pr.7 How can you use %/% to return all but the units digit of a given integer n? Use this process to have R return all but the units digit for <span class="math inline">\(n = 1234\)</span> and <span class="math inline">\(n = 517\)</span>.</p>
+<pre class="r"><code>1234 %/% 10</code></pre>
+<pre><code>[1] 123</code></pre>
+<pre class="r"><code>517 %/% 10</code></pre>
+<pre><code>[1] 51</code></pre>
+<p>To find out why this works let’s look at the same write up of the problem again.<br />
+<span class="math inline">\(1234 \mod 10 = 123 R 4\)</span><br />
+The %% function only shows us the following:<br />
+<span class="math inline">\(1234 \mod 10 = 123 \boxed{R 4}\)</span><br />
+whereas the %/% function shows us:<br />
+<span class="math inline">\(1234 \mod 10 = \boxed{123} R 4\)</span>.</p>
+<hr />
+<p>Pr. 8</p>
+<pre class="r"><code>#Pr. 8a
+x &lt;- c(1:10)
+x</code></pre>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>class(x)</code></pre>
+<pre><code>[1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>mode(x)</code></pre>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>typeof(x)</code></pre>
+<pre><code>[1] &quot;integer&quot;</code></pre>
+<hr />
+<pre class="r"><code>#Pr. 8b
+x &lt;- sqrt(1:10)
+x</code></pre>
+<pre><code> [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
+ [9] 3.000000 3.162278</code></pre>
+<pre class="r"><code>class(x)</code></pre>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>mode(x)</code></pre>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>typeof(x)</code></pre>
+<pre><code>[1] &quot;double&quot;</code></pre>
+<hr />
+<pre class="r"><code>#Pr. 8c
+x &lt;- c(&quot;alpha&quot;, &quot;bravo&quot;, &quot;charlie&quot;, &quot;delta&quot;)
+x</code></pre>
+<pre><code>[1] &quot;alpha&quot;   &quot;bravo&quot;   &quot;charlie&quot; &quot;delta&quot;  </code></pre>
+<pre class="r"><code>class(x)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="r"><code>mode(x)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="r"><code>typeof(x)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>

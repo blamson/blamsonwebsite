@@ -1,0 +1,330 @@
+---
+title: 'MTH-2520 Homework 4: Vectors Part II'
+author: Brady Lamson
+date: '2021-02-15'
+slug: mth-2520-homework-4-vectors-part-ii
+categories: []
+tags: [Homework, R]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="pr.-1" class="section level2">
+<h2>Pr. 1</h2>
+<pre class="r"><code>data &lt;- c(1.2,-3.5,4.3,8.6,-5.1)
+summary(data)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   -5.1    -3.5     1.2     1.1     4.3     8.6 </code></pre>
+<pre class="r"><code>cat(&quot;The sample mean is&quot;,mean(data),&quot;\n&quot;)</code></pre>
+<pre><code>The sample mean is 1.1 </code></pre>
+<pre class="r"><code>cat(&quot;The sample standard deviation is&quot;,sd(data),&quot;\n&quot;)</code></pre>
+<pre><code>The sample standard deviation is 5.614713 </code></pre>
+<pre class="r"><code>cat(&quot;The interquartile range is&quot;,IQR(data),&quot;\n&quot;)</code></pre>
+<pre><code>The interquartile range is 7.8 </code></pre>
+<!-- The following commands are computing R inline. You won't see these executed until you knit the document-->
+<p>The mean of the data set is 1.1.</p>
+<p>The median of the data set is 1.2.</p>
+<p>The sample standard deviation is 5.6147128.</p>
+<p>The interquartile range is 7.8</p>
+<hr />
+</div>
+<div id="pr.-2" class="section level2">
+<h2>Pr. 2</h2>
+<pre class="r"><code>data2 &lt;- c(4.1, 4.3, 4.7, 3.4, 3.9, 5.6, 4.6, NA, 6.6, 5.1, 4.3, 49, NA, 4.4, 6.1)
+
+# I really like this method of formatting. It looks so clean! 
+
+cat(&quot;The sample mean is&quot;, mean(data2, na.rm = TRUE), &quot;\n&quot;)</code></pre>
+<pre><code>The sample mean is 8.161538 </code></pre>
+<pre class="r"><code>cat(&quot;The standard deviation of this sample is&quot;, sd(data2, na.rm = TRUE), &quot;\n&quot;)</code></pre>
+<pre><code>The standard deviation of this sample is 12.30302 </code></pre>
+<pre class="r"><code>cat(&quot;The median of this sample is&quot;, median(data2, na.rm = TRUE), &quot;\n&quot;)</code></pre>
+<pre><code>The median of this sample is 4.6 </code></pre>
+<pre class="r"><code>cat(&quot;The interquartile range of this sample is&quot;, IQR(data2, na.rm = TRUE), &quot;\n&quot;)</code></pre>
+<pre><code>The interquartile range of this sample is 1.3 </code></pre>
+<hr />
+</div>
+<div id="pr.-3" class="section level2">
+<h2>Pr. 3</h2>
+<pre class="r"><code>xdata &lt;- read.csv(&quot;hw4_x.csv&quot;,sep=&quot;&quot;)
+cat(&quot;The type of data is&quot;, typeof(xdata), &quot;\n&quot;)</code></pre>
+<pre><code>The type of data is list </code></pre>
+<pre class="r"><code>summary(xdata)</code></pre>
+<pre><code>       x        
+ Min.   : 13.0  
+ 1st Qu.:238.8  
+ Median :526.0  
+ Mean   :488.0  
+ 3rd Qu.:751.8  
+ Max.   :991.0  </code></pre>
+<pre class="r"><code>cat(&quot;The standard deviation of ydata is&quot;, sd(xdata$x, na.rm = TRUE), &quot;\n&quot;)</code></pre>
+<pre><code>The standard deviation of ydata is 298.2539 </code></pre>
+<pre class="r"><code>cat(&quot;The interquartile rnage of ydata is&quot;, IQR(xdata$x, na.rm = TRUE), &quot;\n&quot;)</code></pre>
+<pre><code>The interquartile rnage of ydata is 513 </code></pre>
+<pre class="r"><code>hist(xdata$x,main=&quot;Histogram of the Data Set x&quot;,xlab=&quot;x&quot;,col=&quot;magenta&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="384" /></p>
+<hr />
+</div>
+<div id="pr.-4" class="section level2">
+<h2>Pr. 4</h2>
+<pre class="r"><code>ydata &lt;- read.csv(&quot;hw4_y.csv&quot;,sep=&quot;&quot;)
+cat(&quot;The type of data is&quot;, typeof(ydata), &quot;\n&quot;)</code></pre>
+<pre><code>The type of data is list </code></pre>
+<pre class="r"><code>summary(ydata)</code></pre>
+<pre><code>       y        
+ Min.   : 36.0  
+ 1st Qu.:271.5  
+ Median :543.0  
+ Mean   :528.3  
+ 3rd Qu.:801.5  
+ Max.   :997.0  </code></pre>
+<pre class="r"><code>cat(&quot;The standard deviation of ydata is&quot;, sd(ydata$y), &quot;\n&quot;)</code></pre>
+<pre><code>The standard deviation of ydata is 296.5066 </code></pre>
+<pre class="r"><code>cat(&quot;The interquartile rnage of ydata is&quot;, IQR(ydata$y), &quot;\n&quot;)</code></pre>
+<pre><code>The interquartile rnage of ydata is 530 </code></pre>
+<pre class="r"><code>hist(ydata$y,main=&quot;Histogram of the Data Set y&quot;, xlab=&quot;y&quot;,col=&quot;yellow&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="384" /></p>
+<hr />
+</div>
+<div id="pr.-5" class="section level2">
+<h2>Pr. 5</h2>
+<div id="pr.-5a" class="section level3">
+<h3>Pr. 5a</h3>
+<pre class="r"><code># Problem 5a. 
+
+x &lt;- c(1, 2, 5, 9, 11)
+y &lt;- c(2, 5, 1, 0, 23)
+
+intersect(x, y)</code></pre>
+<pre><code>[1] 1 2 5</code></pre>
+</div>
+<div id="pr.-5b" class="section level3">
+<h3>Pr. 5b</h3>
+<pre class="r"><code># Problem 5b. 
+union(x, y)</code></pre>
+<pre><code>[1]  1  2  5  9 11  0 23</code></pre>
+<pre class="r"><code>c(x, y)</code></pre>
+<pre><code> [1]  1  2  5  9 11  2  5  1  0 23</code></pre>
+<pre class="r"><code># The difference is that while c(x, y) includes all of the data from both vectors, union removes the duplicates. So, there&#39;s only one instance of &quot;2&quot; inside of the union made vector for instance. </code></pre>
+</div>
+<div id="pr.-5c-and-5d" class="section level3">
+<h3>Pr. 5c and 5d</h3>
+<pre class="r"><code># Problem 5c and 5d 
+cat(&quot;The set difference of x and y is&quot;, setdiff(x, y), &quot;\n&quot;); cat(&quot;The set difference of y and x is&quot;, setdiff(y, x), &quot;\n&quot;)</code></pre>
+<pre><code>The set difference of x and y is 9 11 </code></pre>
+<pre><code>The set difference of y and x is 0 23 </code></pre>
+</div>
+<div id="pr.-5e" class="section level3">
+<h3>Pr. 5e</h3>
+<pre class="r"><code># Problem 5e.
+# Symmetric difference in my understanding can be described as the union of the two above set difference calculations. So if I was to do this by hand it would look like c(9, 11, 0, 23).
+
+diff_X_Y &lt;- setdiff(x, y); diff_Y_X &lt;- setdiff(y, x) 
+
+cat(&quot;The symmetric difference is&quot;, union(diff_X_Y, diff_Y_X), &quot;\n&quot;)</code></pre>
+<pre><code>The symmetric difference is 9 11 0 23 </code></pre>
+<hr />
+</div>
+</div>
+<div id="pr.-6" class="section level2">
+<h2>Pr. 6</h2>
+<div id="a" class="section level3">
+<h3>6a</h3>
+<pre class="r"><code># Pr. 6a: Adding the vectors
+cat(&quot;x plus y is&quot;, x + y, &quot;\n&quot;)</code></pre>
+<pre><code>x plus y is 3 7 6 9 34 </code></pre>
+</div>
+<div id="b" class="section level3">
+<h3>6b</h3>
+<pre class="r"><code># Pr. 6b: Subtracting the vectors
+cat(&quot;4x minus 5y is&quot;, (4*x) - (5*y), &quot;\n&quot;)</code></pre>
+<pre><code>4x minus 5y is -6 -17 15 36 -71 </code></pre>
+</div>
+<div id="c" class="section level3">
+<h3>6c</h3>
+<pre class="r"><code># Pr. 6c: Multiplying the vectors
+cat(&quot;x multiplied by y is &quot;, x * y, &quot;\n&quot;)</code></pre>
+<pre><code>x multiplied by y is  2 10 5 0 253 </code></pre>
+</div>
+<div id="d" class="section level3">
+<h3>6d</h3>
+<pre class="r"><code># Pr. 6d: Dividing the vectors
+cat(&quot;x divided by y is&quot;, x / y, &quot;\n&quot;)</code></pre>
+<pre><code>x divided by y is 0.5 0.4 5 Inf 0.4782609 </code></pre>
+</div>
+<div id="e" class="section level3">
+<h3>6e</h3>
+<pre class="r"><code># Pr. 6e: Dot product of vectors
+cat(&quot;The dot product of x and y is&quot;, dot(x,y), &quot;\n&quot;)</code></pre>
+<pre><code>The dot product of x and y is 270 </code></pre>
+</div>
+<div id="f" class="section level3">
+<h3>6f</h3>
+<pre class="r"><code># Pr. 6f: Magnitude of x
+cat(&quot;The magnitude of x is&quot;, sqrt(dot(x, x)), &quot;\n&quot;)</code></pre>
+<pre><code>The magnitude of x is 15.23155 </code></pre>
+</div>
+<div id="g" class="section level3">
+<h3>6g</h3>
+<pre class="r"><code># Pr. 6g: Cumulative sum of x
+cat(&quot;The cumulative sum of x is&quot;, cumsum(x), &quot;\n&quot;)</code></pre>
+<pre><code>The cumulative sum of x is 1 3 8 17 28 </code></pre>
+</div>
+<div id="h" class="section level3">
+<h3>6h</h3>
+<pre class="r"><code># Pr. 6h: Cumulative product of x
+cat(&quot;The cumulative product of x is&quot;, cumprod(x), &quot;\n&quot;)</code></pre>
+<pre><code>The cumulative product of x is 1 2 10 90 990 </code></pre>
+<hr />
+</div>
+</div>
+<div id="pr.-7" class="section level2">
+<h2>Pr. 7</h2>
+<div id="a-1" class="section level3">
+<h3>7a</h3>
+<pre class="r"><code># Pr. 7a
+xint &lt;- unlist(xdata); yint &lt;- unlist(ydata)</code></pre>
+</div>
+<div id="b-1" class="section level3">
+<h3>7b</h3>
+<pre class="r"><code># Pr. 7b: Intersection of xint and yint
+intersect(xint, yint)</code></pre>
+<pre><code> [1] 253 743 849 166 920 373 131 941 102 297 874  75 837  74 606</code></pre>
+</div>
+<div id="c-1" class="section level3">
+<h3>7c</h3>
+<pre class="r"><code># Pr. 7c: Set difference of xint and yint
+setdiff(xint, yint)</code></pre>
+<pre><code> [1] 440 787 270 680 757 199 331 725 261 774  43  66  64 189 641 872  13 790 319
+[20] 947 303 493  95 543 579 896 296 125 563  89 568 479 217 327 281 282 667 646
+[39] 438 509 687 323 569  63 706 814 191 862 991 246 877 926 263 792 909 723 895
+[58] 664 126  97 661 256 924 406 576 783 643 852 501 750 277 285  51 636 793 213
+[77]  60 718  23 879 642 117</code></pre>
+</div>
+<div id="d-1" class="section level3">
+<h3>7d</h3>
+<pre class="r"><code># Pr. 7d: Set difference of yint and xint
+setdiff(yint, xint)</code></pre>
+<pre><code> [1] 921 164 310 993 239 258 551 397 113 703  41 923 809  85 502 435 586 657 504
+[20] 291 966 954 276 658  45 811 939 592 659 678 538 742 540 517 707 441 859 639
+[39] 997 772 873 103 519  44 518 815 912 326 453 387 128  50 656 755 204 631 378
+[58] 756 534 195 890 882 918 364 799 306 620 637 300 974 546 832 467  36 221 248
+[77] 160 660  68 610</code></pre>
+</div>
+<div id="e-1" class="section level3">
+<h3>7e</h3>
+<pre class="r"><code># Pr. 7e: Finding specific integers in xint or yint.
+problem_7e &lt;- c(42, 373, 678)
+problem_7e %in% xint</code></pre>
+<pre><code>[1] FALSE  TRUE FALSE</code></pre>
+<pre class="r"><code>problem_7e %in% yint</code></pre>
+<pre><code>[1] FALSE  TRUE  TRUE</code></pre>
+<p>The results show that c(42, 373, 678) is nowhere to be found in xint. 373 and 678 are found in yint though.</p>
+<hr />
+</div>
+</div>
+<div id="pr.-8" class="section level2">
+<h2>Pr. 8</h2>
+<div id="a-2" class="section level3">
+<h3>8a</h3>
+<pre class="r"><code># Pr. 8a
+i_a &lt;- 1:200
+sum(i_a^2)</code></pre>
+<pre><code>[1] 2686700</code></pre>
+<pre class="r"><code>n &lt;- 200
+n * (n + 1) * ((2 * n) + 1) / 6</code></pre>
+<pre><code>[1] 2686700</code></pre>
+</div>
+<div id="b-2" class="section level3">
+<h3>8b</h3>
+<pre class="r"><code># Pr. 8b
+i_b &lt;- 10:100
+sum(i_b^3 + (4 * i_b^2))</code></pre>
+<pre><code>[1] 26852735</code></pre>
+</div>
+<div id="c-2" class="section level3">
+<h3>8c</h3>
+<pre class="r"><code># Pr. 8c
+i_c &lt;- 1:15
+sum((2^{i_c} / i_c) + (3^{i_c} / i_c^2))</code></pre>
+<pre><code>[1] 108538</code></pre>
+</div>
+<div id="d-2" class="section level3">
+<h3>8d</h3>
+<pre class="r"><code># Pr. 8d
+i_d &lt;- 0:15
+sum(2^{i_d} / factorial(i_d))</code></pre>
+<pre><code>[1] 7.389056</code></pre>
+<pre class="r"><code># To check that this actually converges with e^2 we can just do this.
+cat(&quot;This is eulers number squared&quot;, exp(2), &quot;\n&quot;)</code></pre>
+<pre><code>This is eulers number squared 7.389056 </code></pre>
+</div>
+<div id="e-2" class="section level3">
+<h3>8e</h3>
+<pre class="r"><code># Pr. 8e
+i_e &lt;- 1:10^6
+4 * sum(((-1)^{i_e + 1}) / ((2 * i_e) - 1))</code></pre>
+<pre><code>[1] 3.141592</code></pre>
+<pre class="r"><code># Checking the value of pi. This is mostly a formality. 
+cat(&quot;The value of pi is&quot;, pi, &quot;\n&quot;)</code></pre>
+<pre><code>The value of pi is 3.141593 </code></pre>
+</div>
+<div id="f-1" class="section level3">
+<h3>8f</h3>
+<pre class="r"><code># Pr. 8f 
+# We can actually just use i_e again. 
+
+sum(1 / (i_e^2))</code></pre>
+<pre><code>[1] 1.644933</code></pre>
+<pre class="r"><code># Checking our answers.
+cat(&quot;pi squared divided by six is&quot;, (pi^2) / 6, &quot;\n&quot;)</code></pre>
+<pre><code>pi squared divided by six is 1.644934 </code></pre>
+</div>
+<div id="g-1" class="section level3">
+<h3>8g</h3>
+<pre class="r"><code># Pr. 8g
+
+sum(((-1)^{i_e + 1}) * (1 / i_e))</code></pre>
+<pre><code>[1] 0.6931467</code></pre>
+<pre class="r"><code># Checking our answers.
+cat(&quot;ln(2) is&quot;, log(2), &quot;\n&quot;)</code></pre>
+<pre><code>ln(2) is 0.6931472 </code></pre>
+</div>
+<div id="h-1" class="section level3">
+<h3>8h</h3>
+<pre class="r"><code># Pr. 8h
+# First let&#39;s set our various values of n.
+n_5 &lt;- 1:10^5
+n_6 &lt;- 1:10^6
+n_7 &lt;- 1:10^7
+n_8 &lt;- 1:10^8
+n_9 &lt;- 1:10^9
+
+# Time to hopefully not kill my computer.
+sum(1 / n_5)</code></pre>
+<pre><code>[1] 12.09015</code></pre>
+<pre class="r"><code>sum(1 / n_6)</code></pre>
+<pre><code>[1] 14.39273</code></pre>
+<pre class="r"><code>sum(1 / n_7)</code></pre>
+<pre><code>[1] 16.69531</code></pre>
+<pre class="r"><code>sum(1 / n_8)</code></pre>
+<pre><code>[1] 18.9979</code></pre>
+<pre class="r"><code># sum(1 / n_9) gave the error: cannot allocate vector of size 7.5 Gb. </code></pre>
+<p>This series approaches infinity incredibly slowly. Which makes sense when you think about it. As n is in the denominator the fraction continues to shrink as n iterates further along.</p>
+<hr />
+</div>
+<div id="pr.-9" class="section level3">
+<h3>Pr. 9</h3>
+<pre class="r"><code># First we need to define our n and our numerator and denominator.
+i_9 &lt;- 1:50
+num &lt;- cumprod((2 * i_9) - 1)
+den &lt;- cumprod((3 * i_9) - 2)
+
+# All we do now is plug and chug. 
+
+sum(num / den)</code></pre>
+<pre><code>[1] 3.479372</code></pre>
+</div>
+</div>

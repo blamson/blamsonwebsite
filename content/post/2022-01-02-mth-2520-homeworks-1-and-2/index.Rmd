@@ -1,0 +1,355 @@
+---
+title: 'MTH-2520 Homework 2: Using R as a Scientific Calculator'
+author: Brady Lamson
+date: '2021-01-27'
+slug: mth-2520-homework-2-using-r-as-a-scientific-calculator
+categories: []
+tags: [Homework, R]
+---
+
+**Homework 2: Using R as a Scientific Calculator**
+
+***
+
+Homework 2 Instructions:
+
+1. This is a skeleton .rmd notebook for HW 2. Fill in the code for the 
+other problems and write a summary statement on the answers. Some 
+Latex code is included below (see pr. 5).
+
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE,comment="")
+library(rmarkdown, tinytex)
+
+```
+
+***
+Pr. 1: Use R to compute the following
+
+```{r}
+#Pr. 1a
+10**2 + 3*60/8-3
+```
+\[\boxed{10^2 + \frac{3*60}{8} - 3 = 119.5}\]
+
+
+```{r}
+#Pr. 1b
+(5**3*(6-2))/(61-3+4)
+```
+\[\boxed{\frac{5^3 * (6 - 2)}{61 -3 + 4} = 8.06}\]
+
+
+```{r}
+#Pr. 1c
+((0.44 * (1 - 0.44)) / 34)^{1/2}
+```
+\[\boxed{\left( \frac{0.44 * (1 - 0.44)}{34} \right) ^{1/2}}\]
+
+
+```{r}
+#Pr. 1d
+x <- c(2, 2.5, 3, 3.5, 4)
+2^x
+```
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+  x & $x^2$ \\ [0.5ex] 
+ \hline\hline
+ 2 & 4.0 \\ 
+ 2.5 & 5.65 \\ 
+ 3 & 8.00 \\
+ 3.5 & 11.3 \\
+ 4 & 16.00 \\
+ \hline
+\end{tabular}
+\end{center}
+
+```{r}
+#Pr. 1e
+x <- c(10:15)
+log(x)
+```
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+  x & $ln(x)$ \\ [0.5ex] 
+ \hline\hline
+ 10 & 2.30 \\ 
+ 11 & 2.40 \\ 
+ 12 & 2.48 \\
+ 13 & 2.56 \\
+ 14 & 2.64 \\
+ 15 & 2.71 \\
+ \hline
+\end{tabular}
+\end{center}
+
+
+```{r}
+#Pr. 1f
+n <- c(5:10)
+factorial(n)
+```
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+  n & n! \\ [0.5ex] 
+ \hline\hline
+ 5 & 120 \\ 
+ 6 & 720 \\ 
+ 7 & 5040 \\
+ 8 & 40320 \\
+ 9 & 362880 \\
+ 10 & 3628800 \\
+ \hline
+\end{tabular}
+\end{center}
+
+
+
+```{r}
+#Pr. 1g
+cos((2 * pi) / 3)
+```
+\[\boxed{cos\frac{2\pi}{3} = -0.5}\]
+
+
+```{r}
+#Pr. 1h
+# So, based on my reading it seems R operates in radians by default for stuff like cos.
+# We can fix that by converting our given degrees to radians in-line!
+# r = d * pi / 180
+cos((30*pi) / 180)
+```
+\[\boxed{cos(30^{\circ}) = 0.866}\]
+
+
+```{r}
+#Pr. 1i
+r <- c(0:5)
+choose(5, r)
+```
+\[\frac{n!}{r! (n - r)!}\]
+\centerline{Where $n$ is the number of things to choose from (5), and we choose $r$ of them.}
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+  r & x \\ [0.5ex] 
+ \hline\hline
+ 0 & 1 \\ 
+ 1 & 5 \\ 
+ 2 & 10 \\
+ 3 & 10 \\
+ 4 & 5 \\
+ 5 & 1 \\
+ \hline
+\end{tabular}
+\end{center}
+
+
+```{r}
+#Pr. 1j
+r <- c(0:6)
+choose(6, r)
+```
+\[\frac{n!}{r! (n - r)!}\]
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+  r & x \\ [0.5ex] 
+ \hline\hline
+ 0 & 1 \\ 
+ 1 & 6 \\ 
+ 2 & 15 \\
+ 3 & 20 \\
+ 4 & 15 \\
+ 5 & 6 \\
+ 6 & 1 \\
+ \hline
+\end{tabular}
+\end{center}
+
+***
+Pr. 2 Use the quadratic formula to compute the roots of the quadratic equations.
+
+2a.
+$3x^2 +2x - 1$
+```{r}
+#Pr. 2a
+a = 3
+b = 2
+c = -1
+(-b + sqrt(b**2 - 4*a*c))/(2*a)
+(-b - sqrt(b**2 - 4*a*c))/(2*a)
+```
+The roots of the quadratic equation $3x^2+2x-1=0$ are $\boxed{x=-1}$ and $\boxed{x=\frac{1}{3}}$.
+
+***
+
+2b. 
+$x^2 - x - 6 = 0$
+```{r}
+#Pr. 2b
+a = 1
+b = -1
+c = -6
+(-b + sqrt(b**2 - 4*a*c))/(2*a)
+(-b - sqrt(b**2 - 4*a*c))/(2*a)
+```
+The roots of the quadratic equation $x^2-x-6=0$ are $\boxed{x=3}$ and $\boxed{x=-2}$.
+
+***
+
+2c.
+$x^2 + x + 1 = 0$
+```{r}
+#Pr. 2b
+a = 1
+b = 1
+c = 1
+(-b + sqrt(as.complex(b**2 - 4*a*c)))/(2*a)
+(-b - sqrt(as.complex(b**2 - 4*a*c)))/(2*a)
+
+```
+The roots of the quadratic equation $x^2+x+1=0$ are $\boxed{x = -0.5 + 0.866i}$ and $\boxed{x = -0.5 - 0.866i}$.
+
+***
+Pr. 3
+
+```{r}
+pi
+round(pi)
+round(pi,4)
+signif(pi,5)
+signif(pi,10)
+signif(pi,50)
+#After some messing around it seems 10 significant figures is the max I'm able to get out of this.
+trunc(pi)
+ceiling(pi)
+floor(pi)
+```
+
+***
+Pr. 4
+
+```{r}
+trunc(4.87)
+trunc(-4.87)
+trunc(17.973)
+round(4.87)
+```
+trunc() seems to just outright turn the given value into an integer with no regard to what the decimals are valued at. That's very different from rounding which does take that into consideration. 
+
+***
+Pr. 5
+
+```{r}
+#5a.How many times does 11 divide into 2387 evenly?
+2387 / 11
+2387 %/%11
+
+#5b. Compute 2387 mod 11.
+2387 %% 11
+```
+
+
+Pr. 5c  
+Express 2387 in the form 11 * q + r  
+Let q be quotient and let r be remainder.  
+$\boxed{2387 = 11 * 217 + 0}$
+
+
+```{r}
+#Pr. 5d quotient
+2387 %/% 42
+
+#Pr. 5e 2387 mod 42
+2387 %% 42
+
+```
+
+
+Pr. 5f 
+
+$2387 = 56*42 +35$
+
+
+```{r}
+#Pr. 5g quotient
+170166719 %/% 31079
+
+#Pr. 5h 2387 mod 42
+170166719 %% 31079
+
+```
+
+Pr. 5i  
+Express 170,166,719 in the form 31,079 * q + r  
+Let q be quotient and let r be remainder.  
+$\boxed{170166719 = 5475*31079 + 9194}$
+
+
+***
+Pr. 6 How can you use %% to compute the units digit of a given integer n. Use this process to have R give the units digit for $n = 1234$ and $n = 517$.
+
+```{r}
+1234 %% 10
+517 %% 10
+```
+Why does this work? To find out let's just look at the math!  
+$1234 \mod 10 = 123 R 4$  
+The %% function only shows the remainder and so that's how we get our answer. 
+
+
+***
+Pr.7 How can you use %/% to return all but the units digit of a given integer n? Use this process to have R return all but the units digit for $n = 1234$ and $n = 517$.
+
+```{r}
+1234 %/% 10
+517 %/% 10
+```
+To find out why this works let's look at the same write up of the problem again.  
+$1234 \mod 10 = 123 R 4$  
+The %% function only shows us the following:  
+$1234 \mod 10 = 123 \boxed{R 4}$  
+whereas the %/% function shows us:  
+$1234 \mod 10 = \boxed{123} R 4$. 
+
+
+
+***
+Pr. 8 
+
+```{r}
+#Pr. 8a
+x <- c(1:10)
+x
+class(x)
+mode(x)
+typeof(x)
+
+```
+
+***
+```{r}
+#Pr. 8b
+x <- sqrt(1:10)
+x
+class(x)
+mode(x)
+typeof(x)
+```
+
+***
+```{r}
+#Pr. 8c
+x <- c("alpha", "bravo", "charlie", "delta")
+x
+class(x)
+mode(x)
+typeof(x)
+```
