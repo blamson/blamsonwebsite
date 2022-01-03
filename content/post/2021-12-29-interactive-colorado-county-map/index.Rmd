@@ -13,8 +13,6 @@ My current task has been an interactive map showing where all the universities a
 
 Firstly, I knew I wanted to color the map by county so I had to figure that out. My first attempt, utilizing a lot of code from the original guide, looks as follows. 
 
-Note: There's a bizarre bug where the HTML rendering of the map is causing this entire blog post to be white. I don't know why and this blog post is still a bit too much of a hobby project for me to invest more time into fixing this issue. If you have any information on how to this please contact me! 
-
 
 ```{r}
 library(leaflet)
