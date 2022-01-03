@@ -1,0 +1,379 @@
+---
+title: 'MTH-2520 Homework 5: Functions and Basic Programming'
+author: Brady Lamson
+date: '2021-02-22'
+slug: mth-2520-homework-5-functions-and-basic-programming
+categories: []
+tags: [Homework]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="problem-1" class="section level2">
+<h2>Problem 1:</h2>
+<p>Write a function that computes the area of a circle.</p>
+<pre class="r"><code>Calculate_Area &lt;- function(r) {
+# This function calculates the area of a circle
+area &lt;- pi * r^2
+return(area)
+}
+
+radii &lt;- c(5, 15, 200)
+
+Calculate_Area(radii)</code></pre>
+<pre><code>[1]     78.53982    706.85835 125663.70614</code></pre>
+<hr />
+</div>
+<div id="problem-2" class="section level2">
+<h2>Problem 2:</h2>
+<p>Write a function that computes the average absolute value. <span class="math inline">\(\frac{\lvert x \rvert + \lvert y \rvert}{2}\)</span>.</p>
+<pre class="r"><code>Average_Absolutely &lt;- function(x, y) {
+  # This function calculates the average absolute value. 
+  # (|x| + |y|) / 2
+  
+  absolute_average &lt;- (abs(x) + abs(y)) / 2
+  return(absolute_average)
+}
+
+example_x &lt;- c(-3:2)
+example_y &lt;- c(-3:2)
+
+Average_Absolutely(example_x, example_y)</code></pre>
+<pre><code>[1] 3 2 1 0 1 2</code></pre>
+<hr />
+</div>
+<div id="problem-3" class="section level2">
+<h2>Problem 3:</h2>
+<p>Write a function to count the number of odd integers in a given vector x. Test your function of the vectors: c(1, 3, 5, 6, 8, 9), seq(1, 99, 3) and seq(1, 5000, 7).</p>
+<pre class="r"><code># Returns the amount of odd integers in a given vector
+Count_Odds &lt;- function(x) {
+  odds &lt;- length(which(x %% 2 &gt; 0))
+  return(odds)
+}
+
+ex_1 &lt;- c(1, 3, 5, 6, 8, 9)
+ex_2 &lt;- seq(1, 99, 3)
+ex_3 &lt;- seq(1, 5000, 7)
+
+cat(&quot;The amount of odds in the first vector are&quot;, Count_Odds(ex_1), &quot;\n&quot;)</code></pre>
+<pre><code>The amount of odds in the first vector are 4 </code></pre>
+<pre class="r"><code>cat(&quot;The amount of odds in the second vector are&quot;, Count_Odds(ex_2), &quot;\n&quot;)</code></pre>
+<pre><code>The amount of odds in the second vector are 17 </code></pre>
+<pre class="r"><code>cat(&quot;The amount of odds in the third vector are&quot;, Count_Odds(ex_3), &quot;\n&quot;)</code></pre>
+<pre><code>The amount of odds in the third vector are 358 </code></pre>
+<hr />
+</div>
+<div id="problem-4" class="section level2">
+<h2>Problem 4:</h2>
+<p>Use ifelse or switch to return “even” or “odd” depending whether or not each element of the vector x is divisible by 2.</p>
+<pre class="r"><code># This function finds the remainder of various integers and assigns them even or odd depending on said remainder. 
+Even_or_Odd &lt;- function(x) {
+  y &lt;- x%%2
+  
+  if (y == 0){
+    return(&quot;even&quot;)}
+  else{
+    return(&quot;odd&quot;)}
+}
+
+
+x_1 &lt;- c(1, 3, 5, 6, 8, 9)
+x_2 &lt;- 1:20
+
+
+sapply(x_1, Even_or_Odd)</code></pre>
+<pre><code>[1] &quot;odd&quot;  &quot;odd&quot;  &quot;odd&quot;  &quot;even&quot; &quot;even&quot; &quot;odd&quot; </code></pre>
+<pre class="r"><code>sapply(x_2, Even_or_Odd)</code></pre>
+<pre><code> [1] &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot;
+[11] &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot; &quot;odd&quot;  &quot;even&quot;</code></pre>
+<hr />
+</div>
+<div id="problem-5" class="section level2">
+<h2>Problem 5:</h2>
+<p>We wish to compute the product of 3, 4 or 5 digits, and then add 42. Write a function to complete this task. Test your function on the vectors: c(3,5,7), c(3,5,7,9) and c(5,6,7,8,9).</p>
+<pre class="r"><code>sqornshellous_zeta &lt;- function(x) {
+  # This function does what it says on the tin. That is, to say, takes the product of a vector and adds the answer to life, the universe, and everything.
+  
+  # This function only works for vectors made up of integers, floats and logicals.
+  
+  product_value &lt;- prod(x)
+  final_product_value &lt;- product_value + 42
+  return(final_product_value)
+}
+
+ex_51 &lt;- c(3,5,7)
+ex_52 &lt;- c(3,5,7,9)
+ex_53 &lt;- c(5,6,7,8,9)
+
+sqornshellous_zeta(ex_51)</code></pre>
+<pre><code>[1] 147</code></pre>
+<pre class="r"><code>sqornshellous_zeta(ex_52)</code></pre>
+<pre><code>[1] 987</code></pre>
+<pre class="r"><code>sqornshellous_zeta(ex_53)</code></pre>
+<pre><code>[1] 15162</code></pre>
+<hr />
+</div>
+<div id="problem-6" class="section level2">
+<h2>Problem 6:</h2>
+<p>The sum formula for the finite geometric series <span class="math inline">\(h(x,n) = \sum_{i=0}^{n} x^{i} = 1 + x + x^2 + ... + x^n, x \neq 1\)</span> is given by:</p>
+<p><span class="math display">\[
+  h(x,n) = 
+  \begin{cases}
+                                   \frac{1 - x^{n+1}}{1-x} &amp; \text{for $x \neq 1$} \\
+  n &amp; \text{for $x = 1$}
+  \end{cases}
+\]</span></p>
+<p>Write a function to compute this formula. Use your function to compute: h(0.7, 57), h(4.2, 9), h(-1.2, 81) and h(1, 342).</p>
+<pre class="r"><code>piecewise_example &lt;- function(x,n) {
+  if (x == 1){return(n)}
+  else{return({(1 - x^(n+1)) / (1-x)})}
+}
+
+piecewise_example(0.7, 57)</code></pre>
+<pre><code>[1] 3.333333</code></pre>
+<pre class="r"><code>piecewise_example(4.2, 9)</code></pre>
+<pre><code>[1] 533755.9</code></pre>
+<pre class="r"><code>piecewise_example(-1.2, 81)</code></pre>
+<pre><code>[1] -1413967</code></pre>
+<pre class="r"><code>piecewise_example(1, 342)</code></pre>
+<pre><code>[1] 342</code></pre>
+<hr />
+</div>
+<div id="problem-7." class="section level2">
+<h2>Problem 7.</h2>
+<p>Write a function that computes <span class="math inline">\(f(n) = n!\)</span> using the formula <span class="math inline">\(n! n(n-1,)(n-2) ... 2 \cdot 1\)</span> and does not use factorial(). For a given integer <span class="math inline">\(n\)</span>, the function prints out:</p>
+<ol style="list-style-type: decimal">
+<li>n! n&gt; 0</li>
+<li>1 for n=0</li>
+<li>NaN for n&lt;0
+Test on n=5, 15, 0, -8</li>
+</ol>
+<pre class="r"><code>better_factorial &lt;- function(n){
+
+  # Here I have if statements that return 1 if n=0 and a NaN if n&lt;0. I put these at the start to catch them as soon as possible
+  if (n == 0){return(1)}
+  if (n &lt; 0){return(NaN)}
+  
+  return_value &lt;- 1
+    
+  # This while loop takes a value which is set to 1 and multiplies it by a variable &quot;n&quot; that gets progressively smaller by 1 with every loop. This loop stops once n is no longer greater than 1.
+  while (n &gt; 1) {
+    return_value &lt;- return_value * n
+    n &lt;- n-1
+  }
+  return(return_value)
+}
+
+cat(&quot;5! is&quot;, better_factorial(5), &quot;\n&quot;)</code></pre>
+<pre><code>5! is 120 </code></pre>
+<pre class="r"><code>cat(&quot;15! is&quot;, better_factorial(15), &quot;\n&quot;)</code></pre>
+<pre><code>15! is 1.307674e+12 </code></pre>
+<pre class="r"><code>cat(&quot;0! is&quot;, better_factorial(0), &quot;\n&quot;)</code></pre>
+<pre><code>0! is 1 </code></pre>
+<pre class="r"><code>cat(&quot;-8! is&quot;, better_factorial(-8), &quot;\n&quot;)</code></pre>
+<pre><code>-8! is NaN </code></pre>
+<hr />
+</div>
+<div id="problem-8" class="section level2">
+<h2>Problem 8</h2>
+<p>Write a function that prints out the 1st n Lucas numbers for a given n. Test your function for
+n = 10, 25.</p>
+<pre class="r"><code>lucas_func &lt;- function(n){
+  
+  #First I need to make sure no negative values are plugged in here. 
+  if (n &lt; 1){
+    return(NaN)
+  }
+  
+  # Then we just need to setup the first two known values of this sequence. That is, 2 and 1.
+  if (n == 1){
+    return(2)
+  }
+  
+  if (n == 2){
+    return(1)
+  }
+  
+  #Essentially my game plan is to have a and b add with each other to create a variable &quot;c&quot;. After doing that we reassign some values. The key here is the counter. It goes up by 1 at the end of the loop and when it is no longer less than n the loop stops. 
+  a &lt;- 2
+  b &lt;- 1
+  counter &lt;- 2
+  results_list &lt;- c(2, 1) # We create a small vector here with our two given values.
+  
+  while (counter &lt; n) {
+    c &lt;- a + b
+    a &lt;- b
+    b &lt;- c
+    counter &lt;- counter + 1
+    results_list &lt;- append(results_list, c) #This makes that small little vector useful! 
+  }
+return(results_list)
+}
+
+test_val &lt;- c(10, 25)
+sapply(test_val, lucas_func)</code></pre>
+<pre><code>[[1]]
+ [1]  2  1  3  4  7 11 18 29 47 76
+
+[[2]]
+ [1]      2      1      3      4      7     11     18     29     47     76
+[11]    123    199    322    521    843   1364   2207   3571   5778   9349
+[21]  15127  24476  39603  64079 103682</code></pre>
+<hr />
+</div>
+<div id="problem-9" class="section level2">
+<h2>Problem 9</h2>
+<pre class="r"><code>tribo_func &lt;- function(n){
+  
+  #Essentially my gameplan here is the exact same as problem 8, I just add in another variable. 
+  
+  if (n &lt; 1){
+    return(NaN)
+  }
+  
+  if (n == 1){
+    return(0)
+  }
+  
+  if (n == 2){
+    return(0)
+  }
+  
+  if (n == 3){
+    return(1)
+  }
+  
+  a &lt;- 0
+  b &lt;- 0
+  c &lt;- 1
+  counter &lt;- 3
+  results_list &lt;- c(0, 0, 1)
+  
+  while (counter &lt; n) {
+    d &lt;- a + b + c
+    a &lt;- b
+    b &lt;- c
+    c &lt;- d
+    counter &lt;- counter + 1
+    results_list &lt;- append(results_list, d)
+  }
+return(results_list)
+}
+
+test_val2 &lt;- c(10, 25)
+sapply(test_val2, tribo_func)</code></pre>
+<pre><code>[[1]]
+ [1]  0  0  1  1  2  4  7 13 24 44
+
+[[2]]
+ [1]      0      0      1      1      2      4      7     13     24     44
+[11]     81    149    274    504    927   1705   3136   5768  10609  19513
+[21]  35890  66012 121415 223317 410744</code></pre>
+<hr />
+</div>
+<div id="problem-10" class="section level1">
+<h1>Problem 10</h1>
+<p>Using the code for the Fibonacci sequence given in class, generate a vector containing
+every 3rd term of the 1st 30 terms. Then verify using R that is vector contains only even
+numbers.
+Theorem: Every third Fibonacci number is even.</p>
+<pre class="r"><code>Fibonacci &lt;- function(n){
+  
+fib &lt;- numeric(n)
+# Create a vector of length n
+
+fib[1] &lt;- fib[2] &lt;- 1
+# Store F 1 and F 2 in the vector
+
+for (i in 3:n) fib[i] = fib[i-1] + fib[i-2]
+
+cat(&quot;The first&quot;, n, &quot;Fibonacci numbers are&quot;, &quot;\n&quot;)
+print(fib)}
+
+# Here I set fib_30 to the vector created when 30 is put into the fibonacci function.
+fib_30 &lt;- Fibonacci(30)</code></pre>
+<pre><code>The first 30 Fibonacci numbers are 
+ [1]      1      1      2      3      5      8     13     21     34     55
+[11]     89    144    233    377    610    987   1597   2584   4181   6765
+[21]  10946  17711  28657  46368  75025 121393 196418 317811 514229 832040</code></pre>
+<pre class="r"><code># From here I filter it out using a sequence. The sequence starts at the third position and moves up by 3. 
+fib_thirds &lt;- fib_30[seq(3, length(fib_30), 3)]
+
+cat(&quot;Every third value in the Fibonacci sequence up to the thirtieth are&quot;, fib_thirds, &quot;\n&quot;)</code></pre>
+<pre><code>Every third value in the Fibonacci sequence up to the thirtieth are 2 8 34 144 610 2584 10946 46368 196418 832040 </code></pre>
+<pre class="r"><code># To check if all the values here are even we can actually use our old Even_or_Odd function!
+sapply(fib_thirds, Even_or_Odd)</code></pre>
+<pre><code> [1] &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot; &quot;even&quot;</code></pre>
+<hr />
+</div>
+<div id="problem-11" class="section level1">
+<h1>Problem 11</h1>
+<p>Using the code for the Fibonacci sequence given in class, generate a vector containing
+every 4th term of the 1st 30 terms. Then verify using R that every number in this vector is divisible by three.
+Theorem: Every fourth Fibonacci number is divisible by three.</p>
+<pre class="r"><code>Fibonacci &lt;- function(n){
+  
+fib &lt;- numeric(n)
+# Create a vector of length n
+
+fib[1] &lt;- fib[2] &lt;- 1
+# Store F 1 and F 2 in the vector
+
+for (i in 3:n) fib[i] = fib[i-1] + fib[i-2]
+
+cat(&quot;The first&quot;, n, &quot;Fibonacci numbers are&quot;, &quot;\n&quot;)
+print(fib)}
+
+
+# Here I set fib_30 to the vector created when 30 is put into the fibonacci function.
+fib_30 &lt;- Fibonacci(30)</code></pre>
+<pre><code>The first 30 Fibonacci numbers are 
+ [1]      1      1      2      3      5      8     13     21     34     55
+[11]     89    144    233    377    610    987   1597   2584   4181   6765
+[21]  10946  17711  28657  46368  75025 121393 196418 317811 514229 832040</code></pre>
+<pre class="r"><code># From here I filter it out using a sequence. The sequence starts at the fourth position and moves up by 4. 
+fib_fourth &lt;- fib_30[seq(4, length(fib_30), 4)]
+
+cat(&quot;Every fourth value in the Fibonacci sequence up to the thirtieth are&quot;, fib_fourth, &quot;\n&quot;)</code></pre>
+<pre><code>Every fourth value in the Fibonacci sequence up to the thirtieth are 3 21 144 987 6765 46368 317811 </code></pre>
+<pre class="r"><code># To see if all of these are divisible by three we just slightly tweak our even or odd function!
+
+divisible_by_three &lt;- function(x) {
+  y &lt;- x%%3
+  
+  if (y == 0){
+    return(&quot;TRUE&quot;)}
+  else{
+    return(&quot;FALSE&quot;)}
+}
+
+sapply(fib_fourth, divisible_by_three)</code></pre>
+<pre><code>[1] &quot;TRUE&quot; &quot;TRUE&quot; &quot;TRUE&quot; &quot;TRUE&quot; &quot;TRUE&quot; &quot;TRUE&quot; &quot;TRUE&quot;</code></pre>
+<hr />
+<div id="problem-12" class="section level2">
+<h2>Problem 12</h2>
+<p>Generate a sequence of ratios with the Fibonacci numbers. List the 1st 30 terms of this sequence and verify the sequence appears to converge to 1.618034.</p>
+<pre class="r"><code>fibonacci_ratio &lt;- function(n){
+  
+  fib_vector &lt;- Fibonacci(n+1) #I add the +1 here to prevent things from getting wacky when we reach the end of the final loop.
+  ratio_vector &lt;- c()
+  
+  for (i in 0:n) ratio_vector[i] = fib_vector[i+1] / fib_vector[i] #The n on this line could be replaced with n-1 if you remove the +1 from the n a few lines up. 
+  
+  return(ratio_vector)
+}
+
+fibonacci_ratio(30)</code></pre>
+<pre><code>The first 31 Fibonacci numbers are 
+ [1]       1       1       2       3       5       8      13      21      34
+[10]      55      89     144     233     377     610     987    1597    2584
+[19]    4181    6765   10946   17711   28657   46368   75025  121393  196418
+[28]  317811  514229  832040 1346269</code></pre>
+<pre><code> [1] 1.000000 2.000000 1.500000 1.666667 1.600000 1.625000 1.615385 1.619048
+ [9] 1.617647 1.618182 1.617978 1.618056 1.618026 1.618037 1.618033 1.618034
+[17] 1.618034 1.618034 1.618034 1.618034 1.618034 1.618034 1.618034 1.618034
+[25] 1.618034 1.618034 1.618034 1.618034 1.618034 1.618034</code></pre>
+</div>
+</div>

@@ -1,0 +1,449 @@
+---
+title: 'MTH-2520 Homework 6: Matrices and Arrays'
+author: Brady Lamson
+date: '2021-03-01'
+slug: mth-2520-homework-6-matrices-and-arrays
+categories: []
+tags: [Homework]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="problem-1." class="section level2">
+<h2>Problem 1.</h2>
+<p>Create an example matrix in the three following ways:</p>
+<div id="section" class="section level3">
+<h3></h3>
+<p>Problem 1a
+Using matrix()</p>
+<pre class="r"><code>matrix(1:5, nrow = 5, ncol=8)</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]    1    1    1    1    1    1    1    1
+[2,]    2    2    2    2    2    2    2    2
+[3,]    3    3    3    3    3    3    3    3
+[4,]    4    4    4    4    4    4    4    4
+[5,]    5    5    5    5    5    5    5    5</code></pre>
+</div>
+<div id="section-1" class="section level3">
+<h3></h3>
+<p>Problem 1b
+Using rbind()</p>
+<pre class="r"><code>matrix_1b1 &lt;- matrix(1, nrow = 1, ncol=8, byrow=FALSE) 
+matrix_1b2 &lt;- matrix(2, nrow = 1, ncol=8, byrow=FALSE)
+matrix_1b3 &lt;- matrix(3, nrow = 1, ncol=8, byrow=FALSE)
+matrix_1b4 &lt;- matrix(4, nrow = 1, ncol=8, byrow=FALSE)
+matrix_1b5 &lt;- matrix(5, nrow = 1, ncol=8, byrow=FALSE)
+
+rbind(matrix_1b1, matrix_1b2, matrix_1b3, matrix_1b4, matrix_1b5)</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]    1    1    1    1    1    1    1    1
+[2,]    2    2    2    2    2    2    2    2
+[3,]    3    3    3    3    3    3    3    3
+[4,]    4    4    4    4    4    4    4    4
+[5,]    5    5    5    5    5    5    5    5</code></pre>
+</div>
+<div id="section-2" class="section level3">
+<h3></h3>
+<p>Problem 1c
+Using cbind()</p>
+<pre class="r"><code>matrix_1c1 &lt;- matrix(1:5, nrow = 5, ncol=4) 
+matrix_1c2 &lt;- matrix(1:5, nrow = 5, ncol=4)
+
+cbind(matrix_1c1, matrix_1c2)</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]    1    1    1    1    1    1    1    1
+[2,]    2    2    2    2    2    2    2    2
+[3,]    3    3    3    3    3    3    3    3
+[4,]    4    4    4    4    4    4    4    4
+[5,]    5    5    5    5    5    5    5    5</code></pre>
+<hr />
+</div>
+</div>
+<div id="problem-2." class="section level2">
+<h2>Problem 2.</h2>
+<p>For the matrix A in pr. 1: , b)</p>
+<div id="problem-2a." class="section level3">
+<h3>Problem 2a.</h3>
+<p>add a row of 6’s on the bottom</p>
+<pre class="r"><code>matrix_2 &lt;- matrix(1:5, nrow = 5, ncol=8)
+rbind(matrix_2, rep(6, 8))</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]    1    1    1    1    1    1    1    1
+[2,]    2    2    2    2    2    2    2    2
+[3,]    3    3    3    3    3    3    3    3
+[4,]    4    4    4    4    4    4    4    4
+[5,]    5    5    5    5    5    5    5    5
+[6,]    6    6    6    6    6    6    6    6</code></pre>
+</div>
+<div id="problem-2b." class="section level3">
+<h3>Problem 2b.</h3>
+<p>then extract the middle 2 × 4 matrix</p>
+<pre class="r"><code># Before we can do this we need to know what the middle even is! This matrix is 6 rows long and 8 columns long. That means the middle 2 x 4 matrix would be in rows 3-4 and columns 3-6. We should get all 3s and 4s in our matrix.
+
+matrix_2[row=3:4, col=3:6]</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    3    3    3    3
+[2,]    4    4    4    4</code></pre>
+<hr />
+</div>
+</div>
+<div id="problem-3" class="section level2">
+<h2>Problem 3</h2>
+<p>Build a 10 x 10 identity matrix. Then change all the non-zero elements to 5.</p>
+<pre class="r"><code>matrix_3 &lt;- diag(10)
+matrix_3 * 5</code></pre>
+<pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]    5    0    0    0    0    0    0    0    0     0
+ [2,]    0    5    0    0    0    0    0    0    0     0
+ [3,]    0    0    5    0    0    0    0    0    0     0
+ [4,]    0    0    0    5    0    0    0    0    0     0
+ [5,]    0    0    0    0    5    0    0    0    0     0
+ [6,]    0    0    0    0    0    5    0    0    0     0
+ [7,]    0    0    0    0    0    0    5    0    0     0
+ [8,]    0    0    0    0    0    0    0    5    0     0
+ [9,]    0    0    0    0    0    0    0    0    5     0
+[10,]    0    0    0    0    0    0    0    0    0     5</code></pre>
+<p>So, funfact for this one. I was racking my brain thinking of some way to change the values in the matrix based on a conditional (ie: where(x != 0)). My roommate walks over, looks at my screen and says “why don’t you just multiply the matrix by 5”. Right. Of course. The solution that’s directly in the lab notes. I should probably go with that solution.</p>
+<hr />
+</div>
+<div id="problem-4." class="section level2">
+<h2>Problem 4.</h2>
+<p>Linear Algebra</p>
+<div id="problem-4a." class="section level3">
+<h3>Problem 4a.</h3>
+<p>Use the random number generator rnorm() with the given seed to generate A.</p>
+<pre class="r"><code>set.seed(1234)
+A &lt;- matrix(rnorm(25), nrow = 5)
+A</code></pre>
+<pre><code>           [,1]       [,2]        [,3]       [,4]       [,5]
+[1,] -1.2070657  0.5060559 -0.47719270 -0.1102855  0.1340882
+[2,]  0.2774292 -0.5747400 -0.99838644 -0.5110095 -0.4906859
+[3,]  1.0844412 -0.5466319 -0.77625389 -0.9111954 -0.4405479
+[4,] -2.3456977 -0.5644520  0.06445882 -0.8371717  0.4595894
+[5,]  0.4291247 -0.8900378  0.95949406  2.4158352 -0.6937202</code></pre>
+</div>
+<div id="problem-4b." class="section level3">
+<h3>Problem 4b.</h3>
+<p>Calculate the determinant of A.</p>
+<pre class="r"><code>det(A)</code></pre>
+<pre><code>[1] -0.562265</code></pre>
+</div>
+<div id="problem-4c." class="section level3">
+<h3>Problem 4c.</h3>
+<p>Calculate the inverse of A.</p>
+<pre class="r"><code>solve(A)</code></pre>
+<pre><code>          [,1]      [,2]       [,3]       [,4]       [,5]
+[1,] -1.422040  1.438988  -1.628982 -0.3694698 -0.5029832
+[2,]  2.903350 -3.505745   3.563584 -0.1352708  0.6882113
+[3,]  2.850793 -5.321075   5.452092  0.6602019  1.2897834
+[4,] -2.065381  3.466124  -4.011938 -0.4977805 -0.6328853
+[5,] -7.854210 10.098876 -12.010162 -0.8753507 -3.0556750</code></pre>
+<hr />
+</div>
+</div>
+<div id="problem-5." class="section level2">
+<h2>Problem 5.</h2>
+<p>For the given matrix compute each part separately. If you alter the matrix be sure to reset it back to its default value.</p>
+<p><span class="math inline">\(A = \begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 5 &amp; 2 &amp; 6 \\ -2 &amp; -1 &amp; -3 \end{bmatrix}\)</span></p>
+<pre class="r"><code>p5_vector &lt;- c(1,1,3,5,2,6,-2,-1,-3)
+p5_matrix &lt;- matrix(p5_vector, nrow = 3, ncol = 3, byrow=TRUE) 
+p5_matrix</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    1    3
+[2,]    5    2    6
+[3,]   -2   -1   -3</code></pre>
+<div id="problem-5a." class="section level3">
+<h3>Problem 5a.</h3>
+<p>Compute <span class="math inline">\(A^2\)</span></p>
+<pre class="r"><code>p5_matrix %*% p5_matrix</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    3    3    9
+[3,]   -1   -1   -3</code></pre>
+</div>
+<div id="problem-5b." class="section level3">
+<h3>Problem 5b.</h3>
+<p>Compute A^2. What is R computing here?</p>
+<pre class="r"><code>p5_matrix^2</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    1    9
+[2,]   25    4   36
+[3,]    4    1    9</code></pre>
+<p>p5_matrix^2 is doing element-wise multiplication. That is, element [1,1] is multiplied with element [1,1], element [1,2] with element [1,2] and so on. In other words, every element is multiplied with itself. This could not be more different from matrix multiplication.</p>
+</div>
+<div id="problem-5c." class="section level3">
+<h3>Problem 5c.</h3>
+<p>Verify that <span class="math inline">\(A^3 = 0\)</span> where <span class="math inline">\(0\)</span> is a 3 X 3 matrix with every entry equal to 0.</p>
+<pre class="r"><code>p5_matrix %*% p5_matrix %*% p5_matrix</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0</code></pre>
+</div>
+<div id="problem-5d." class="section level3">
+<h3>Problem 5d.</h3>
+<p>Compute A^3. What is R computing here?</p>
+<pre class="r"><code>p5_matrix^3</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    1   27
+[2,]  125    8  216
+[3,]   -8   -1  -27</code></pre>
+<p>Yet again we’re seeing the result of element wise multiplication. Each element is simply multiplied with itself twice.</p>
+</div>
+<div id="problem-5e." class="section level3">
+<h3>Problem 5e.</h3>
+<p>Replace the 3rd column of A with the sum of the 2nd and 3rd columns.</p>
+<pre class="r"><code>columns_2_3 &lt;- p5_matrix[,2] + p5_matrix[,3]
+
+p5_matrix[,1] &lt;- columns_2_3
+p5_matrix</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    4    1    3
+[2,]    8    2    6
+[3,]   -4   -1   -3</code></pre>
+</div>
+<div id="problem-5f" class="section level3">
+<h3>Problem 5f</h3>
+<p>Compute the column means of “A”.</p>
+<pre class="r"><code>cat(&quot;the column means of p5_matrix are [&quot;, colMeans(p5_matrix), &quot;] \n&quot;)</code></pre>
+<pre><code>the column means of p5_matrix are [ 2.666667 0.6666667 2 ] </code></pre>
+</div>
+<div id="problem-5g" class="section level3">
+<h3>Problem 5g</h3>
+<p>Compute the square roots of the 2nd column.</p>
+<pre class="r"><code>cat(&quot;The square roots of column two are [&quot;, sqrt(as.complex(p5_matrix[,2])), &quot;] \n&quot;)</code></pre>
+<pre><code>The square roots of column two are [ 1+0i 1.414214+0i 0+1i ] </code></pre>
+</div>
+<div id="problem-5h" class="section level3">
+<h3>Problem 5h</h3>
+<p>Subtract 5 from column 1, subtract 4 from column 2 and add 9 to column 3 of A. Use sweep().</p>
+<pre class="r"><code>sweep(p5_matrix, MARGIN = 2, c(-5, -4, 9), &quot;+&quot;) #Margin=2 in this case because we&#39;re manipulating by column not by row. </code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]   -1   -3   12
+[2,]    3   -2   15
+[3,]   -9   -5    6</code></pre>
+<hr />
+</div>
+</div>
+<div id="problem-6" class="section level2">
+<h2>Problem 6</h2>
+<p>Use the outer() function to make a table (actually a matrix) of powers of integers <span class="math inline">\(x^y\)</span> where x &lt;- 1:10 and y &lt;- 1:9</p>
+<pre class="r"><code>pr6_x &lt;- 1:10
+pr6_y &lt;- 1:9
+
+outer(pr6_x, pr6_y, FUN = &quot;^&quot;)</code></pre>
+<pre><code>      [,1] [,2] [,3]  [,4]   [,5]    [,6]     [,7]      [,8]       [,9]
+ [1,]    1    1    1     1      1       1        1         1          1
+ [2,]    2    4    8    16     32      64      128       256        512
+ [3,]    3    9   27    81    243     729     2187      6561      19683
+ [4,]    4   16   64   256   1024    4096    16384     65536     262144
+ [5,]    5   25  125   625   3125   15625    78125    390625    1953125
+ [6,]    6   36  216  1296   7776   46656   279936   1679616   10077696
+ [7,]    7   49  343  2401  16807  117649   823543   5764801   40353607
+ [8,]    8   64  512  4096  32768  262144  2097152  16777216  134217728
+ [9,]    9   81  729  6561  59049  531441  4782969  43046721  387420489
+[10,]   10  100 1000 10000 100000 1000000 10000000 100000000 1000000000</code></pre>
+<hr />
+</div>
+<div id="problem-7" class="section level2">
+<h2>Problem 7</h2>
+<div id="problem-7a" class="section level3">
+<h3>Problem 7a</h3>
+<p>Create a 6 X 10 matrix of random integers from 1:10.</p>
+<pre class="r"><code>set.seed(75)
+p7_matrix &lt;- matrix(sample(x = 10, size = 60, replace = TRUE), nrow = 6) 
+p7_matrix</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]    8    8    8    7    7    5    2    2    6     5
+[2,]    9    5    2    6    6    1    6    6    3     7
+[3,]    5    1   10    2    5    6    8    9   10     8
+[4,]    9    3    1    1    6   10   10    7    9    10
+[5,]    7    3    3    3    6    4    4    6   10     2
+[6,]    9    3    3    4    1    2    1   10    6     1</code></pre>
+</div>
+<div id="problem-7b" class="section level3">
+<h3>Problem 7b</h3>
+<p>Find the number of entries in each row which are greater than 4.</p>
+<pre class="r"><code># length(which(p7_matrix[1,] &gt; 4))
+
+greater_than_4 &lt;- function(matrix) {
+  # numrows is set to the amount of rows in a given matrix.
+  numrows &lt;- nrow(matrix)
+  # We set our return vector to an empty vector that we will fill later.
+  ret_vec &lt;- c()
+  # This for loop goes from 1 to the number provided by numrows.
+  for (row in c(1:numrows)){
+    # We filter out the amount of numbers greater than 4 per row and then count how many there are. 
+    filter_var &lt;- length(which(matrix[row,] &gt; 4))
+    # We then append that counted length to our empty vector
+    ret_vec &lt;- append(ret_vec, filter_var)
+  } 
+  return(ret_vec)
+}
+
+greater_than_4(p7_matrix)</code></pre>
+<pre><code>[1] 8 7 8 7 4 3</code></pre>
+<p>I, for the life of me, could not figure out how to do this without a for loop. I’m positive there has to be a cleaner way to do this problem but I spent forever on it with no luck.</p>
+</div>
+<div id="problem-7c" class="section level3">
+<h3>Problem 7c</h3>
+<p>Find which rows contain exactly two occurrences of the number 7.</p>
+<pre class="r"><code>sevens &lt;- function(matrix) {
+  
+  numrows &lt;- nrow(matrix)
+  for (row in c(1:numrows)){
+    # This sets seven_var to the length of a vector made up of however many times a value in a row is equal to 7.
+    sevens_var &lt;- length(which(matrix[row,] == 7))
+    # This returns the row which gave us a sevens_var value of 2.
+    if(sevens_var == 2){return(row)}  
+  } 
+}
+
+cat(&quot;The row in p7_matrix that has two occurrences of the number 7 is row&quot;, sevens(p7_matrix), &quot;\n&quot;)</code></pre>
+<pre><code>The row in p7_matrix that has two occurrences of the number 7 is row 1 </code></pre>
+</div>
+<div id="problem-7d" class="section level3">
+<h3>Problem 7d</h3>
+<p>Use apply() to sort each column of A in decreasing order</p>
+<pre class="r"><code>apply(p7_matrix, MARGIN = 2, FUN = sort, decreasing=TRUE)</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]    9    8   10    7    7   10   10   10   10    10
+[2,]    9    5    8    6    6    6    8    9   10     8
+[3,]    9    3    3    4    6    5    6    7    9     7
+[4,]    8    3    3    3    6    4    4    6    6     5
+[5,]    7    3    2    2    5    2    2    6    6     2
+[6,]    5    1    1    1    1    1    1    2    3     1</code></pre>
+</div>
+<div id="problem-7e" class="section level3">
+<h3>Problem 7e</h3>
+<p>Use order() to sort A in decreasing order based on column 1.</p>
+<pre class="r"><code># p7_matrix
+a &lt;- p7_matrix[order(p7_matrix[,1], decreasing=TRUE),]
+
+a</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]    9    5    2    6    6    1    6    6    3     7
+[2,]    9    3    1    1    6   10   10    7    9    10
+[3,]    9    3    3    4    1    2    1   10    6     1
+[4,]    8    8    8    7    7    5    2    2    6     5
+[5,]    7    3    3    3    6    4    4    6   10     2
+[6,]    5    1   10    2    5    6    8    9   10     8</code></pre>
+<p>This mysterious floating comma at the end being the one thing making this work correctly is absolutely blowing my mind right now.</p>
+</div>
+<div id="problem-7f" class="section level3">
+<h3>Problem 7f</h3>
+<p>Use apply() and the transpose to sort each row of A in increasing order.</p>
+<pre class="r"><code>mat_7f &lt;- t(p7_matrix) 
+apply(mat_7f, MARGIN = 1, FUN = sort, decreasing=FALSE)</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]    5    1    1    1    1    1    1    2    3     1
+[2,]    7    3    2    2    5    2    2    6    6     2
+[3,]    8    3    3    3    6    4    4    6    6     5
+[4,]    9    3    3    4    6    5    6    7    9     7
+[5,]    9    5    8    6    6    6    8    9   10     8
+[6,]    9    8   10    7    7   10   10   10   10    10</code></pre>
+</div>
+<div id="problem-7g" class="section level3">
+<h3>Problem 7g</h3>
+<p>Use order() to sort A in increasing order based on row 3</p>
+<pre class="r"><code># p7_matrix
+b &lt;- p7_matrix[, order(p7_matrix[3,], decreasing = FALSE)]
+
+b</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]    8    7    8    7    5    2    5    2    8     6
+[2,]    5    6    9    6    1    6    7    6    2     3
+[3,]    1    2    5    5    6    8    8    9   10    10
+[4,]    3    1    9    6   10   10   10    7    1     9
+[5,]    3    3    7    6    4    4    2    6    3    10
+[6,]    3    4    9    1    2    1    1   10    3     6</code></pre>
+<p>It took me a solid hour to figure out that I needed the comma after the [] there instead of at the end. That is, quite possibly, the silliest thing I have seen in my life (so far). The mysterious floating comma will live on in my nightmares. I fear I have not yet seen the last of its treachery.</p>
+<hr />
+</div>
+</div>
+<div id="problem-8." class="section level2">
+<h2>Problem 8.</h2>
+<p>Find the sum</p>
+<div id="problem-8a." class="section level3">
+<h3>Problem 8a.</h3>
+<p><span class="math display">\[\sum_{i=1}^{20} \sum_{j=1}^{15} (2i + 3j)\]</span></p>
+<pre class="r"><code># First we&#39;ll create our two elements, i and j.
+var_8a_x &lt;- c(1:20) * 2
+var_8a_y &lt;- c(1:15) * 3
+
+sum(outer(var_8a_x, var_8a_y, FUN = &quot;+&quot;))</code></pre>
+<pre><code>[1] 13500</code></pre>
+</div>
+<div id="problem-8b." class="section level3">
+<h3>Problem 8b.</h3>
+<p><span class="math display">\[ \sum_{i=1}^{20} \sum_{j=1}^{5} \frac{i^4}{3 + j} \]</span></p>
+<pre class="r"><code># We&#39;ll use a similar breakdown for this guy.
+var_8b_x &lt;- c(1:20)^4
+var_8b_y &lt;- c(1:5) + 3
+
+sum(outer(var_8b_x, var_8b_y, FUN = &quot;/&quot;))</code></pre>
+<pre><code>[1] 639215.3</code></pre>
+<hr />
+</div>
+</div>
+<div id="problem-9" class="section level2">
+<h2>Problem 9</h2>
+<p>Write a function that takes a matrix and returns a matrix with every odd number doubled.</p>
+<pre class="r"><code>doubling_odds &lt;- function(x){
+  ifelse(x %% 2 != 0, x * 2, x)
+}
+
+pr_9a &lt;- matrix(c(1,-3,-2,4), nrow=2)
+pr_9b &lt;- matrix(c(1:15), nrow = 3)
+
+doubling_odds(pr_9a)</code></pre>
+<pre><code>     [,1] [,2]
+[1,]    2   -2
+[2,]   -6    4</code></pre>
+<pre class="r"><code>doubling_odds(pr_9b)</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    2    4   14   10   26
+[2,]    2   10    8   22   14
+[3,]    6    6   18   12   30</code></pre>
+<hr />
+</div>
+<div id="problem-10." class="section level2">
+<h2>Problem 10.</h2>
+<div id="problem-10a." class="section level3">
+<h3>Problem 10a.</h3>
+<p>Write a function that takes a matrix and returns the smallest number in the matrix.</p>
+<pre class="r"><code>smallest_number &lt;- function(matrix) {
+  # This sets var_10a as a given matrix sorted in ascending order
+  var_10a &lt;- sort(matrix, decreasing=FALSE,)
+  # This returns the first index in said matrix, which due to the above will be the smallest number.
+  return(var_10a[1])
+  } </code></pre>
+</div>
+<div id="problem-10b." class="section level3">
+<h3>Problem 10b.</h3>
+<p>Test the function on the following matrices.</p>
+<pre class="r"><code>matrix_10b1 &lt;- matrix(c(1, -3, -2, 4), nrow = 2)
+smallest_number(matrix_10b1)</code></pre>
+<pre><code>[1] -3</code></pre>
+<pre class="r"><code>smallest_number(A)</code></pre>
+<pre><code>[1] -2.345698</code></pre>
+<hr />
+</div>
+</div>
+<div id="problem-11" class="section level2">
+<h2>Problem 11</h2>
+<p>Solve the system of linear equations. Verify that <span class="math inline">\(det A \neq 0\)</span>.</p>
+<pre class="r"><code>matrix_11_left &lt;- matrix(c(4, 1, 2, -3, -3, 3, -1, 4, -1, 2, 5, 1, 5, 4, 3, -1), byrow = TRUE, nrow = 4)
+matrix_11_right &lt;- matrix(c(-16, 20, -4, -10), nrow=4)
+
+cat(&quot;det A is equal to&quot;, det(matrix_11_left, matrix_11_right), &quot;\n&quot;)</code></pre>
+<pre><code>det A is equal to 116 </code></pre>
+<pre class="r"><code>matrix(solve(matrix_11_left, matrix_11_right), dimnames = list(c(&quot;w =&quot;, &quot;x =&quot;, &quot;y =&quot;, &quot;z =&quot;)))</code></pre>
+<pre><code>    [,1]
+w =   -1
+x =    1
+y =   -2
+z =    3</code></pre>
+</div>

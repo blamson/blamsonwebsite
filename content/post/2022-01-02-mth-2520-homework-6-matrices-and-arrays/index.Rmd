@@ -1,0 +1,404 @@
+---
+title: 'MTH-2520 Homework 6: Matrices and Arrays'
+author: Brady Lamson
+date: '2021-03-01'
+slug: mth-2520-homework-6-matrices-and-arrays
+categories: []
+tags: [Homework]
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+
+library(rmarkdown, tinytex)
+library(markdown)
+library(dplyr)
+```
+
+
+***
+## Problem 1. 
+Create an example matrix in the three following ways:
+
+###
+Problem 1a
+Using matrix()
+
+```{r}
+matrix(1:5, nrow = 5, ncol=8)
+```
+
+
+###
+Problem 1b
+Using rbind()
+
+```{r}
+matrix_1b1 <- matrix(1, nrow = 1, ncol=8, byrow=FALSE) 
+matrix_1b2 <- matrix(2, nrow = 1, ncol=8, byrow=FALSE)
+matrix_1b3 <- matrix(3, nrow = 1, ncol=8, byrow=FALSE)
+matrix_1b4 <- matrix(4, nrow = 1, ncol=8, byrow=FALSE)
+matrix_1b5 <- matrix(5, nrow = 1, ncol=8, byrow=FALSE)
+
+rbind(matrix_1b1, matrix_1b2, matrix_1b3, matrix_1b4, matrix_1b5)
+```
+
+
+###
+Problem 1c
+Using cbind()
+
+```{r}
+matrix_1c1 <- matrix(1:5, nrow = 5, ncol=4) 
+matrix_1c2 <- matrix(1:5, nrow = 5, ncol=4)
+
+cbind(matrix_1c1, matrix_1c2)
+```
+
+
+***
+## Problem 2.
+For the matrix A in pr. 1: , b) 
+
+### Problem 2a.
+add a row of 6’s on the bottom
+
+```{r}
+matrix_2 <- matrix(1:5, nrow = 5, ncol=8)
+rbind(matrix_2, rep(6, 8))
+```
+
+### Problem 2b.
+then extract the middle 2 × 4 matrix
+
+```{r}
+# Before we can do this we need to know what the middle even is! This matrix is 6 rows long and 8 columns long. That means the middle 2 x 4 matrix would be in rows 3-4 and columns 3-6. We should get all 3s and 4s in our matrix.
+
+matrix_2[row=3:4, col=3:6]
+```
+
+
+***
+## Problem 3
+Build a 10 x 10 identity matrix. Then change all the non-zero elements to 5.
+
+```{r}
+matrix_3 <- diag(10)
+matrix_3 * 5
+```
+
+So, funfact for this one. I was racking my brain thinking of some way to change the values in the matrix based on a conditional (ie: where(x != 0)). My roommate walks over, looks at my screen and says "why don't you just multiply the matrix by 5". Right. Of course. The solution that's directly in the lab notes. I should probably go with that solution. 
+
+
+***
+## Problem 4.
+Linear Algebra
+
+### Problem 4a.
+Use the random number generator rnorm() with the given seed to generate A.
+
+```{r}
+set.seed(1234)
+A <- matrix(rnorm(25), nrow = 5)
+A
+```
+
+
+### Problem 4b.
+Calculate the determinant of A.
+
+```{r}
+det(A)
+```
+
+
+### Problem 4c.
+Calculate the inverse of A.
+
+```{r}
+solve(A)
+```
+
+
+***
+## Problem 5. 
+For the given matrix compute each part separately. If you alter the matrix be sure to reset it back to its default value. 
+
+$A = \begin{bmatrix}
+1 & 1 & 1 \\
+5 & 2 & 6 \\
+-2 & -1 & -3
+\end{bmatrix}$
+```{r}
+p5_vector <- c(1,1,3,5,2,6,-2,-1,-3)
+p5_matrix <- matrix(p5_vector, nrow = 3, ncol = 3, byrow=TRUE) 
+p5_matrix
+```
+
+### Problem 5a.
+Compute $A^2$
+
+```{r}
+p5_matrix %*% p5_matrix
+```
+
+
+### Problem 5b. 
+Compute A^2. What is R computing here?
+
+```{r}
+p5_matrix^2
+```
+p5_matrix^2 is doing element-wise multiplication. That is, element [1,1] is multiplied with element [1,1], element [1,2] with element [1,2] and so on. In other words, every element is multiplied with itself. This could not be more different from matrix multiplication.
+
+
+### Problem 5c. 
+Verify that $A^3 = 0$ where $0$ is a 3 X 3 matrix with every entry equal to 0.
+
+```{r}
+p5_matrix %*% p5_matrix %*% p5_matrix
+```
+
+
+### Problem 5d.
+Compute A^3. What is R computing here?
+
+```{r}
+p5_matrix^3
+```
+Yet again we're seeing the result of element wise multiplication. Each element is simply multiplied with itself twice. 
+
+
+### Problem 5e. 
+Replace the 3rd column of A with the sum of the 2nd and 3rd columns. 
+
+```{r}
+columns_2_3 <- p5_matrix[,2] + p5_matrix[,3]
+
+p5_matrix[,1] <- columns_2_3
+p5_matrix
+```
+
+
+### Problem 5f
+Compute the column means of "A". 
+
+```{r}
+cat("the column means of p5_matrix are [", colMeans(p5_matrix), "] \n")
+```
+
+
+### Problem 5g
+Compute the square roots of the 2nd column.
+
+```{r}
+cat("The square roots of column two are [", sqrt(as.complex(p5_matrix[,2])), "] \n")
+```
+
+
+### Problem 5h
+Subtract 5 from column 1, subtract 4 from column 2 and add 9 to column 3 of A. Use sweep().
+
+```{r}
+sweep(p5_matrix, MARGIN = 2, c(-5, -4, 9), "+") #Margin=2 in this case because we're manipulating by column not by row. 
+```
+
+
+***
+## Problem 6
+Use the outer() function to make a table (actually a matrix) of powers of integers $x^y$ where x <- 1:10 and y <- 1:9
+
+```{r}
+pr6_x <- 1:10
+pr6_y <- 1:9
+
+outer(pr6_x, pr6_y, FUN = "^")
+```
+
+
+*** 
+## Problem 7
+
+### Problem 7a
+Create a 6 X 10 matrix of random integers from 1:10.
+
+```{r}
+set.seed(75)
+p7_matrix <- matrix(sample(x = 10, size = 60, replace = TRUE), nrow = 6) 
+p7_matrix
+```
+
+
+### Problem 7b
+Find the number of entries in each row which are greater than 4. 
+
+```{r}
+# length(which(p7_matrix[1,] > 4))
+
+greater_than_4 <- function(matrix) {
+  # numrows is set to the amount of rows in a given matrix.
+  numrows <- nrow(matrix)
+  # We set our return vector to an empty vector that we will fill later.
+  ret_vec <- c()
+  # This for loop goes from 1 to the number provided by numrows.
+  for (row in c(1:numrows)){
+    # We filter out the amount of numbers greater than 4 per row and then count how many there are. 
+    filter_var <- length(which(matrix[row,] > 4))
+    # We then append that counted length to our empty vector
+    ret_vec <- append(ret_vec, filter_var)
+  } 
+  return(ret_vec)
+}
+
+greater_than_4(p7_matrix)
+```
+
+I, for the life of me, could not figure out how to do this without a for loop. I'm positive there has to be a cleaner way to do this problem but I spent forever on it with no luck.
+
+
+### Problem 7c
+Find which rows contain exactly two occurrences of the number 7.
+
+```{r}
+
+sevens <- function(matrix) {
+  
+  numrows <- nrow(matrix)
+  for (row in c(1:numrows)){
+    # This sets seven_var to the length of a vector made up of however many times a value in a row is equal to 7.
+    sevens_var <- length(which(matrix[row,] == 7))
+    # This returns the row which gave us a sevens_var value of 2.
+    if(sevens_var == 2){return(row)}  
+  } 
+}
+
+cat("The row in p7_matrix that has two occurrences of the number 7 is row", sevens(p7_matrix), "\n")
+```
+
+
+### Problem 7d
+Use apply() to sort each column of A in decreasing order
+
+```{r}
+apply(p7_matrix, MARGIN = 2, FUN = sort, decreasing=TRUE)
+```
+
+
+### Problem 7e
+Use order() to sort A in decreasing order based on column 1. 
+
+```{r}
+# p7_matrix
+a <- p7_matrix[order(p7_matrix[,1], decreasing=TRUE),]
+
+a
+```
+This mysterious floating comma at the end being the one thing making this work correctly is absolutely blowing my mind right now. 
+
+### Problem 7f
+Use apply() and the transpose to sort each row of A in increasing order.
+
+```{r}
+mat_7f <- t(p7_matrix) 
+apply(mat_7f, MARGIN = 1, FUN = sort, decreasing=FALSE)
+
+```
+
+
+### Problem 7g
+Use order() to sort A in increasing order based on row 3
+
+```{r}
+# p7_matrix
+b <- p7_matrix[, order(p7_matrix[3,], decreasing = FALSE)]
+
+b
+```
+It took me a solid hour to figure out that I needed the comma after the [] there instead of at the end. That is, quite possibly, the silliest thing I have seen in my life (so far). The mysterious floating comma will live on in my nightmares. I fear I have not yet seen the last of its treachery. 
+
+***
+## Problem 8.
+Find the sum
+
+### Problem 8a.
+\[\sum_{i=1}^{20} \sum_{j=1}^{15} (2i + 3j)\]
+
+```{r}
+# First we'll create our two elements, i and j.
+var_8a_x <- c(1:20) * 2
+var_8a_y <- c(1:15) * 3
+
+sum(outer(var_8a_x, var_8a_y, FUN = "+"))
+```
+
+
+### Problem 8b.
+\[ \sum_{i=1}^{20} \sum_{j=1}^{5} \frac{i^4}{3 + j} \]
+
+```{r}
+# We'll use a similar breakdown for this guy.
+var_8b_x <- c(1:20)^4
+var_8b_y <- c(1:5) + 3
+
+sum(outer(var_8b_x, var_8b_y, FUN = "/"))
+
+```
+
+
+***
+## Problem 9
+Write a function that takes a matrix and returns a matrix with every odd number doubled.
+
+```{r}
+doubling_odds <- function(x){
+  ifelse(x %% 2 != 0, x * 2, x)
+}
+
+pr_9a <- matrix(c(1,-3,-2,4), nrow=2)
+pr_9b <- matrix(c(1:15), nrow = 3)
+
+doubling_odds(pr_9a)
+doubling_odds(pr_9b)
+```
+
+
+***
+## Problem 10. 
+
+### Problem 10a.
+Write a function that takes a matrix and returns the smallest number in the matrix. 
+
+```{r}
+
+smallest_number <- function(matrix) {
+  # This sets var_10a as a given matrix sorted in ascending order
+  var_10a <- sort(matrix, decreasing=FALSE,)
+  # This returns the first index in said matrix, which due to the above will be the smallest number.
+  return(var_10a[1])
+  } 
+```
+
+
+### Problem 10b.
+Test the function on the following matrices. 
+
+```{r}
+matrix_10b1 <- matrix(c(1, -3, -2, 4), nrow = 2)
+smallest_number(matrix_10b1)
+smallest_number(A)
+```
+
+
+***
+## Problem 11
+Solve the system of linear equations. Verify that $det A \neq 0$. 
+
+```{r}
+matrix_11_left <- matrix(c(4, 1, 2, -3, -3, 3, -1, 4, -1, 2, 5, 1, 5, 4, 3, -1), byrow = TRUE, nrow = 4)
+matrix_11_right <- matrix(c(-16, 20, -4, -10), nrow=4)
+
+cat("det A is equal to", det(matrix_11_left, matrix_11_right), "\n")
+matrix(solve(matrix_11_left, matrix_11_right), dimnames = list(c("w =", "x =", "y =", "z =")))
+
+```
+

@@ -1,0 +1,12 @@
+Make         Model        Year    CityMPG    HighwayMPG
+Ford	     Focus	  2012	 17	    26
+Toyota	     Prius	  2013    51         NA
+Ford         Fusion       2014    22         31
+Chevrolet    Volt	  2015    NA         NA
+Honda        Accord       2011    23         33
+Volkswagen   Beetle       2012    22         31
+Chevrolet    Impala       2015    22         31
+Tesla        ModelS       2014    NA         NA
+Honda        Civic        2011    26         34
+Honda        S2000        2005    17         23
+Toyota       Camry        2013    25         35

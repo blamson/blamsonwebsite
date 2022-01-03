@@ -1,0 +1,349 @@
+---
+title: 'MTH-2520 Homework 7: Factors, Lists and Data Frames'
+author: Brady Lamson
+date: '2021-03-15'
+slug: mth-2520-homework-7-factors-lists-and-data-frames
+categories: []
+tags: [Homework]
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+
+library(rmarkdown, tinytex)
+library(markdown)
+library(dplyr)
+library(stringr)
+#library(tidyverse)
+library(ggplot2)
+library(reshape)
+```
+
+
+## Problem 1.
+
+### Problem 1a. 
+Create a random vector of length 20000 from the numbers 0:500
+
+```{r}
+rvector_1a <- sample(0:500, 20000, replace=TRUE)
+```
+
+
+### Problem 1b.
+Use the cut() function to create a factor with groups of 100. (i.e. 0 to 100, 100 to 200, etc.). Present this information in a table.
+
+```{r}
+example <- cut(rvector_1a, seq(0, 500, 100)) #one way to   think about this within the sequence is (from=0, to=500, group size=100)
+table(example)
+```
+
+
+### 
+Use tapply() to find the mean of each level in the factor
+
+```{r}
+tapply(rvector_1a, example, mean)
+```
+
+
+###
+Use tapply() to find the mean of each level in the factor
+
+```{r}
+tapply(rvector_1a, example, median)
+```
+
+
+\pagebreak
+## Problem 2
+
+### Problem 2a
+Create a random vector of 500 letters of the alphabet
+
+```{r}
+# random vector created using the letters constant in R.
+letters_2a <- sample(letters, 500, replace=TRUE)
+table(letters_2a)
+```
+
+### Problem 2c
+Convert the vector letters_2a to a factor factor_2c. Why might we want to do this?
+```{r}
+factor_2c <- as.factor(letters_2a)
+```
+Treating a character as a factor instead let's you perform different types of analyses on the data. Essentially you're taking what the computer sees as qualitative data and using it as quantitative data instead. This could be useful if you were to say, assign different numerical "rankings" to words for instance. Likert type scales would be a good example of this. Being able to work with a vector full of "goods" and "very bads" as if it was 1:5 is a useful thing to be able to do. Assuming R handles these as I think they do anyway. Having characters that work as integers under the hood is incredibly useful.
+
+
+### Problem 2d
+Use the table() command to tabulate how many of each letters is in the factor factor_2c
+```{r}
+table(factor_2c)
+```
+
+### Problem 2e.
+Verify the class of letters_2a and factor_2c
+```{r}
+class(letters_2a)
+class(factor_2c)
+```
+
+
+\pagebreak
+## Problem 3
+Create a list that includes the following elements:
+i) The first 10 Fibonacci numbers. (For this I will be shamelessly reusing old code)
+ii) The factor c("even", "odd")
+iii) The data frame micedata.txt
+
+```{r}
+
+# I COULD just write the first ten numbers manually in a vector but this seems more fun.
+
+Fibonacci <- function(n){
+  
+fib <- numeric(n)
+# Create a vector of length n
+
+fib[1] <- fib[2] <- 1
+# Store F 1 and F 2 in the vector
+
+for (i in 3:n) fib[i] = fib[i-1] + fib[i-2]
+
+# cat("The first", n, "Fibonacci numbers are", "\n")
+print(fib)}
+
+fib_10 <- Fibonacci(10)
+fib_101 <- c(1,1,2,3,5,8,13,21,34,55) #backup in-case of bugs
+```
+
+```{r}
+mice_data <- read.delim("micedata.txt")
+mice_data
+```
+
+Alright, now we have what we need to work with here. 
+
+```{r}
+pr3_list <- list(fib_10, as.factor(c("even", "odd")), mice_data )
+pr3_list
+```
+
+### Problem 3b
+Name the elements in the list
+
+```{r}
+names(pr3_list) <- c("fibb", "even/odd", "mice")
+```
+
+
+### Problem 3c
+Using sapply() calculate the mean, median, sum and product of the first 10 Fibonacci numbers.
+
+```{r}
+sapply(pr3_list["fibb"], summary)
+cat("The sum of the first 10 Fibonacci numbers is", sapply(pr3_list["fibb"], sum), "\n")
+cat("The product of the first 10 Fibonacci numbers is", sapply(pr3_list["fibb"], prod), "\n")
+```
+
+### Problem 3d
+Add the string "Fibonacci rules!" as a new element to the list.
+
+```{r}
+pr3_list[[4]] <- toString("Fibonacci Rules!")
+```
+
+
+### Problem 3e
+Remove the factor from the list.
+
+```{r}
+pr3_list[[2]] <- NULL
+```
+
+\pagebreak
+## Problem 4
+Import the built-in data set "trees" using data(trees)
+
+```{r}
+data(trees)
+```
+
+### Problem 4a.
+Compute the summary statistics and standard deviation, rounded to 3 decimal places, for each column.
+
+```{r}
+summary(trees)
+sapply(trees, sd)
+sapply(trees, hist)
+```
+
+```{r}
+sapply(trees, hist)
+```
+
+
+\pagebreak
+## Problem 5
+
+```{r}
+pr5_str <- "I made myself a snowball As perfect as can be I thought I’d keep it as a pet And let it sleep with me I made it some pajamas And a pillow for its head Then last night it ran away But first It wet the bed"
+```
+
+```{r}
+pr5_str <- tolower(pr5_str)
+str_count(pr5_str, c("a", "e", "i", "o", "u"))
+```
+
+```{r}
+str_replace_all(pr5_str, "p", "b")
+```
+
+
+\pagebreak
+## Problem 6
+Pascal's Triangle arises from the coefficients of the binomial expansion $(x + y)^n$. 
+
+These are combinations $\left(n \atop r\right) = C(n,r) = \text{choose}(n,r)$ in R. 
+
+### Problem 6a
+Create the following list
+
+```{r}
+list_6 <- list(c(1), c(1, 1), c(1, 2, 1), c(1, 3, 3, 1))
+```
+
+```{r}
+list(1, choose(1, 0:1), choose(2, 0:2), choose(3, 0:3))
+```
+
+```{r}
+pascals_func <- function(n){
+  #setting up a list with a 1 at the start.
+  ret_val <- list()
+  ret_val[1] <- 1
+  # i will function as a variable and counter simultaneously! 
+  i <- 1
+  
+  while (i <= n){
+    # Set x to the list output of the choose function. This breaks if "list" is not specified. 
+    x <- list(choose(i, 0:i))
+    # append x to ret_val
+    ret_val <- append(ret_val, x)
+    # increments i up by 1 with every loop. Caps at n+1.
+    i <- i + 1
+    }
+  return(ret_val)
+}
+```
+
+```{r}
+pascals_func(5)
+```
+
+```{r}
+pascals_func(10)
+```
+
+
+\pagebreak
+## Problem 7.
+Import the built-in data set "iris".
+
+### Problem 7a
+Using the original data frame, compute the mean and standard deviation of the petal lengths. 
+
+```{r}
+cat("The mean of the petal length in iris is", round(mean(iris$Petal.Length), digits = 2), "\n")
+
+cat("The standard deviation of the petal length in iris is", round(sd(iris$Petal.Length), digits = 2), "\n")
+```
+
+### Problem 7b
+Compute the maximum petal width and maximum petal length.
+
+```{r}
+cat("The max petal width is", max(iris$Petal.Width), "\n")
+cat("The max petal length is", max(iris$Petal.Length), "\n")
+```
+
+### Problem 7c
+Extract the rows corresponding the species iris versicolor flowers and save it to a new data frame "VersicolorIris". 
+
+```{r}
+VersicolorIris <- subset(iris, Species == "versicolor")
+```
+
+### Problem 7d
+Compute the mean and standard deviation of the Versicolor petal lengths
+
+```{r}
+cat("The mean petal length of the versicolor iris is", mean(VersicolorIris$Petal.Length), "\n")
+
+cat("The standard deviation of the versicolor iris is", round(sd(VersicolorIris$Petal.Length), digits = 2), "\n")
+```
+
+### Problem 7e 
+Extract the Species and Petal Length columns and save to a new data frame 'Petal-Length'.
+
+```{r}
+# I'll be using select() from the tidyverse package here. It's so convenient.
+
+data_7e <- as_tibble(iris)
+
+Petal_Length <- data_7e %>% select(Petal.Length, Species)
+unstack(Petal_Length)
+```
+
+
+\pagebreak
+## Problem 8: THE BIRTHDAY PROBLEM
+
+What is the probability that in a set of $n$ randomly selected people at least two people have the same birthday?
+
+If we have a group of 366 (or 367 for a leap year), there is a 100% probability that two people have the same birthday.
+
+How many people do you need so that the probability is at least 50%? It is surprising to learn that only 23 people are needed for a 50% chance of two people with the same birthday. And if there are 60 people in the room, the probability increases to 99.41%. 
+
+The probability is given by the formula:
+
+\[p(n) = 1 - \frac{365!}{365^n (365 - n)}\]
+
+### Problem 8a
+
+```{r}
+birthday <- function(n){
+  1 - prod(seq(from=1, to = (365 - n + 1) / 365, by = -1/365))
+}
+BdayProb <- sapply(1:70, birthday)
+```
+
+### Problem 8b
+
+```{r}
+plot(1:70, BdayProb, pch = 20, xlab = "Number of People", ylab = "Probability")
+```
+
+
+### Problem 8d
+Create a nicer plot. Run the following code.
+
+```{r}
+library(reshape)
+library(ggplot2)
+
+# Input the value for npeople. Change this value to change the graph.
+  npeople = 70
+
+# Create a data frame Bday using the birthday function
+  Bday = data.frame(n = 1:npeople, ProbTwoSame =
+    sapply(1:npeople, birthday), y = 0.5)
+
+  # Melt the data for casting (Smooths the data points)
+  Bday = reshape::melt(Bday, id.vars = "n")
+  
+  ggplot(Bday, aes(x = n, y = value, colour = variable)) + geom_line() + scale_colour_hue("") + xlab("Number of People") + ylab("Probability")
+```
+
+I believe I got this working correctly. I ran into an issue where "+" was on a new line, so making it one giant gnarly line got it at least compiling. 

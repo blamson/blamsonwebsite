@@ -1,0 +1,370 @@
+---
+title: 'MTH-2520 Homework 5: Functions and Basic Programming'
+author: Brady Lamson
+date: '2021-02-22'
+slug: mth-2520-homework-5-functions-and-basic-programming
+categories: []
+tags: [Homework]
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment="")
+library(rmarkdown, tinytex)
+
+```
+
+
+***
+## Problem 1: 
+Write a function that computes the area of a circle.
+```{r}
+Calculate_Area <- function(r) {
+# This function calculates the area of a circle
+area <- pi * r^2
+return(area)
+}
+
+radii <- c(5, 15, 200)
+
+Calculate_Area(radii)
+```
+
+
+***
+## Problem 2:
+Write a function that computes the average absolute value. $\frac{\lvert x \rvert + \lvert y \rvert}{2}$.
+
+```{r}
+Average_Absolutely <- function(x, y) {
+  # This function calculates the average absolute value. 
+  # (|x| + |y|) / 2
+  
+  absolute_average <- (abs(x) + abs(y)) / 2
+  return(absolute_average)
+}
+
+example_x <- c(-3:2)
+example_y <- c(-3:2)
+
+Average_Absolutely(example_x, example_y)
+```
+
+
+***
+## Problem 3:
+Write a function to count the number of odd integers in a given vector x. Test your function of the vectors: c(1, 3, 5, 6, 8, 9), seq(1, 99, 3) and seq(1, 5000, 7). 
+
+```{r}
+# Returns the amount of odd integers in a given vector
+Count_Odds <- function(x) {
+  odds <- length(which(x %% 2 > 0))
+  return(odds)
+}
+
+ex_1 <- c(1, 3, 5, 6, 8, 9)
+ex_2 <- seq(1, 99, 3)
+ex_3 <- seq(1, 5000, 7)
+
+cat("The amount of odds in the first vector are", Count_Odds(ex_1), "\n")
+cat("The amount of odds in the second vector are", Count_Odds(ex_2), "\n")
+cat("The amount of odds in the third vector are", Count_Odds(ex_3), "\n")
+```
+
+
+***
+## Problem 4: 
+Use ifelse or switch to return "even" or "odd" depending whether or not each element of the vector x is divisible by 2. 
+
+```{r}
+# This function finds the remainder of various integers and assigns them even or odd depending on said remainder. 
+Even_or_Odd <- function(x) {
+  y <- x%%2
+  
+  if (y == 0){
+    return("even")}
+  else{
+    return("odd")}
+}
+
+
+x_1 <- c(1, 3, 5, 6, 8, 9)
+x_2 <- 1:20
+
+
+sapply(x_1, Even_or_Odd)
+sapply(x_2, Even_or_Odd)
+```
+
+
+***
+## Problem 5:
+We wish to compute the product of 3, 4 or 5 digits, and then add 42. Write a function to complete this task. Test your function on the vectors: c(3,5,7), c(3,5,7,9) and c(5,6,7,8,9).
+
+```{r}
+sqornshellous_zeta <- function(x) {
+  # This function does what it says on the tin. That is, to say, takes the product of a vector and adds the answer to life, the universe, and everything.
+  
+  # This function only works for vectors made up of integers, floats and logicals.
+  
+  product_value <- prod(x)
+  final_product_value <- product_value + 42
+  return(final_product_value)
+}
+
+ex_51 <- c(3,5,7)
+ex_52 <- c(3,5,7,9)
+ex_53 <- c(5,6,7,8,9)
+
+sqornshellous_zeta(ex_51)
+sqornshellous_zeta(ex_52)
+sqornshellous_zeta(ex_53)
+```
+
+
+***
+## Problem 6:
+The sum formula for the finite geometric series $h(x,n) = \sum_{i=0}^{n} x^{i} = 1 + x + x^2 + ... + x^n, x \neq 1$ is given by: 
+
+\[
+  h(x,n) = 
+  \begin{cases}
+                                   \frac{1 - x^{n+1}}{1-x} & \text{for $x \neq 1$} \\
+  n & \text{for $x = 1$}
+  \end{cases}
+\]
+
+Write a function to compute this formula. Use your function to compute: h(0.7, 57), h(4.2, 9), h(-1.2, 81) and h(1, 342).
+
+```{r}
+piecewise_example <- function(x,n) {
+  if (x == 1){return(n)}
+  else{return({(1 - x^(n+1)) / (1-x)})}
+}
+
+piecewise_example(0.7, 57)
+piecewise_example(4.2, 9)
+piecewise_example(-1.2, 81)
+piecewise_example(1, 342)
+```
+
+
+***
+## Problem 7.
+Write a function that computes $f(n) = n!$ using the formula $n! n(n-1,)(n-2) ... 2 \cdot 1$ and does not use factorial(). For a given integer $n$, the function prints out:
+
+1) n! n> 0 
+2) 1 for n=0
+3) NaN for n<0
+Test on n=5, 15, 0, -8
+
+```{r}
+better_factorial <- function(n){
+
+  # Here I have if statements that return 1 if n=0 and a NaN if n<0. I put these at the start to catch them as soon as possible
+  if (n == 0){return(1)}
+  if (n < 0){return(NaN)}
+  
+  return_value <- 1
+    
+  # This while loop takes a value which is set to 1 and multiplies it by a variable "n" that gets progressively smaller by 1 with every loop. This loop stops once n is no longer greater than 1.
+  while (n > 1) {
+    return_value <- return_value * n
+    n <- n-1
+  }
+  return(return_value)
+}
+
+cat("5! is", better_factorial(5), "\n")
+cat("15! is", better_factorial(15), "\n")
+cat("0! is", better_factorial(0), "\n")
+cat("-8! is", better_factorial(-8), "\n")
+```
+
+
+
+***
+## Problem 8
+Write a function that prints out the 1st n Lucas numbers for a given n. Test your function for
+n = 10, 25.
+
+```{r}
+lucas_func <- function(n){
+  
+  #First I need to make sure no negative values are plugged in here. 
+  if (n < 1){
+    return(NaN)
+  }
+  
+  # Then we just need to setup the first two known values of this sequence. That is, 2 and 1.
+  if (n == 1){
+    return(2)
+  }
+  
+  if (n == 2){
+    return(1)
+  }
+  
+  #Essentially my game plan is to have a and b add with each other to create a variable "c". After doing that we reassign some values. The key here is the counter. It goes up by 1 at the end of the loop and when it is no longer less than n the loop stops. 
+  a <- 2
+  b <- 1
+  counter <- 2
+  results_list <- c(2, 1) # We create a small vector here with our two given values.
+  
+  while (counter < n) {
+    c <- a + b
+    a <- b
+    b <- c
+    counter <- counter + 1
+    results_list <- append(results_list, c) #This makes that small little vector useful! 
+  }
+return(results_list)
+}
+
+test_val <- c(10, 25)
+sapply(test_val, lucas_func)
+```
+
+
+***
+## Problem 9
+
+```{r}
+tribo_func <- function(n){
+  
+  #Essentially my gameplan here is the exact same as problem 8, I just add in another variable. 
+  
+  if (n < 1){
+    return(NaN)
+  }
+  
+  if (n == 1){
+    return(0)
+  }
+  
+  if (n == 2){
+    return(0)
+  }
+  
+  if (n == 3){
+    return(1)
+  }
+  
+  a <- 0
+  b <- 0
+  c <- 1
+  counter <- 3
+  results_list <- c(0, 0, 1)
+  
+  while (counter < n) {
+    d <- a + b + c
+    a <- b
+    b <- c
+    c <- d
+    counter <- counter + 1
+    results_list <- append(results_list, d)
+  }
+return(results_list)
+}
+
+test_val2 <- c(10, 25)
+sapply(test_val2, tribo_func)
+```
+
+
+***
+# Problem 10
+Using the code for the Fibonacci sequence given in class, generate a vector containing
+every 3rd term of the 1st 30 terms. Then verify using R that is vector contains only even
+numbers.
+Theorem: Every third Fibonacci number is even.
+
+```{r}
+Fibonacci <- function(n){
+  
+fib <- numeric(n)
+# Create a vector of length n
+
+fib[1] <- fib[2] <- 1
+# Store F 1 and F 2 in the vector
+
+for (i in 3:n) fib[i] = fib[i-1] + fib[i-2]
+
+cat("The first", n, "Fibonacci numbers are", "\n")
+print(fib)}
+
+# Here I set fib_30 to the vector created when 30 is put into the fibonacci function.
+fib_30 <- Fibonacci(30)
+# From here I filter it out using a sequence. The sequence starts at the third position and moves up by 3. 
+fib_thirds <- fib_30[seq(3, length(fib_30), 3)]
+
+cat("Every third value in the Fibonacci sequence up to the thirtieth are", fib_thirds, "\n")
+
+# To check if all the values here are even we can actually use our old Even_or_Odd function!
+sapply(fib_thirds, Even_or_Odd)
+```
+
+
+***
+# Problem 11
+Using the code for the Fibonacci sequence given in class, generate a vector containing
+every 4th term of the 1st 30 terms. Then verify using R that every number in this vector is divisible by three.
+Theorem: Every fourth Fibonacci number is divisible by three.
+
+```{r}
+Fibonacci <- function(n){
+  
+fib <- numeric(n)
+# Create a vector of length n
+
+fib[1] <- fib[2] <- 1
+# Store F 1 and F 2 in the vector
+
+for (i in 3:n) fib[i] = fib[i-1] + fib[i-2]
+
+cat("The first", n, "Fibonacci numbers are", "\n")
+print(fib)}
+
+
+# Here I set fib_30 to the vector created when 30 is put into the fibonacci function.
+fib_30 <- Fibonacci(30)
+
+# From here I filter it out using a sequence. The sequence starts at the fourth position and moves up by 4. 
+fib_fourth <- fib_30[seq(4, length(fib_30), 4)]
+
+cat("Every fourth value in the Fibonacci sequence up to the thirtieth are", fib_fourth, "\n")
+
+
+# To see if all of these are divisible by three we just slightly tweak our even or odd function!
+
+divisible_by_three <- function(x) {
+  y <- x%%3
+  
+  if (y == 0){
+    return("TRUE")}
+  else{
+    return("FALSE")}
+}
+
+sapply(fib_fourth, divisible_by_three)
+```
+
+
+
+***
+## Problem 12
+Generate a sequence of ratios with the Fibonacci numbers. List the 1st 30 terms of this sequence and verify the sequence appears to converge to 1.618034.
+
+```{r}
+
+fibonacci_ratio <- function(n){
+  
+  fib_vector <- Fibonacci(n+1) #I add the +1 here to prevent things from getting wacky when we reach the end of the final loop.
+  ratio_vector <- c()
+  
+  for (i in 0:n) ratio_vector[i] = fib_vector[i+1] / fib_vector[i] #The n on this line could be replaced with n-1 if you remove the +1 from the n a few lines up. 
+  
+  return(ratio_vector)
+}
+
+fibonacci_ratio(30)
+```

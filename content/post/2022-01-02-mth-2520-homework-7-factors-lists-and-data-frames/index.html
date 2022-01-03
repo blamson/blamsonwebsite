@@ -1,0 +1,443 @@
+---
+title: 'MTH-2520 Homework 7: Factors, Lists and Data Frames'
+author: Brady Lamson
+date: '2021-03-15'
+slug: mth-2520-homework-7-factors-lists-and-data-frames
+categories: []
+tags: [Homework]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="problem-1." class="section level2">
+<h2>Problem 1.</h2>
+<div id="problem-1a." class="section level3">
+<h3>Problem 1a.</h3>
+<p>Create a random vector of length 20000 from the numbers 0:500</p>
+<pre class="r"><code>rvector_1a &lt;- sample(0:500, 20000, replace=TRUE)</code></pre>
+</div>
+<div id="problem-1b." class="section level3">
+<h3>Problem 1b.</h3>
+<p>Use the cut() function to create a factor with groups of 100. (i.e. 0 to 100, 100 to 200, etc.). Present this information in a table.</p>
+<pre class="r"><code>example &lt;- cut(rvector_1a, seq(0, 500, 100)) #one way to   think about this within the sequence is (from=0, to=500, group size=100)
+table(example)</code></pre>
+<pre><code>example
+  (0,100] (100,200] (200,300] (300,400] (400,500] 
+     3954      3861      4131      4022      3982 </code></pre>
+</div>
+<div id="section" class="section level3">
+<h3></h3>
+<p>Use tapply() to find the mean of each level in the factor</p>
+<pre class="r"><code>tapply(rvector_1a, example, mean)</code></pre>
+<pre><code>  (0,100] (100,200] (200,300] (300,400] (400,500] 
+ 50.29767 151.06397 250.47301 351.03754 451.26745 </code></pre>
+</div>
+<div id="section-1" class="section level3">
+<h3></h3>
+<p>Use tapply() to find the mean of each level in the factor</p>
+<pre class="r"><code>tapply(rvector_1a, example, median)</code></pre>
+<pre><code>  (0,100] (100,200] (200,300] (300,400] (400,500] 
+       50       151       251       352       451 </code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-2" class="section level2">
+<h2>Problem 2</h2>
+<div id="problem-2a" class="section level3">
+<h3>Problem 2a</h3>
+<p>Create a random vector of 500 letters of the alphabet</p>
+<pre class="r"><code># random vector created using the letters constant in R.
+letters_2a &lt;- sample(letters, 500, replace=TRUE)
+table(letters_2a)</code></pre>
+<pre><code>letters_2a
+ a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z 
+15 24 32 26 14 28 23 20 22 14 23 19 12 16 24 19 22 17 18 15 11 15 18 13 20 20 </code></pre>
+</div>
+<div id="problem-2c" class="section level3">
+<h3>Problem 2c</h3>
+<p>Convert the vector letters_2a to a factor factor_2c. Why might we want to do this?</p>
+<pre class="r"><code>factor_2c &lt;- as.factor(letters_2a)</code></pre>
+<p>Treating a character as a factor instead let’s you perform different types of analyses on the data. Essentially you’re taking what the computer sees as qualitative data and using it as quantitative data instead. This could be useful if you were to say, assign different numerical “rankings” to words for instance. Likert type scales would be a good example of this. Being able to work with a vector full of “goods” and “very bads” as if it was 1:5 is a useful thing to be able to do. Assuming R handles these as I think they do anyway. Having characters that work as integers under the hood is incredibly useful.</p>
+</div>
+<div id="problem-2d" class="section level3">
+<h3>Problem 2d</h3>
+<p>Use the table() command to tabulate how many of each letters is in the factor factor_2c</p>
+<pre class="r"><code>table(factor_2c)</code></pre>
+<pre><code>factor_2c
+ a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z 
+15 24 32 26 14 28 23 20 22 14 23 19 12 16 24 19 22 17 18 15 11 15 18 13 20 20 </code></pre>
+</div>
+<div id="problem-2e." class="section level3">
+<h3>Problem 2e.</h3>
+<p>Verify the class of letters_2a and factor_2c</p>
+<pre class="r"><code>class(letters_2a)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class(factor_2c)</code></pre>
+<pre><code>[1] &quot;factor&quot;</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-3" class="section level2">
+<h2>Problem 3</h2>
+<p>Create a list that includes the following elements:
+i) The first 10 Fibonacci numbers. (For this I will be shamelessly reusing old code)
+ii) The factor c(“even”, “odd”)
+iii) The data frame micedata.txt</p>
+<pre class="r"><code># I COULD just write the first ten numbers manually in a vector but this seems more fun.
+
+Fibonacci &lt;- function(n){
+  
+fib &lt;- numeric(n)
+# Create a vector of length n
+
+fib[1] &lt;- fib[2] &lt;- 1
+# Store F 1 and F 2 in the vector
+
+for (i in 3:n) fib[i] = fib[i-1] + fib[i-2]
+
+# cat(&quot;The first&quot;, n, &quot;Fibonacci numbers are&quot;, &quot;\n&quot;)
+print(fib)}
+
+fib_10 &lt;- Fibonacci(10)</code></pre>
+<pre><code> [1]  1  1  2  3  5  8 13 21 34 55</code></pre>
+<pre class="r"><code>fib_101 &lt;- c(1,1,2,3,5,8,13,21,34,55) #backup in-case of bugs</code></pre>
+<pre class="r"><code>mice_data &lt;- read.delim(&quot;micedata.txt&quot;)
+mice_data</code></pre>
+<pre><code>   color.weight.length
+1 purple     23    3.8
+2 yellow     21    3.7
+3    red     18    3.0
+4  brown     26    3.4
+5  green     25    3.4
+6 purple     22    3.1
+7    red     26    3.5
+8 purple     19    3.2</code></pre>
+<p>Alright, now we have what we need to work with here.</p>
+<pre class="r"><code>pr3_list &lt;- list(fib_10, as.factor(c(&quot;even&quot;, &quot;odd&quot;)), mice_data )
+pr3_list</code></pre>
+<pre><code>[[1]]
+ [1]  1  1  2  3  5  8 13 21 34 55
+
+[[2]]
+[1] even odd 
+Levels: even odd
+
+[[3]]
+   color.weight.length
+1 purple     23    3.8
+2 yellow     21    3.7
+3    red     18    3.0
+4  brown     26    3.4
+5  green     25    3.4
+6 purple     22    3.1
+7    red     26    3.5
+8 purple     19    3.2</code></pre>
+<div id="problem-3b" class="section level3">
+<h3>Problem 3b</h3>
+<p>Name the elements in the list</p>
+<pre class="r"><code>names(pr3_list) &lt;- c(&quot;fibb&quot;, &quot;even/odd&quot;, &quot;mice&quot;)</code></pre>
+</div>
+<div id="problem-3c" class="section level3">
+<h3>Problem 3c</h3>
+<p>Using sapply() calculate the mean, median, sum and product of the first 10 Fibonacci numbers.</p>
+<pre class="r"><code>sapply(pr3_list[&quot;fibb&quot;], summary)</code></pre>
+<pre><code>         fibb
+Min.     1.00
+1st Qu.  2.25
+Median   6.50
+Mean    14.30
+3rd Qu. 19.00
+Max.    55.00</code></pre>
+<pre class="r"><code>cat(&quot;The sum of the first 10 Fibonacci numbers is&quot;, sapply(pr3_list[&quot;fibb&quot;], sum), &quot;\n&quot;)</code></pre>
+<pre><code>The sum of the first 10 Fibonacci numbers is 143 </code></pre>
+<pre class="r"><code>cat(&quot;The product of the first 10 Fibonacci numbers is&quot;, sapply(pr3_list[&quot;fibb&quot;], prod), &quot;\n&quot;)</code></pre>
+<pre><code>The product of the first 10 Fibonacci numbers is 122522400 </code></pre>
+</div>
+<div id="problem-3d" class="section level3">
+<h3>Problem 3d</h3>
+<p>Add the string “Fibonacci rules!” as a new element to the list.</p>
+<pre class="r"><code>pr3_list[[4]] &lt;- toString(&quot;Fibonacci Rules!&quot;)</code></pre>
+</div>
+<div id="problem-3e" class="section level3">
+<h3>Problem 3e</h3>
+<p>Remove the factor from the list.</p>
+<pre class="r"><code>pr3_list[[2]] &lt;- NULL</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-4" class="section level2">
+<h2>Problem 4</h2>
+<p>Import the built-in data set “trees” using data(trees)</p>
+<pre class="r"><code>data(trees)</code></pre>
+<div id="problem-4a." class="section level3">
+<h3>Problem 4a.</h3>
+<p>Compute the summary statistics and standard deviation, rounded to 3 decimal places, for each column.</p>
+<pre class="r"><code>summary(trees)</code></pre>
+<pre><code>     Girth           Height       Volume     
+ Min.   : 8.30   Min.   :63   Min.   :10.20  
+ 1st Qu.:11.05   1st Qu.:72   1st Qu.:19.40  
+ Median :12.90   Median :76   Median :24.20  
+ Mean   :13.25   Mean   :76   Mean   :30.17  
+ 3rd Qu.:15.25   3rd Qu.:80   3rd Qu.:37.30  
+ Max.   :20.60   Max.   :87   Max.   :77.00  </code></pre>
+<pre class="r"><code>sapply(trees, sd)</code></pre>
+<pre><code>    Girth    Height    Volume 
+ 3.138139  6.371813 16.437846 </code></pre>
+<pre class="r"><code>sapply(trees, hist)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-2.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-3.png" width="672" /></p>
+<pre><code>         Girth     Height    Volume   
+breaks   integer,8 integer,7 integer,8
+counts   integer,7 integer,6 integer,7
+density  numeric,7 numeric,6 numeric,7
+mids     numeric,7 numeric,6 numeric,7
+xname    &quot;X[[i]]&quot;  &quot;X[[i]]&quot;  &quot;X[[i]]&quot; 
+equidist TRUE      TRUE      TRUE     </code></pre>
+<pre class="r"><code>sapply(trees, hist)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-3.png" width="672" /></p>
+<pre><code>         Girth     Height    Volume   
+breaks   integer,8 integer,7 integer,8
+counts   integer,7 integer,6 integer,7
+density  numeric,7 numeric,6 numeric,7
+mids     numeric,7 numeric,6 numeric,7
+xname    &quot;X[[i]]&quot;  &quot;X[[i]]&quot;  &quot;X[[i]]&quot; 
+equidist TRUE      TRUE      TRUE     </code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-5" class="section level2">
+<h2>Problem 5</h2>
+<pre class="r"><code>pr5_str &lt;- &quot;I made myself a snowball As perfect as can be I thought I’d keep it as a pet And let it sleep with me I made it some pajamas And a pillow for its head Then last night it ran away But first It wet the bed&quot;</code></pre>
+<pre class="r"><code>pr5_str &lt;- tolower(pr5_str)
+str_count(pr5_str, c(&quot;a&quot;, &quot;e&quot;, &quot;i&quot;, &quot;o&quot;, &quot;u&quot;))</code></pre>
+<pre><code>[1] 20 19 14  5  2</code></pre>
+<pre class="r"><code>str_replace_all(pr5_str, &quot;p&quot;, &quot;b&quot;)</code></pre>
+<pre><code>[1] &quot;i made myself a snowball as berfect as can be i thought i’d keeb it as a bet and let it sleeb with me i made it some bajamas and a billow for its head then last night it ran away but first it wet the bed&quot;</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="problem-6" class="section level2">
+<h2>Problem 6</h2>
+<p>Pascal’s Triangle arises from the coefficients of the binomial expansion <span class="math inline">\((x + y)^n\)</span>.</p>
+<p>These are combinations <span class="math inline">\(\left(n \atop r\right) = C(n,r) = \text{choose}(n,r)\)</span> in R.</p>
+<div id="problem-6a" class="section level3">
+<h3>Problem 6a</h3>
+<p>Create the following list</p>
+<pre class="r"><code>list_6 &lt;- list(c(1), c(1, 1), c(1, 2, 1), c(1, 3, 3, 1))</code></pre>
+<pre class="r"><code>list(1, choose(1, 0:1), choose(2, 0:2), choose(3, 0:3))</code></pre>
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 1 1
+
+[[3]]
+[1] 1 2 1
+
+[[4]]
+[1] 1 3 3 1</code></pre>
+<pre class="r"><code>pascals_func &lt;- function(n){
+  #setting up a list with a 1 at the start.
+  ret_val &lt;- list()
+  ret_val[1] &lt;- 1
+  # i will function as a variable and counter simultaneously! 
+  i &lt;- 1
+  
+  while (i &lt;= n){
+    # Set x to the list output of the choose function. This breaks if &quot;list&quot; is not specified. 
+    x &lt;- list(choose(i, 0:i))
+    # append x to ret_val
+    ret_val &lt;- append(ret_val, x)
+    # increments i up by 1 with every loop. Caps at n+1.
+    i &lt;- i + 1
+    }
+  return(ret_val)
+}</code></pre>
+<pre class="r"><code>pascals_func(5)</code></pre>
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 1 1
+
+[[3]]
+[1] 1 2 1
+
+[[4]]
+[1] 1 3 3 1
+
+[[5]]
+[1] 1 4 6 4 1
+
+[[6]]
+[1]  1  5 10 10  5  1</code></pre>
+<pre class="r"><code>pascals_func(10)</code></pre>
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 1 1
+
+[[3]]
+[1] 1 2 1
+
+[[4]]
+[1] 1 3 3 1
+
+[[5]]
+[1] 1 4 6 4 1
+
+[[6]]
+[1]  1  5 10 10  5  1
+
+[[7]]
+[1]  1  6 15 20 15  6  1
+
+[[8]]
+[1]  1  7 21 35 35 21  7  1
+
+[[9]]
+[1]  1  8 28 56 70 56 28  8  1
+
+[[10]]
+ [1]   1   9  36  84 126 126  84  36   9   1
+
+[[11]]
+ [1]   1  10  45 120 210 252 210 120  45  10   1</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-7." class="section level2">
+<h2>Problem 7.</h2>
+<p>Import the built-in data set “iris”.</p>
+<div id="problem-7a" class="section level3">
+<h3>Problem 7a</h3>
+<p>Using the original data frame, compute the mean and standard deviation of the petal lengths.</p>
+<pre class="r"><code>cat(&quot;The mean of the petal length in iris is&quot;, round(mean(iris$Petal.Length), digits = 2), &quot;\n&quot;)</code></pre>
+<pre><code>The mean of the petal length in iris is 3.76 </code></pre>
+<pre class="r"><code>cat(&quot;The standard deviation of the petal length in iris is&quot;, round(sd(iris$Petal.Length), digits = 2), &quot;\n&quot;)</code></pre>
+<pre><code>The standard deviation of the petal length in iris is 1.77 </code></pre>
+</div>
+<div id="problem-7b" class="section level3">
+<h3>Problem 7b</h3>
+<p>Compute the maximum petal width and maximum petal length.</p>
+<pre class="r"><code>cat(&quot;The max petal width is&quot;, max(iris$Petal.Width), &quot;\n&quot;)</code></pre>
+<pre><code>The max petal width is 2.5 </code></pre>
+<pre class="r"><code>cat(&quot;The max petal length is&quot;, max(iris$Petal.Length), &quot;\n&quot;)</code></pre>
+<pre><code>The max petal length is 6.9 </code></pre>
+</div>
+<div id="problem-7c" class="section level3">
+<h3>Problem 7c</h3>
+<p>Extract the rows corresponding the species iris versicolor flowers and save it to a new data frame “VersicolorIris”.</p>
+<pre class="r"><code>VersicolorIris &lt;- subset(iris, Species == &quot;versicolor&quot;)</code></pre>
+</div>
+<div id="problem-7d" class="section level3">
+<h3>Problem 7d</h3>
+<p>Compute the mean and standard deviation of the Versicolor petal lengths</p>
+<pre class="r"><code>cat(&quot;The mean petal length of the versicolor iris is&quot;, mean(VersicolorIris$Petal.Length), &quot;\n&quot;)</code></pre>
+<pre><code>The mean petal length of the versicolor iris is 4.26 </code></pre>
+<pre class="r"><code>cat(&quot;The standard deviation of the versicolor iris is&quot;, round(sd(VersicolorIris$Petal.Length), digits = 2), &quot;\n&quot;)</code></pre>
+<pre><code>The standard deviation of the versicolor iris is 0.47 </code></pre>
+</div>
+<div id="problem-7e" class="section level3">
+<h3>Problem 7e</h3>
+<p>Extract the Species and Petal Length columns and save to a new data frame ‘Petal-Length’.</p>
+<pre class="r"><code># I&#39;ll be using select() from the tidyverse package here. It&#39;s so convenient.
+
+data_7e &lt;- as_tibble(iris)
+
+Petal_Length &lt;- data_7e %&gt;% select(Petal.Length, Species)
+unstack(Petal_Length)</code></pre>
+<pre><code>   setosa versicolor virginica
+1     1.4        4.7       6.0
+2     1.4        4.5       5.1
+3     1.3        4.9       5.9
+4     1.5        4.0       5.6
+5     1.4        4.6       5.8
+6     1.7        4.5       6.6
+7     1.4        4.7       4.5
+8     1.5        3.3       6.3
+9     1.4        4.6       5.8
+10    1.5        3.9       6.1
+11    1.5        3.5       5.1
+12    1.6        4.2       5.3
+13    1.4        4.0       5.5
+14    1.1        4.7       5.0
+15    1.2        3.6       5.1
+16    1.5        4.4       5.3
+17    1.3        4.5       5.5
+18    1.4        4.1       6.7
+19    1.7        4.5       6.9
+20    1.5        3.9       5.0
+21    1.7        4.8       5.7
+22    1.5        4.0       4.9
+23    1.0        4.9       6.7
+24    1.7        4.7       4.9
+25    1.9        4.3       5.7
+26    1.6        4.4       6.0
+27    1.6        4.8       4.8
+28    1.5        5.0       4.9
+29    1.4        4.5       5.6
+30    1.6        3.5       5.8
+31    1.6        3.8       6.1
+32    1.5        3.7       6.4
+33    1.5        3.9       5.6
+34    1.4        5.1       5.1
+35    1.5        4.5       5.6
+36    1.2        4.5       6.1
+37    1.3        4.7       5.6
+38    1.4        4.4       5.5
+39    1.3        4.1       4.8
+40    1.5        4.0       5.4
+41    1.3        4.4       5.6
+42    1.3        4.6       5.1
+43    1.3        4.0       5.1
+44    1.6        3.3       5.9
+45    1.9        4.2       5.7
+46    1.4        4.2       5.2
+47    1.6        4.2       5.0
+48    1.4        4.3       5.2
+49    1.5        3.0       5.4
+50    1.4        4.1       5.1</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-8-the-birthday-problem" class="section level2">
+<h2>Problem 8: THE BIRTHDAY PROBLEM</h2>
+<p>What is the probability that in a set of <span class="math inline">\(n\)</span> randomly selected people at least two people have the same birthday?</p>
+<p>If we have a group of 366 (or 367 for a leap year), there is a 100% probability that two people have the same birthday.</p>
+<p>How many people do you need so that the probability is at least 50%? It is surprising to learn that only 23 people are needed for a 50% chance of two people with the same birthday. And if there are 60 people in the room, the probability increases to 99.41%.</p>
+<p>The probability is given by the formula:</p>
+<p><span class="math display">\[p(n) = 1 - \frac{365!}{365^n (365 - n)}\]</span></p>
+<div id="problem-8a" class="section level3">
+<h3>Problem 8a</h3>
+<pre class="r"><code>birthday &lt;- function(n){
+  1 - prod(seq(from=1, to = (365 - n + 1) / 365, by = -1/365))
+}
+BdayProb &lt;- sapply(1:70, birthday)</code></pre>
+</div>
+<div id="problem-8b" class="section level3">
+<h3>Problem 8b</h3>
+<pre class="r"><code>plot(1:70, BdayProb, pch = 20, xlab = &quot;Number of People&quot;, ylab = &quot;Probability&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="problem-8d" class="section level3">
+<h3>Problem 8d</h3>
+<p>Create a nicer plot. Run the following code.</p>
+<pre class="r"><code>library(reshape)
+library(ggplot2)
+
+# Input the value for npeople. Change this value to change the graph.
+  npeople = 70
+
+# Create a data frame Bday using the birthday function
+  Bday = data.frame(n = 1:npeople, ProbTwoSame =
+    sapply(1:npeople, birthday), y = 0.5)
+
+  # Melt the data for casting (Smooths the data points)
+  Bday = reshape::melt(Bday, id.vars = &quot;n&quot;)
+  
+  ggplot(Bday, aes(x = n, y = value, colour = variable)) + geom_line() + scale_colour_hue(&quot;&quot;) + xlab(&quot;Number of People&quot;) + ylab(&quot;Probability&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>I believe I got this working correctly. I ran into an issue where “+” was on a new line, so making it one giant gnarly line got it at least compiling.</p>
+</div>
+</div>

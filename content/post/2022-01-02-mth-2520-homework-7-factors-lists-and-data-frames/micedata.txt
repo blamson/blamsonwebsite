@@ -1,0 +1,9 @@
+color weight length
+purple     23    3.8
+yellow     21    3.7
+red     18    3.0
+brown     26    3.4
+green     25    3.4
+purple     22    3.1
+red     26    3.5
+purple     19    3.2
