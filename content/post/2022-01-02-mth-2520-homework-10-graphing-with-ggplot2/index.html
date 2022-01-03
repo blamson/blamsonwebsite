@@ -1,0 +1,313 @@
+---
+title: 'MTH-2520 Homework 10: Graphing with ggplot2'
+author: Brady Lamson
+date: '2022-04-13'
+slug: mth-2520-homework-10-graphing-with-ggplot2
+categories: []
+tags: [Homework]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="problem-1-co_covid19" class="section level2">
+<h2>Problem 1 [CO_COVID19]</h2>
+<p>Load the dataset CO_COVID19.csv</p>
+<pre class="r"><code>covid &lt;- &quot;CO_COVID19.csv&quot; |&gt;
+  read.csv() |&gt;
+  dplyr::as_tibble()</code></pre>
+<div id="problem-1a" class="section level3">
+<h3>Problem 1a</h3>
+<p>Draw a boxplot for the cumulative number of cases.</p>
+<pre class="r"><code>ggplot(covid, aes(CumulativeCases)) + 
+  geom_boxplot(fill = &quot;navy&quot;) +
+  labs(title = &quot;Covid19 Cases&quot;, subtitle = &quot;Cumulative Cases&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="problem-1b" class="section level3">
+<h3>Problem 1b</h3>
+<p>Draw a boxplot for the cumulative number of deaths.</p>
+<pre class="r"><code>ggplot(covid, aes(CumulativeDeaths)) + 
+  geom_boxplot(fill = &quot;violet&quot;) +
+  labs(title = &quot;Covid19 Deaths&quot;, subtitle = &quot;Cumulative Deaths&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="problem-1c" class="section level3">
+<h3>Problem 1c</h3>
+<p>Draw a scatterplot of the daily number of cases versus the daily number of deaths.</p>
+<pre class="r"><code>ggplot(covid) +
+  aes(x = DailyCases, y = DailyDeaths) +
+  geom_point(shape = 23) +
+  geom_smooth(method = &quot;lm&quot;, color = &quot;red&quot;) +
+  xlab(&quot;Daily Cases&quot;) +
+  ylab(&quot;Daily Deaths&quot;) +
+  ggtitle(&quot;Daily Covid19 Cases vs. Deaths&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="load-the-given-dataset" class="section level3">
+<h3>Load the given dataset</h3>
+<pre class="r"><code>covid2 &lt;- &quot;CovidMonthlyData.csv&quot; |&gt;
+  read.csv() |&gt;
+  dplyr::as_tibble()
+
+# Clean up the date column.
+covid2$Date &lt;- covid2$Date |&gt; my()</code></pre>
+</div>
+<div id="problem-1d" class="section level3">
+<h3>Problem 1d</h3>
+<p>Draw a bar graph for the monthly number of cases.</p>
+<pre class="r"><code>ggplot(covid2, aes(x = Date, y = Cases)) +
+    geom_col(color = &quot;black&quot;, fill = &quot;deepskyblue&quot;) + 
+  scale_y_continuous(labels = comma) +
+  labs(title = &quot;Covid19 Cases by Month&quot;, x = &quot;Date: (Month / Year)&quot;, y = &quot;Number of Cases&quot;) +
+  theme(axis.text.x = element_text(angle = 65, vjust = 0.6))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="problem-1d-1" class="section level3">
+<h3>Problem 1d</h3>
+<p>Draw a bar graph for the monthly number of Deaths.</p>
+<pre class="r"><code>ggplot(covid2, aes(x = Date, y = Deaths)) +
+    geom_col(color = &quot;black&quot;, fill = &quot;deepskyblue&quot;) + 
+  scale_y_continuous(labels = comma) +
+  labs(title = &quot;Covid19 Deaths per Month&quot;, x = &quot;Date: (Month / Year)&quot;, y = &quot;Number of Deaths&quot;) +
+  theme(axis.text.x = element_text(angle = 65, vjust = 0.6))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="problem-1f" class="section level3">
+<h3>Problem 1f</h3>
+<p>Draw a pie chart for the monthly number of cases</p>
+<pre class="r"><code>ggplot(covid2) +
+  aes(x = &quot;&quot;, y=Cases, fill = factor(Date)) +
+  geom_col() +
+  labs(fill = &quot;Date&quot;, x=NULL, y=NULL, 
+      title = &quot;Covid19 Cases per Month&quot;) +
+  coord_polar(theta = &quot;y&quot;, start = 0) +
+  scale_y_continuous(labels = comma)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(covid2) +
+  aes(x = &quot;&quot;, y=Deaths, fill = factor(Date)) +
+  geom_col() +
+  labs(fill = &quot;Date&quot;, x=NULL, y=NULL, 
+      title = &quot;Covid19 Deaths per Month&quot;) +
+  coord_polar(theta = &quot;y&quot;, start = 0) +
+  scale_y_continuous(labels = comma)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-2" class="section level2">
+<h2>Problem 2</h2>
+<p>For the mpg dataset, redo the following plots from the Week 12 Lab using the city mpg instead of the highway mpg.</p>
+<div id="problem-2a" class="section level3">
+<h3>Problem 2a</h3>
+<p>Redo the scatterplot with shape = drv, color = drv</p>
+<pre class="r"><code>ggplot(mpg, aes(x = displ, y = cty, shape = drv, color = drv)) + geom_point()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="problem-2b" class="section level3">
+<h3>Problem 2b</h3>
+<p>The facet_wrap plots with ‘class’ and ‘drv’</p>
+<pre class="r"><code>ggplot(mpg, aes(x = displ, y = cty)) + geom_point(color = &quot;purple&quot;) +
+facet_wrap(~class, nrow = 2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mpg, aes(x = displ, y = cty)) + geom_point(color = &quot;red&quot;) + 
+  facet_wrap(~drv)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="problem-2c" class="section level3">
+<h3>Problem 2c</h3>
+<p>The bar chart of make vs. average city mpg.</p>
+<pre class="r"><code>make &lt;- unique(mpg$manufacturer)
+cty_mean &lt;- tapply(mpg$cty, mpg$manufacturer, mean)
+mpg2 &lt;- data.frame(make, cty_mean)
+
+ggplot(mpg2, aes(x = make, y = cty_mean)) +
+geom_bar(stat = &quot;identity&quot;, width = 0.5, fill = &quot;cyan3&quot;) +
+labs(title = &quot;Bar Chart&quot;, subtitle = &quot;Make vs. Avg City MPG&quot;,
+x = &quot;Make&quot;, y = &quot;City Mileage MPG&quot;, caption=&quot;Source: Frequency of
+Manufacturers from ’mpg’ dataset&quot;) +
+theme(axis.text.x = element_text(angle = 65, vjust = 0.6))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="problem-2d" class="section level3">
+<h3>Problem 2d</h3>
+<p>The lollipop chart of make vs. average city mpg.</p>
+<pre class="r"><code>ggplot(mpg2, aes(x = make, y = cty_mean)) + geom_point(size = 3) +
+  geom_segment(aes(x = make, xend = make, y = 0, yend = cty_mean)) +
+  labs(title = &quot;Lollipop Chart&quot;, subtitle = &quot;Make Vs Avg City MPG&quot;,
+  x = &quot;Make&quot;, y = &quot;City Mileage MPG&quot;, caption=&quot;Source: Frequency of
+  Manufacturers from ’mpg’ dataset&quot;) +
+  theme(axis.text.x = element_text(angle = 65, vjust = 0.6))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-3" class="section level2">
+<h2>Problem 3</h2>
+<p>Load the dataset</p>
+<pre class="r"><code>penguins &lt;- &quot;penguins.csv&quot; |&gt;
+  read.csv() |&gt;
+  dplyr::as_tibble()</code></pre>
+<div id="problem-3a" class="section level3">
+<h3>Problem 3a</h3>
+<p>Compute:
+i) The overall average body mass
+ii) The average body mass by species
+iii) The average body mass by island
+iv) the average body mass by sex.</p>
+<pre class="r"><code>#p3i overall body mass (grams)
+mean(penguins$body_mass_g)</code></pre>
+<pre><code>## [1] 4201.754</code></pre>
+<pre class="r"><code>#p3ii body mass by species (grams)
+tapply(penguins$body_mass_g, penguins$species, FUN = mean)</code></pre>
+<pre><code>##    Adelie Chinstrap    Gentoo 
+##  3700.662  3733.088  5076.016</code></pre>
+<pre class="r"><code># p3iii body mass by island (grams)
+tapply(penguins$body_mass_g, penguins$island, FUN = mean)</code></pre>
+<pre><code>##    Biscoe     Dream Torgersen 
+##  4716.018  3712.903  3706.373</code></pre>
+<pre class="r"><code># p3iv body mass by sex (grams)
+tapply(penguins$body_mass_g, penguins$sex, FUN = mean)</code></pre>
+<pre><code>##   female     male 
+## 3866.420 4529.335</code></pre>
+</div>
+<div id="problem-3b" class="section level3">
+<h3>Problem 3b</h3>
+<p>Draw a histogram of the body mass.</p>
+<pre class="r"><code>ggplot(penguins, aes(body_mass_g)) +
+  geom_histogram(color = &quot;black&quot;, fill = &quot;palegreen1&quot;, bins = 40) +
+  labs(title = &quot;Distribution of Penguin Body Mass&quot;,
+       x = &quot;Body Mass in Grams&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(penguins, aes(body_mass_g)) +
+  scale_fill_brewer(palette = &quot;Paired&quot;) +
+  geom_histogram(color = &quot;black&quot;, aes(fill = species), binwidth = 125) +
+  labs(title = &quot;Body Mass across Penguin Species&quot;,
+       x = &quot;Body Mass in Grams&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(penguins, aes(body_mass_g)) +
+  scale_fill_brewer(palette = &quot;Accent&quot;) +
+  geom_histogram(aes(fill = island), binwidth = 80, color = &quot;black&quot;) +
+  labs(title = &quot;Body Mass of Penguins across Islands&quot;,
+       x = &quot;Body Mass in Grams&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(penguins, aes(body_mass_g)) +
+  geom_histogram(color = &quot;black&quot;, aes(fill = sex), binwidth = 50) +
+  labs(title = &quot;Body Mass of Penguins by Sex&quot;,
+       x = &quot;Body Mass in Grams&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-4-epicycloids" class="section level2">
+<h2>Problem 4 [Epicycloids]</h2>
+<p>The parametric equations for the epicycloid on <span class="math inline">\([0, (R + r)\pi]\)</span> are:</p>
+<p><span class="math display">\[x = (R + r) \cos t - r \cdot \cos \left( \frac{R + r}{r} \cdot t \right)\]</span>
+<span class="math display">\[y = (R + r) \sin t - r \cdot \sin \left( \frac{R + r}{r} \cdot t \right)\]</span></p>
+<div id="problem-4a" class="section level3">
+<h3>Problem 4a</h3>
+<p>Modify your epicycloid function from HW 9 to include color, and replace the plot() command with the provided ggplot command.</p>
+<pre class="r"><code>Epicycloid &lt;- function(r, R, color){
+  t &lt;- seq(from=0, to=(R + r)*2*pi, len=10000)
+  
+  x &lt;- (R + r)*cos(t) - (r * cos(((R+r)/r)*t))
+  # print(x)
+  
+  y&lt;- (R + r)*sin(t) - (r * sin(((R+r)/r)*t)) 
+  # print(y)
+  
+  ggplot(data.frame(t, x, y), aes(x,y)) + geom_path(color = color) +
+    ggtitle(paste(&quot;Epicycloid: r =&quot;, r, &quot;, R = &quot;, R)) + 
+    theme_void()
+  }</code></pre>
+<pre class="r"><code>Epicycloid(r = 1, R = 4, color = &quot;red&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r = 6, R = 5, color = &quot;violetred3&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r = 10, R = 21, color = &quot;red&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r = 32, R = 33, color = &quot;violetred3&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r = 18, R = 4, color = &quot;tomato4&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r = 72, R = 71, color = &quot;sienna&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code>Epicycloid(r = 30, R = 65, color = &quot;purple3&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-5-rose-curves" class="section level2">
+<h2>Problem 5 [Rose Curves]</h2>
+<pre class="r"><code>Rose &lt;- function(k, color){
+  t &lt;- seq(from=0, to=(2*pi*(10/k)), by=0.001)
+  
+  x &lt;- cos(k*t)*cos(t)
+  y &lt;- cos(k*t)*sin(t)
+  
+  
+  ggplot(data.frame(t, x, y), aes(x,y)) + geom_path(color = color) +
+    ggtitle(paste(&quot;Epicycloid: k =&quot;, k)) + 
+    theme_void()
+  }</code></pre>
+<pre class="r"><code>Rose(k=4, color=&quot;blue2&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<pre class="r"><code>Rose(k=5, color=&quot;blue3&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre class="r"><code>Rose(k=(3/5), color=&quot;chocolate1&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<pre class="r"><code>Rose(k=(4/5), color=&quot;chocolate1&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<pre class="r"><code>Rose(k=1.2, color=&quot;indianred2&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<pre class="r"><code>Rose(k = 12, color = &quot;purple&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<pre class="r"><code>Rose(k=27, color = &quot;purple&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="problem-6." class="section level2">
+<h2>Problem 6.</h2>
+<p>Make one or more ‘heatmap’ images.</p>
+<pre class="r"><code>data &lt;- matrix(rnorm(150), nrow=10)
+heatmap(data, Colv = NA, Rowv = NA, scale = &quot;none&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+<div id="problem-7" class="section level2">
+<h2>Problem 7</h2>
+<p>Modify the given code to make one or more variations of the artwork.</p>
+<pre class="r"><code>set.seed(345) #set the seed of R&#39;s random number generator
+library(ggplot2)
+library(RColorBrewer)
+ngroup=32    # changes how many groups there are in the art graph
+names=paste(&quot;G_&quot;,seq(1,ngroup),sep=&quot;&quot;)
+DAT=data.frame()</code></pre>
+<pre class="r"><code>#creating dataframe 
+for(i in seq(1:ngroup)){
+    data=data.frame( matrix(0, ngroup , 3))
+    data[,1]=cos(i) + sin(i)
+    data[,2]=sample(names, nrow(data))
+    data[,3]=prop.table(sample( c(rep(0,150),c(1:ngroup)) ,nrow(data)))
+    DAT=rbind(DAT,data)
+    }
+colnames(DAT)=c(&quot;Year&quot;,&quot;Group&quot;,&quot;Value&quot;)
+DAT=DAT[order( DAT$Year, DAT$Group) , ]
+
+coul = brewer.pal(12, &quot;Paired&quot;) 
+coul = colorRampPalette(coul)(ngroup)
+coul=coul[sample(c(1:length(coul)) , size=length(coul) ) ] #deciding the color for the palette</code></pre>
+<pre class="r"><code>ggplot(DAT, aes(x=Year, y=Value, fill=Group )) + 
+    geom_area(alpha=1 , color=1 )+
+    theme_bw() +
+    scale_fill_manual(values = coul)+
+     theme(line = element_blank(),
+        text = element_blank(),
+        title = element_blank(),
+        legend.position=&quot;none&quot;,
+        panel.border = element_blank(),
+        panel.background = element_blank())</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
