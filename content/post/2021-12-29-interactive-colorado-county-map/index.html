@@ -1,0 +1,78 @@
+---
+title: Interactive Colorado County Map
+author: Brady Lamson
+date: '2021-12-29'
+slug: interactive-colorado-county-map
+categories: []
+tags: [personal, R, leaflet]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/pymjs/pym.v1.js"></script>
+<script src="{{< blogdown/postref >}}index_files/widgetframe-binding/widgetframe.js"></script>
+
+
+<p>I’m currently working on a shiny application as a personal project alongside a fellow club officer. The app we’re using uses a <a href="https://data.colorado.gov/Higher-Education/Degrees-Awarded-to-Post-Secondary-Graduates-in-Col/hxf8-ab6k">data-set</a> containing information about post-secondary degrees awarded in Colorado. It contains a variety of demographic information spanning 2001 to 2017, so there’s a <strong>lot</strong> of information here.</p>
+<p>My current task has been an interactive map showing where all the universities are. I’ve got some cool plans for it, so I would like to showcase my progress. I’ve been using the wonderful <a href="https://leafletjs.com/">Leaflet</a> package for this and a great guide exists for those using it in <a href="https://rstudio.github.io/leaflet/">R</a>.</p>
+<p>Firstly, I knew I wanted to color the map by county so I had to figure that out. My first attempt, utilizing a lot of code from the original guide, looks as follows.</p>
+<p>Note: There’s a bizarre bug where the HTML rendering of the map is causing this entire blog post to be white. I don’t know why and this blog post is still a bit too much of a hobby project for me to invest more time into fixing this issue. If you have any information on how to this please contact me!</p>
+<pre class="r"><code>library(leaflet)
+colorado_counties &lt;- 
+  maps::map(&quot;county&quot;, &#39;colorado&#39;, 
+            fill = TRUE, 
+            col = palette(),
+            plot = FALSE
+            )
+
+map1 &lt;- leaflet::leaflet(data = colorado_counties) |&gt;
+  addTiles() |&gt;
+  addPolygons(
+    fillColor = topo.colors(64,alpha = 1), 
+    stroke = FALSE
+    ) |&gt;
+  widgetframe::frameableWidget()</code></pre>
+<pre class="r"><code>widgetframe::frameWidget(map1)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_unnamed-chunk-2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>There are quite a number of problems with this initial build. First of all is that it’s just a little unclear without any county outlines and many of the colors bleed together. There’s also no limitation to zooming in and out even though there’s no benefit to the end user for doing so. That’s okay though! It’s a very simple first step. From there I feel as if I’ve improved it quite a bit. I’ve added the following changes:</p>
+<ul>
+<li>New colors</li>
+<li>County outlines</li>
+<li>Mouseover highlighting for the map</li>
+<li>Max and minimum zoom</li>
+<li>A new tileset from the ThunderForest package.</li>
+<li>markers for each of the institutions in our data frame</li>
+</ul>
+<pre class="r"><code>institution_locations &lt;- readr::read_rds(&quot;institution_locations.rds&quot;)
+colorado_counties &lt;- maps::map(&quot;county&quot;, &#39;colorado&#39;, fill = TRUE, plot = FALSE)
+
+
+map2 &lt;- leaflet(data = colorado_counties, 
+                  options = leafletOptions(
+                    minZoom = 6.25,
+                    maxZoom = 12.5)
+                  ) |&gt;
+  addProviderTiles(providers$Thunderforest.MobileAtlas) |&gt;
+  addProviderTiles(providers$Stamen.TonerLines,
+                  options = providerTileOptions(opacity = 0.35)) |&gt;
+  addProviderTiles(providers$Stamen.TonerLabels) |&gt;
+  addMarkers(~institution_locations$long, 
+             ~institution_locations$lat, 
+             popup = institution_locations$institutionname) |&gt;
+  leaflet::addPolygons(
+    color = &quot;#444444&quot;,
+    weight = 1.5,
+    smoothFactor = 1,
+    fillColor = RColorBrewer::brewer.pal(12, &quot;Paired&quot;),
+    stroke = TRUE,
+    highlightOptions = highlightOptions(
+      stroke = TRUE,
+      color = &quot;white&quot;,
+      weight = 5,
+      bringToFront = TRUE)
+    )</code></pre>
+<pre class="r"><code>widgetframe::frameWidget(map2)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"index_files/figure-html//widgets/widget_unnamed-chunk-4.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>I still have a ton to do but as of Dec 29th thats where I’m at! I hope to update this more as I get further along. I still need to integrate this with our giant data-set so theres a lot to do.</p>

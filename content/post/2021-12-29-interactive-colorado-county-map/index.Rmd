@@ -1,0 +1,88 @@
+---
+title: Interactive Colorado County Map
+author: Brady Lamson
+date: '2021-12-29'
+slug: interactive-colorado-county-map
+categories: []
+tags: [personal, R, leaflet]
+---
+
+I'm currently working on a shiny application as a personal project alongside a fellow club officer. The app we're using uses a [data-set](https://data.colorado.gov/Higher-Education/Degrees-Awarded-to-Post-Secondary-Graduates-in-Col/hxf8-ab6k) containing information about post-secondary degrees awarded in Colorado. It contains a variety of demographic information spanning 2001 to 2017, so there's a **lot** of information here. 
+
+My current task has been an interactive map showing where all the universities are. I've got some cool plans for it, so I would like to showcase my progress. I've been using the wonderful [Leaflet](https://leafletjs.com/) package for this and a great guide exists for those using it in [R](https://rstudio.github.io/leaflet/). 
+
+Firstly, I knew I wanted to color the map by county so I had to figure that out. My first attempt, utilizing a lot of code from the original guide, looks as follows. 
+
+Note: There's a bizarre bug where the HTML rendering of the map is causing this entire blog post to be white. I don't know why and this blog post is still a bit too much of a hobby project for me to invest more time into fixing this issue. If you have any information on how to this please contact me! 
+
+
+```{r}
+library(leaflet)
+colorado_counties <- 
+  maps::map("county", 'colorado', 
+            fill = TRUE, 
+            col = palette(),
+            plot = FALSE
+            )
+
+map1 <- leaflet::leaflet(data = colorado_counties) |>
+  addTiles() |>
+  addPolygons(
+    fillColor = topo.colors(64,alpha = 1), 
+    stroke = FALSE
+    ) |>
+  widgetframe::frameableWidget()
+```
+
+```{r, echo=TRUE}
+widgetframe::frameWidget(map1)
+```
+
+
+There are quite a number of problems with this initial build. First of all is that it's just a little unclear without any county outlines and many of the colors bleed together. There's also no limitation to zooming in and out even though there's no benefit to the end user for doing so. That's okay though! It's a very simple first step. From there I feel as if I've improved it quite a bit. I've added the following changes:
+
+- New colors
+- County outlines
+- Mouseover highlighting for the map
+- Max and minimum zoom
+- A new tileset from the ThunderForest package. 
+- markers for each of the institutions in our data frame 
+
+```{r}
+institution_locations <- readr::read_rds("institution_locations.rds")
+colorado_counties <- maps::map("county", 'colorado', fill = TRUE, plot = FALSE)
+
+
+map2 <- leaflet(data = colorado_counties, 
+                  options = leafletOptions(
+                    minZoom = 6.25,
+                    maxZoom = 12.5)
+                  ) |>
+  addProviderTiles(providers$Thunderforest.MobileAtlas) |>
+  addProviderTiles(providers$Stamen.TonerLines,
+                  options = providerTileOptions(opacity = 0.35)) |>
+  addProviderTiles(providers$Stamen.TonerLabels) |>
+  addMarkers(~institution_locations$long, 
+             ~institution_locations$lat, 
+             popup = institution_locations$institutionname) |>
+  leaflet::addPolygons(
+    color = "#444444",
+    weight = 1.5,
+    smoothFactor = 1,
+    fillColor = RColorBrewer::brewer.pal(12, "Paired"),
+    stroke = TRUE,
+    highlightOptions = highlightOptions(
+      stroke = TRUE,
+      color = "white",
+      weight = 5,
+      bringToFront = TRUE)
+    )
+
+```
+
+```{r, echo=TRUE}
+widgetframe::frameWidget(map2)
+```
+
+
+I still have a ton to do but as of Dec 29th thats where I'm at! I hope to update this more as I get further along. I still need to integrate this with our giant data-set so theres a lot to do. 
