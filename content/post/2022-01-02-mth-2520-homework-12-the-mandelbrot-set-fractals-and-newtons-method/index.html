@@ -1,0 +1,622 @@
+---
+title: 'MTH-2520 Homework 12: The Mandelbrot Set, Fractals, and Newtons Method'
+author: Brady Lamson
+date: '2021-05-02'
+slug: mth-2520-homework-12-the-mandelbrot-set-fractals-and-newtons-method
+categories: []
+tags: [Homework]
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="problem-1" class="section level2">
+<h2>Problem 1</h2>
+<p>Draw the fractals generated from the following IFS codes using the R code provided in the lab. Modify as needed. Be sure to use cumulative probabilities.</p>
+<div id="problem-1a" class="section level3">
+<h3>Problem 1a</h3>
+<p>IFS code for dragon</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 15000
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(1/2, -(1/2), 1/2, 1/2), nrow = 2, byrow = TRUE)
+  A2 = matrix(c(-(1/2), -(1/2), 1/2, -(1/2)), nrow = 2, byrow = TRUE)
+  
+  b1 = c(0, 0)
+  b2 = c(1, 0)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 1/2) {x &lt;&lt;- A1 %*% x + b1}
+    else {x &lt;&lt;- A2 %*% x + b2}}
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;Dragon&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="problem-1b" class="section level3">
+<h3>Problem 1b</h3>
+<p>IFS code for a 5-sided crystal.</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 10000
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(0.382, 0, 0, 0.382), nrow = 2, byrow = TRUE)
+  # A2 = matrix(c(-(1/2), -(1/2), 1/2, -(1/2)), nrow = 2, byrow = TRUE)
+  
+  b1 = c(0.3072, 0.6190)
+  b2 = c(0.6033, 0.4044)
+  b3 = c(0.0139, 0.4044)
+  b4 = c(0.1253, 0.0595)
+  b5 = c(0.4920, 0.0595)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 1/5) {x &lt;&lt;- A1 %*% x + b1}
+    else if (p &lt;= 2/5) {x &lt;&lt;- A1 %*% x + b2}
+    else if (p &lt;= 3/5) {x &lt;&lt;- A1 %*% x + b3}
+    else if (p &lt;= 4/5) {x &lt;&lt;- A1 %*% x + b4}
+    else {x &lt;&lt;- A1 %*% x + b5}
+    }
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;5-sided Crystal&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="problem-1c" class="section level3">
+<h3>Problem 1c</h3>
+<p>IFS code for a Sierpinski carpet</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 10000
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(1/3, 0, 0, 1/3), nrow = 2, byrow = TRUE)
+  # A2 = matrix(c(-(1/2), -(1/2), 1/2, -(1/2)), nrow = 2, byrow = TRUE)
+  
+  b1 = c(0,0)
+  b2 = c(1/3, 0)
+  b3 = c(2/3, 0)
+  b4 = c(0, 1/3)
+  b5 = c(2/3, 1/3)
+  b6 = c(0, 2/3)
+  b7 = c(1/3, 2/3)
+  b8 = c(2/3, 2/3)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 1/8) {x &lt;&lt;- A1 %*% x + b1}
+    else if (p &lt;= 2/8) {x &lt;&lt;- A1 %*% x + b2}
+    else if (p &lt;= 3/8) {x &lt;&lt;- A1 %*% x + b3}
+    else if (p &lt;= 4/8) {x &lt;&lt;- A1 %*% x + b4}
+    else if (p &lt;= 5/8) {x &lt;&lt;- A1 %*% x + b5}
+    else if (p &lt;= 6/8) {x &lt;&lt;- A1 %*% x + b6}
+    else if (p &lt;= 7/8) {x &lt;&lt;- A1 %*% x + b7}
+    else {x &lt;&lt;- A1 %*% x + b8}
+    }
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;Sierpinkski Carpet&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="problem-1d" class="section level3">
+<h3>Problem 1d</h3>
+<p>IFS code for a nautilus</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 10000
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(0.8607, 0.4015, -0.4023, 0.8619), nrow = 2, byrow = TRUE)
+  A2 = matrix(c(0.0950, -0.0010, 0.2370, 0.0020), nrow = 2, byrow = TRUE)
+  A3 = matrix(c(0.1509, 0.0, 0.0, 0.1469), nrow = 2, byrow = TRUE)
+  A4 = matrix(c(0.3243, -0.0022, 0.0058, 0.0013), nrow = 2, byrow = TRUE)
+
+  b1 = c(0.1085, 0.0751)
+  b2 = c(-0.7469, 0.0473)
+  b3 = c(-0.5632, 0.0320)
+  b4 = c(-0.5579, -0.1397)
+  #b5 = c(2/3, 1/3)
+  #b6 = c(0, 2/3)
+  #b7 = c(1/3, 2/3)
+  #b8 = c(2/3, 2/3)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 0.93) {x &lt;&lt;- A1 %*% x + b1}
+    else if (p &lt;= 0.02) {x &lt;&lt;- A2 %*% x + b2}
+    else if (p &lt;= 0.03) {x &lt;&lt;- A3 %*% x + b3}
+    else if (p &lt;= 0.02) {x &lt;&lt;- A4 %*% x + b4}
+    #else if (p &lt;= 5/8) {x &lt;&lt;- A1 %*% x + b5}
+    #else if (p &lt;= 6/8) {x &lt;&lt;- A1 %*% x + b6}
+    #else if (p &lt;= 7/8) {x &lt;&lt;- A1 %*% x + b7}
+    #else {x &lt;&lt;- A1 %*% x + b8}
+    }
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;Nautilus&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="problem-1e" class="section level3">
+<h3>Problem 1e</h3>
+<p>IFS code for Tree A:</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 10000
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(0, 0, 0, 0.5), nrow = 2, byrow = TRUE)
+  A2 = matrix(c(0.42, -0.42, 0.42, 0.42), nrow = 2, byrow = TRUE)
+  A3 = matrix(c(0.42, 0.42, -0.42, 0.42), nrow = 2, byrow = TRUE)
+  A4 = matrix(c(0.1, 0, 0, 0.1), nrow = 2, byrow = TRUE)
+
+  b1 = c(0,0)
+  b2 = c(0,0.2)
+  #b3 = c(-0.5632, 0.0320)
+  #b4 = c(-0.5579, -0.1397)
+  #b5 = c(2/3, 1/3)
+  #b6 = c(0, 2/3)
+  #b7 = c(1/3, 2/3)
+  #b8 = c(2/3, 2/3)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 0.05) {x &lt;&lt;- A1 %*% x + b1}
+    else if (p &lt;= 0.15) {x &lt;&lt;- A4 %*% x + b2}
+    else if (p &lt;= 0.40) {x &lt;&lt;- A3 %*% x + b2}
+    else if (p &lt;= 0.40) {x &lt;&lt;- A %*% x + b2}
+    #else if (p &lt;= 5/8) {x &lt;&lt;- A1 %*% x + b5}
+    #else if (p &lt;= 6/8) {x &lt;&lt;- A1 %*% x + b6}
+    #else if (p &lt;= 7/8) {x &lt;&lt;- A1 %*% x + b7}
+    #else {x &lt;&lt;- A1 %*% x + b8}
+    }
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;Tree A&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="problem-1f" class="section level3">
+<h3>Problem 1f</h3>
+<p>IFS code for Tree B:</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 10000
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(0.195, 0.344, 0.443, 0.4431), nrow = 2, byrow = TRUE)
+  A2 = matrix(c(0.462, 0.414, -0.252, 0.361), nrow = 2, byrow = TRUE)
+  A3 = matrix(c(-0.058, -0.070, 0.453, -0.111), nrow = 2, byrow = TRUE)
+  A4 = matrix(c(-0.035, 0.070, -0.469, -0.022), nrow = 2, byrow = TRUE)
+  A5 = matrix(c(-0.637, 0, 0, 0.501), nrow = 2, byrow = TRUE)
+
+  b1 = c(0.4431,0.2452)
+  b2 = c(0.2511,0.5692)
+  b3 = c(0.5976, 0.0969)
+  b4 = c(0.4884, 0.5069)
+  b5 = c(0.8562, 0.2513)
+  #b6 = c(0, 2/3)
+  #b7 = c(1/3, 2/3)
+  #b8 = c(2/3, 2/3)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 0.1699) {x &lt;&lt;- A1 %*% x + b1}
+    else if (p &lt;= 0.1811) {x &lt;&lt;- A2 %*% x + b2}
+    else if (p &lt;= 0.2161) {x &lt;&lt;- A3 %*% x + b3}
+    else if (p &lt;= 0.2198) {x &lt;&lt;- A4 %*% x + b4}
+    else if (p &lt;= 0.2131) {x &lt;&lt;- A5 %*% x + b5}
+    #else if (p &lt;= 6/8) {x &lt;&lt;- A1 %*% x + b6}
+    #else if (p &lt;= 7/8) {x &lt;&lt;- A1 %*% x + b7}
+    #else {x &lt;&lt;- A1 %*% x + b8}
+    }
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;Tree A&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="problem-1f-1" class="section level3">
+<h3>Problem 1f</h3>
+<p>IFS code for Tree C:</p>
+<pre class="r"><code># Input a number for n.
+# Start with n = 100 until you get the code debugged.
+# Then use n = 10000 or 15000 or 20000 or more if needed.
+# Use fig.asp = 1 for a square frame.
+  n = 100
+
+# Input the A matrices and the b vectors
+  A1 = matrix(c(0.195, 0.344, 0.443, 0.4431), nrow = 2, byrow = TRUE)
+  A2 = matrix(c(0.462, 0.414, -0.252, 0.361), nrow = 2, byrow = TRUE)
+  A3 = matrix(c(-0.058, -0.070, 0.453, -0.111), nrow = 2, byrow = TRUE)
+  A4 = matrix(c(-0.035, 0.070, -0.469, -0.022), nrow = 2, byrow = TRUE)
+  A5 = matrix(c(-0.637, 0, 0, 0.501), nrow = 2, byrow = TRUE)
+
+  b1 = c(0.4431,0.2452)
+  b2 = c(0.2511,0.5692)
+  b3 = c(0.5976, 0.0969)
+  b4 = c(0.4884, 0.5069)
+  b5 = c(0.8562, 0.2513)
+  #b6 = c(0, 2/3)
+  #b7 = c(1/3, 2/3)
+  #b8 = c(2/3, 2/3)
+
+# Clear and then initialize the data frame with a random vector x
+  df &lt;- NULL
+  x &lt;- runif(2, 0.0, 1.0)
+  df &lt;- data.frame(x = x[1], y = x[2])
+
+# Fractal function.
+# Change the cumulative probabilities and add lines as needed.
+  Fractal &lt;- function(){
+    p = runif(1, 0.0, 1.0) #Computes a random probability p
+    if (p &lt;= 0.1699) {x &lt;&lt;- A1 %*% x + b1}
+    else if (p &lt;= 0.1811) {x &lt;&lt;- A2 %*% x + b2}
+    else if (p &lt;= 0.2161) {x &lt;&lt;- A3 %*% x + b3}
+    else if (p &lt;= 0.2198) {x &lt;&lt;- A4 %*% x + b4}
+    else if (p &lt;= 0.2131) {x &lt;&lt;- A5 %*% x + b5}
+    #else if (p &lt;= 6/8) {x &lt;&lt;- A1 %*% x + b6}
+    #else if (p &lt;= 7/8) {x &lt;&lt;- A1 %*% x + b7}
+    #else {x &lt;&lt;- A1 %*% x + b8}
+    }
+
+#Loop using the fractal function to fill the data frame with points
+  for(i in 1:n) {Fractal()
+  df = rbind(df, data.frame(x = x[1], y = x[2]))}
+
+# Scatterplot of the data frame.
+# Change title and color as desired.
+  ggplot(df, aes(x,y)) + geom_point(color = &quot;black&quot;, size = 0.8) +
+  ggtitle(&quot;Tree A&quot;) + theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-2" class="section level2">
+<h2>Problem 2</h2>
+<p>Use Newton’s method to find all roots on the given interval. Round to 3 decimal places as needed. Graph the function.</p>
+<div id="problem-2a" class="section level3">
+<h3>Problem 2a</h3>
+<pre class="r"><code># Input the functions f and fprime
+  f &lt;- function(x) {(2*x)^3 + (11*x)^2 - (7*x) - 6}
+  fprime &lt;- function(x) {(6*x)^2 + (22*x) - 7}
+
+# Graph f to see how many roots there are; Adjust xlim as needed
+  x &lt;- -7:2
+  ggplot(data.frame(x), aes(x)) +
+  stat_function(fun = f, color = &quot;blue&quot;, size = 1) + xlim(-7, 2) +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+    ggtitle(&quot;problem 2a&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code># Newton’s method function
+  Newton &lt;- function(f, fprime, x0) {
+  tol = 0.0001
+  maxiter = 100
+  icount = 1
+  x = x0
+  while(abs(f(x)) &gt; tol &amp; icount &lt; maxiter)
+    {x = x - f(x)/fprime(x) # This is the Newton’s method formula
+    icount = icount + 1}
+  print(round(x,4))}
+# Call the function to find each root; Provide an appropriate value for the initial guess x0
+  Newton(f, fprime, 0)</code></pre>
+<pre><code>## [1] -15.1794</code></pre>
+</div>
+<div id="problem-2b" class="section level3">
+<h3>Problem 2b</h3>
+<pre class="r"><code># Input the functions f and fprime
+  f &lt;- function(x) {(3*x)^3 - (x)^2 - (15*x) + 5}
+  fprime &lt;- function(x) {(9*x)^2 - (2*x) - 15}
+
+# Graph f to see how many roots there are; Adjust xlim as needed
+  x &lt;- -3:3
+  ggplot(data.frame(x), aes(x)) +
+  stat_function(fun = f, color = &quot;blue&quot;, size = 1) + xlim(-3, 3) +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+    ggtitle(&quot;problem 2b&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code># Newton’s method function
+  Newton &lt;- function(f, fprime, x0) {
+  tol = 0.0001
+  maxiter = 100
+  icount = 1
+  x = x0
+  while(abs(f(x)) &gt; tol &amp; icount &lt; maxiter)
+    {x = x - f(x)/fprime(x) # This is the Newton’s method formula
+    icount = icount + 1}
+  print(round(x,4))}
+# Call the function to find each root; Provide an appropriate value for the initial guess x0
+  Newton(f, fprime, 0)</code></pre>
+<pre><code>## [1] -0.8597</code></pre>
+</div>
+<div id="problem-2c" class="section level3">
+<h3>Problem 2c</h3>
+<pre class="r"><code># Input the functions f and fprime
+  f &lt;- function(x) {(1.7*x) * sin(5.2 * x) + 1}
+  fprime &lt;- function(x) {1.7 * sin(5.2*x) + (8.84*x) * cos(5.2 * x)}
+
+# Graph f to see how many roots there are; Adjust xlim as needed
+  x &lt;- 0:2
+  ggplot(data.frame(x), aes(x)) +
+  stat_function(fun = f, color = &quot;blue&quot;, size = 1) + xlim(0, 2) +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) + 
+    ggtitle(&quot;problem 2c&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code># Newton’s method function
+  Newton &lt;- function(f, fprime, x0) {
+  tol = 0.0001
+  maxiter = 100
+  icount = 1
+  x = x0
+  while(abs(f(x)) &gt; tol &amp; icount &lt; maxiter)
+    {x = x - f(x)/fprime(x) # This is the Newton’s method formula
+    icount = icount + 1}
+  print(round(x,4))}
+  
+# Call the function to find each root; Provide an appropriate value for the initial guess x0
+  Newton(f, fprime, 1)</code></pre>
+<pre><code>## [1] 1.0998</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-3." class="section level2">
+<h2>Problem 3.</h2>
+<p>Use Newton’s method to find all points of intersection of the given functions. Round to 4 decimal places as needed. Graph the two functions on the same set of axes.</p>
+<pre class="r"><code>  # Define f and g
+
+  f &lt;- function(x) {x + 2}
+  g &lt;- function(x) {exp(1)^(2*x)}
+  x &lt;- -3:10
+  
+  # Plot the two graphs.
+  
+  ggplot(data.frame(x), aes(x)) +
+    stat_function(fun = f, color = &quot;red&quot;, size = 1) +
+    stat_function(fun = g, color = &quot;blue&quot;, size = 1) +
+    xlim(-3, 1.5) + 
+    ylim(-1, 10) + # This adjustment is necessary to actually be able to see &quot;f(x)&quot;. It gives a warning but that&#39;s a necessary evil I think.
+    geom_hline(yintercept = 0) +
+    geom_vline(xintercept = 0)</code></pre>
+<pre><code>## Warning: Removed 8 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code># Input the functions h and hprime
+  h &lt;- function(x) {(x+2) - exp(1)^(2*x)}
+  hprime &lt;- function(x) {1 - (2 * exp(1)^(2 * x))}
+
+# Newton’s method function
+  Newton &lt;- function(h, hprime, x0) {
+  tol = 0.0001
+  maxiter = 100
+  icount = 1
+  x = x0
+  while(abs(h(x)) &gt; tol &amp; icount &lt; maxiter)
+    {x = x - h(x)/hprime(x) # This is the Newton’s method formula
+    icount = icount + 1}
+  print(round(x, digits = 4))}
+  
+# Call the function to find each root; Provide an appropriate value for the initial guess x0
+  Newton(h, hprime, 0)</code></pre>
+<pre><code>## [1] 0.4476</code></pre>
+<p>I’m not entirely sure how to make this problem find both intersections. The one in output IS correct, but there should be two intersections I believe, not one. Regardless, this seems mostly correct.</p>
+<div id="problem-3b" class="section level3">
+<h3>Problem 3b</h3>
+<pre class="r"><code>  # Define f and g
+
+  f &lt;- function(x) {exp(1)^x + log(x)}
+  g &lt;- function(x) {4}
+  x &lt;- -1:3
+  
+  # Plot the two graphs.
+  
+  ggplot(data.frame(x), aes(x)) +
+    stat_function(fun = f, color = &quot;red&quot;, size = 1) +
+    stat_function(fun = g, color = &quot;blue&quot;, size = 1) +
+    xlim(-1, 2) + 
+    ylim(-1, 5) + 
+    geom_hline(yintercept = 0) +
+    geom_vline(xintercept = 0)</code></pre>
+<pre><code>## Warning in log(x): NaNs produced</code></pre>
+<pre><code>## Warning: Removed 54 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code># Input the functions h and hprime
+  h &lt;- function(x) {(exp(1)^x + log(x)) - 4}
+  hprime &lt;- function(x) {exp(1)^x - (1/x)}
+
+# Newton’s method function
+  Newton &lt;- function(h, hprime, x0) {
+  tol = 0.0001
+  maxiter = 100
+  icount = 1
+  x = x0
+  while(abs(h(x)) &gt; tol &amp; icount &lt; maxiter)
+    {x = x - h(x)/hprime(x) # This is the Newton’s method formula
+    icount = icount + 1}
+  print(round(x, digits = 4))}
+  
+# Call the function to find each root; Provide an appropriate value for the initial guess x0
+  Newton(h, hprime, 1)</code></pre>
+<pre><code>## [1] 1.3153</code></pre>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-4." class="section level2">
+<h2>Problem 4.</h2>
+<div id="problem-4a" class="section level3">
+<h3>Problem 4a</h3>
+<p>Draw at least two graphs of the entire Mandelbrot set with different color schemes.</p>
+<pre class="r"><code>mb &lt;- mandelbrot(iterations = 500)
+  cols &lt;- mandelbrot_palette(brewer.pal(11, &quot;RdYlBu&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>mb &lt;- mandelbrot(iterations = 500)
+  cols &lt;- mandelbrot_palette(brewer.pal(12, &quot;Set3&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+<div id="problem-4b" class="section level3">
+<h3>Problem 4b</h3>
+<p>Use xlim = c(-0.75, 0.72), ylim = c(0.17, 0.2) to zoom in on Seahorse Valley.</p>
+<pre class="r"><code>mb &lt;- mandelbrot(xlim = c(-0.75, -0.72), ylim = c(0.17, 0.2), iterations = 500)
+  cols &lt;- mandelbrot_palette(brewer.pal(11, &quot;RdYlBu&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="problem-4c" class="section level3">
+<h3>Problem 4c</h3>
+<pre class="r"><code>mb &lt;- mandelbrot(xlim = c(-0.9, -0.7), ylim = c(0, 0.4), iterations = 500)
+  cols &lt;- mandelbrot_palette(brewer.pal(11, &quot;RdYlBu&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+<div id="problem-4d" class="section level3">
+<h3>Problem 4d</h3>
+<p>Zoom in on Elephant Valley</p>
+<pre class="r"><code>mb &lt;- mandelbrot(xlim = c(0.271, 0.276), ylim = c(-0.008, -0.004), iterations = 500)
+  cols &lt;- mandelbrot_palette(brewer.pal(11, &quot;RdYlBu&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="problem-4e" class="section level3">
+<h3>Problem 4e</h3>
+<pre class="r"><code>mb &lt;- mandelbrot(xlim = c(0.248, 0.28), ylim = c(-0.01, 0.01), iterations = 500)
+  cols &lt;- mandelbrot_palette(brewer.pal(11, &quot;RdYlBu&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="problem-4f" class="section level3">
+<h3>Problem 4f</h3>
+<p>Zoom in on at least one other region on the boundary of the Mandelbrot set</p>
+<pre class="r"><code>mb &lt;- mandelbrot(xlim = c(-0.73405, -0.73395), ylim = c(0.2039, 0.2040), iterations = 1000)
+  cols &lt;- mandelbrot_palette(brewer.pal(11, &quot;RdYlBu&quot;), fold = FALSE)
+  plot(mb, col = cols, transform = &quot;log&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="problem-5-pythagorean-tree" class="section level2">
+<h2>Problem 5 [Pythagorean Tree]</h2>
+<p>Load the package grid. Run the following code.</p>
+<pre class="r"><code>grid.newpage()
+l = 0.15 # Length of the square
+gr &lt;- rectGrob(width=l, height=l, name=&quot;gr&quot;) # Basic Square
+pts &lt;- data.frame(level=1, x=0.5, y=0.1, alfa=0) # Centers of the squares
+
+for (i in 2:10) #10=Deep of the fractal. Feel free to change this
+    {df&lt;-pts[pts$level==i-1,] # This == (2 equal signs)
+    for (j in 1:nrow(df))
+    {pts &lt;- rbind(pts, c(i, df[j,]
+    $x-2*l*((1/sqrt(2))^(i-1))*sin(df[j,]$alfa+pi/4)-
+    0.5*l*((1/sqrt(2))^(i-2))*sin(df[j,]$alfa+pi/4-3*pi/4),
+    df[j,]$y+2*l*((1/sqrt(2))^(i-1))*cos(df[j,]$alfa+pi/4)+
+    0.5*l*((1/sqrt(2))^(i-2))*cos(df[j,]$alfa+pi/4-3*pi/4),
+    df[j,]$alfa+pi/4))
+    pts &lt;- rbind(pts, c(i, df[j,]
+    $x-2*l*((1/sqrt(2))^(i-1))*sin(df[j,]$alfa-pi/4)-
+    0.5*l*((1/sqrt(2))^(i-2))*sin(df[j,]$alfa-pi/4+3*pi/4),
+    df[j,]$y+2*l*((1/sqrt(2))^(i-1))*cos(df[j,]$alfa-pi/4)+
+    0.5*l*((1/sqrt(2))^(i-2))*cos(df[j,]$alfa-pi/4+3*pi/4),
+    df[j,]$alfa-pi/4))}}
+    
+for (i in 1:nrow(pts))
+    {grid.draw(editGrob(gr, vp=viewport(x=pts[i,]$x, y=pts[i,]$y,
+    w=((1/sqrt(2))^(pts[i,]$level-1)),
+    h=((1/sqrt(2))^(pts[i,]$level-1)),
+    angle=pts[i,]$alfa*180/pi),
+    gp=gpar(col=0, lty=&quot;solid&quot;,
+    fill=rgb(139*(nrow(pts)-i)/(nrow(pts)-1),
+    (186*i+69*nrow(pts)-255)/(nrow(pts)-1),
+    19*(nrow(pts)-i)/(nrow(pts)-1),
+    alpha= (-110*i+200*nrow(pts)-90)/(nrow(pts)-1), max=255))))}</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
