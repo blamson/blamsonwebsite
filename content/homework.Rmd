@@ -2,7 +2,7 @@
 title: College Homework PDF files
 ---
 
-Below are links to all of the pdf files that I can't be bothered to get working on the site natively. These go back to my first proper math class after becoming a math major, Trigonometry! I first started using LaTex with trig and I was completely new to anything involving code. What you'll see here is my process learning LaTex and math simultaneously, so the process should prove interesting. I can't promise consistent quality here but I had a lot of fun making these so I wanted to keep them consolidated somewhere!
+Below are links to all of the pdf files that I can't be bothered to get working on the site natively. These go back to my first proper math class after becoming a math major, Trigonometry! I first started using LaTex with trig and I was completely new to anything involving code. What you'll see here is my experience learning LaTex and math simultaneously, so the process should prove interesting. I can't promise consistent quality here but I had a lot of fun making these so I wanted to keep them consolidated somewhere!
 
 ### MTH 1120 - Trigonometry (Spring 2021)
 

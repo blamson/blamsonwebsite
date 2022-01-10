@@ -47,18 +47,21 @@ params:
 
 menu:
   nav:
-    - name: About
-      url: /about/
-      weight: 1
-    - name: Github
-      url: https://github.com/blamson
-      weight: 2
     - name: Blog
       url: /post/
-      weight: 4
-    - name: Tags
-      url: /tags/
+      weight: 1
+    - name: About Me
+      url: /about/
       weight: 5
+    - name: Github
+      url: https://github.com/blamson
+      weight: 3
+    - name: Linkedin
+      url: https://www.linkedin.com/in/brady-lamson-6b58161b7
+      weight: 4
+    # - name: Tags
+    #   url: /tags/
+    #   weight: 5
     - name: Homework pdfs
       url: /homework/
 
