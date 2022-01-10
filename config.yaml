@@ -20,7 +20,13 @@ imaging:
 params:
   description: MSU Denver Statistical Science Student, Honors Program member, Statistical Science Club Officer.
   homeMetaContent: An accessibility-friendly Hugo theme, ported from the original Cupper project.
-  footer: Made with [Hugo](https://gohugo.io/). Themed by [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Deployed to [Netlify](https://www.netlify.com/).
+  footer: |
+    [Resume](/Lamson_Brady_CV.pdf/)
+  
+    Personal Email: blamson@msudenver.edu
+    
+    Made with [Hugo](https://gohugo.io/). Themed by [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Deployed to [Netlify](https://www.netlify.com/).
+  header: Testing
   # For more date formats see https://gohugo.io/functions/format/
   dateFormat: Jan 2, 2006
   codePenUser: someUser
@@ -41,18 +47,18 @@ params:
 
 menu:
   nav:
+    - name: About
+      url: /about/
+      weight: 1
+    - name: Github
+      url: https://github.com/blamson
+      weight: 2
     - name: Blog
       url: /post/
       weight: 4
     - name: Tags
       url: /tags/
       weight: 5
-    - name: About
-      url: /about/
-      weight: 2
-    - name: Github
-      url: https://github.com/blamson
-      weight: 3
     - name: Homework pdfs
       url: /homework/
 
