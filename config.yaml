@@ -23,7 +23,7 @@ params:
   footer: |
     [Resume](/Lamson_Brady_CV.pdf/)
   
-    Personal Email: blamson@msudenver.edu
+    Email: blamson@msudenver.edu
     
     Made with [Hugo](https://gohugo.io/). Themed by [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Deployed to [Netlify](https://www.netlify.com/).
   header: Testing
