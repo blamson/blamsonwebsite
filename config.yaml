@@ -19,7 +19,7 @@ imaging:
 
 params:
   description: MSU Denver Statistical Science Student, Honors Program member, Statistical Science Club Officer.
-  homeMetaContent: An accessibility-friendly Hugo theme, ported from the original Cupper project.
+  homeMetaContent: Personal website of Brady Lamson, statistics student and aspiring data scientist. 
   footer: |
     [Resume](/Lamson_Brady_CV.pdf/)
   
