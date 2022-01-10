@@ -3,20 +3,24 @@ date: "2016-05-05T21:48:51-07:00"
 title: Who Am I? 
 ---
 
-My names Brady, I'm a Statistical Science major / Computer Science minor at MSU Denver. Previously I acquired my Associates Degree of Science - Psychology from the Community College of Denver. In my academic life I keep myself busy as a member of the MSU Honors Program and am also an officer of the MSU Statistical Science club. In my personal time I dive deep into obscure retro video games and bizarre movies! 
+My names Brady Lamson, I'm a Statistical Science major / Computer Science minor at MSU Denver. Previously I acquired my Associates Degree of Science - Psychology from the Community College of Denver. In my academic life I keep myself busy as a member of the MSU Denver Honors Program and am also an officer of the MSU Statistical Science club. In my personal time I dive deep into obscure retro video games and bizarre movies! I hope to become good enough at what I do to become a Data Scientist in the future.
 
-I intend to use these skills I'm developing to pursue a career in Data Science. It is my hope that by expanding my technical knowledge I can glean more wisdom from the world we all live in. I'm most experienced in R and Python, but I do have exposure to various other tools and am excited to continue growing my skillset. This blog will serve to chronicle my time through my journey, hosting various homework assignments and projects. 
+I hope that as I progress as a student and acquire a deeper understanding of the world I can use that growth to finally give back and contribute to it. Data sets are oftentimes a window into a world I otherwise would never have access to, and that makes them incredibly satisfying to explore and dig into. I want to become an expert at navigating these spaces, to be able to share the stories hidden in the data with everyone. I never to want to stop learning, to stop being being challenged. I know that data science can help me meet those goals. 
 
-Programming Knowledge:
+I hope that didn't get too serious! Since starting this journey it's felt like I've been drinking from a fire hose. As such I've collected experience in a variety of areas. You could say I have an approximate knowledge of many things. To give an idea of where I'm at I've listed said many things below.
 
+### Programming Knowledge:
 - Beginner
     - R
     - Python
     - Java
     - LaTex
     - Markdown
+    - R Shiny
+    - Git
 - Exposed to
     - SQL
-    - R Shiny
+    - CSS
+    - HTML
 
-If you need to contact me I can be reached via email at blamson@msudenver.edu.
+If you need to contact me I can be reached via email at blamson@msudenver.edu. You can find my resume [here](/Lamson_Brady_CV.pdf/).
