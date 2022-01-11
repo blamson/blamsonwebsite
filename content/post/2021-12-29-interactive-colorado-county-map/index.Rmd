@@ -84,3 +84,105 @@ widgetframe::frameWidget(map2)
 
 
 I still have a ton to do but as of Dec 29th thats where I'm at! I hope to update this more as I get further along. I still need to integrate this with our giant data-set so theres a lot to do. 
+
+
+## Update: Jan 11
+
+A lot of progress has been made on the map. I have gotten it working with our giant data-set and have modified a number of features. 
+I have added:
+
+- A different palette
+
+- Updated marker icons
+
+- Clustering for the awarded degrees, zooming in shows which batch of degrees belong to which school
+
+Not shown here:
+
+- Shiny re-activity has been finally added! In the web application I'm working on you can filter by the degree level, so you can look at only associates degrees for instance. That would be a huge hassle to show here though. 
+
+- The code to setup the data. It wasn't done by me anyway and I don't want this post to be too bogged down by giant batches of code. 
+
+```{r, echo=FALSE}
+  options(readr.show_col_types = FALSE)
+  data_url <- "https://data.colorado.gov/resource/hxf8-ab6k.csv?$limit=250000"
+  location_df <- readRDS("institution_locations.rds")
+
+  #print("Fetching data from url...")
+
+  degrees_data <- data_url |>
+    httr::GET() |>
+    httr::content()
+
+  #print("Found data!")
+
+  ## Clean/Organize data
+  ad_org <- degrees_data |>
+    dplyr::arrange(
+      year,
+      institutionname
+    ) |>
+    dplyr::filter(
+      !is.na(recordcount)
+    ) |>
+    dplyr::mutate(
+      programname = ifelse(
+        test = is.na(programname),
+        yes = "General",
+        no = programname
+      )
+    ) |>
+    dplyr::left_join(location_df, by = "institutionname")
+
+  #print("Data cleaned and ready for use!")
+```
+
+```{r}
+colorado_counties <- maps::map("county", 'colorado', fill = TRUE, plot = FALSE)
+
+map3 <- leaflet(data = colorado_counties, 
+              options = leafletOptions(
+                minZoom = 6,
+                maxZoom = 18)
+      ) |>
+        addProviderTiles(providers$Thunderforest.MobileAtlas) |>
+        addProviderTiles(providers$Stamen.TonerLines,
+                         options = providerTileOptions(opacity = 0.35)) |>
+        addProviderTiles(providers$Stamen.TonerLabels) |>
+        addMarkers(ad_org$long,
+                   ad_org$lat,
+                   clusterOptions = markerClusterOptions(spiderfyOnMaxZoom = FALSE)
+                   ) |>
+        addAwesomeMarkers(lng = unique(ad_org$long),
+                   lat = unique(ad_org$lat), 
+                   icon = awesomeIcons(icon = 'fa-university', 
+                                       markerColor = 'green', 
+                                       iconColor = 'black', 
+                                       library = "fa"),
+                   popup = unique(ad_org$institutionname),
+                   options = markerOptions(opacity = .6, 
+                                           riseOnHover = TRUE)
+                   ) |>
+        addPolygons(
+          color = "#444444",
+          weight = 1.5,
+          smoothFactor = 1, 
+          fillColor = RColorBrewer::brewer.pal(11, "Spectral"),
+          stroke = TRUE,
+          highlightOptions = highlightOptions(
+            stroke = TRUE,
+            color = "white",
+            weight = 5,
+            bringToFront = TRUE)
+        )
+```
+
+```{r}
+widgetframe::frameWidget(map3)
+```
+
+There's still a **LOT** I want to do here. The elephant in the room is how the green markers completely overshadow the orange clusters. That would be fine, except for the fact I want the clusters to be the focus, not the markers. You can't even see the biggest cluster, the one in Denver. 
+
+Unfortunately I've struggled to find a way to make the clusters pop out more, at least with what is built into R. Ideally I could make the circles bigger based on the number of degrees and have them in front of the markers, but I haven't been able to figure out how to accomplish that. I found options [here](https://github.com/Leaflet/Leaflet.markercluster), but I don't know how to implement these in R.
+
+Another thing is that I'd like to make the markers color tied to the number of degrees awarded per school, though that should be easy to accomplish. Regardless, I feel like this is coming along nicely! This is a very fun package to play around with and I can see myself continuing to jump straight to this with future data sets.

@@ -75,3 +75,61 @@ map2 &lt;- leaflet(data = colorado_counties,
 <div id="htmlwidget-2" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2">{"x":{"url":"index_files/figure-html//widgets/widget_unnamed-chunk-4.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p>I still have a ton to do but as of Dec 29th thats where I’m at! I hope to update this more as I get further along. I still need to integrate this with our giant data-set so theres a lot to do.</p>
+<div id="update-jan-11" class="section level2">
+<h2>Update: Jan 11</h2>
+<p>A lot of progress has been made on the map. I have gotten it working with our giant data-set and have modified a number of features.
+I have added:</p>
+<ul>
+<li><p>A different palette</p></li>
+<li><p>Updated marker icons</p></li>
+<li><p>Clustering for the awarded degrees, zooming in shows which batch of degrees belong to which school</p></li>
+</ul>
+<p>Not shown here:</p>
+<ul>
+<li><p>Shiny re-activity has been finally added! In the web application I’m working on you can filter by the degree level, so you can look at only associates degrees for instance. That would be a huge hassle to show here though.</p></li>
+<li><p>The code to setup the data. It wasn’t done by me anyway and I don’t want this post to be too bogged down by giant batches of code.</p></li>
+</ul>
+<pre class="r"><code>colorado_counties &lt;- maps::map(&quot;county&quot;, &#39;colorado&#39;, fill = TRUE, plot = FALSE)
+
+map3 &lt;- leaflet(data = colorado_counties, 
+              options = leafletOptions(
+                minZoom = 6,
+                maxZoom = 18)
+      ) |&gt;
+        addProviderTiles(providers$Thunderforest.MobileAtlas) |&gt;
+        addProviderTiles(providers$Stamen.TonerLines,
+                         options = providerTileOptions(opacity = 0.35)) |&gt;
+        addProviderTiles(providers$Stamen.TonerLabels) |&gt;
+        addMarkers(ad_org$long,
+                   ad_org$lat,
+                   clusterOptions = markerClusterOptions(spiderfyOnMaxZoom = FALSE)
+                   ) |&gt;
+        addAwesomeMarkers(lng = unique(ad_org$long),
+                   lat = unique(ad_org$lat), 
+                   icon = awesomeIcons(icon = &#39;fa-university&#39;, 
+                                       markerColor = &#39;green&#39;, 
+                                       iconColor = &#39;black&#39;, 
+                                       library = &quot;fa&quot;),
+                   popup = unique(ad_org$institutionname),
+                   options = markerOptions(opacity = .6, 
+                                           riseOnHover = TRUE)
+                   ) |&gt;
+        addPolygons(
+          color = &quot;#444444&quot;,
+          weight = 1.5,
+          smoothFactor = 1, 
+          fillColor = RColorBrewer::brewer.pal(11, &quot;Spectral&quot;),
+          stroke = TRUE,
+          highlightOptions = highlightOptions(
+            stroke = TRUE,
+            color = &quot;white&quot;,
+            weight = 5,
+            bringToFront = TRUE)
+        )</code></pre>
+<pre class="r"><code>widgetframe::frameWidget(map3)</code></pre>
+<div id="htmlwidget-3" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"url":"index_files/figure-html//widgets/widget_unnamed-chunk-7.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>There’s still a <strong>LOT</strong> I want to do here. The elephant in the room is how the green markers completely overshadow the orange clusters. That would be fine, except for the fact I want the clusters to be the focus, not the markers. You can’t even see the biggest cluster, the one in Denver.</p>
+<p>Unfortunately I’ve struggled to find a way to make the clusters pop out more, at least with what is built into R. Ideally I could make the circles bigger based on the number of degrees and have them in front of the markers, but I haven’t been able to figure out how to accomplish that. I found options <a href="https://github.com/Leaflet/Leaflet.markercluster">here</a>, but I don’t know how to implement these in R.</p>
+<p>Another thing is that I’d like to make the markers color tied to the number of degrees awarded per school, though that should be easy to accomplish. Regardless, I feel like this is coming along nicely! This is a very fun package to play around with and I can see myself continuing to jump straight to this with future data sets.</p>
+</div>
