@@ -194,9 +194,9 @@ School has started back up and I super don't have time to work on this much anym
 I'm beginning to reach the point where a lot of the tutorials I rely on are running dry. I'm starting to have to figure stuff out on my own and man am I not succeeding on that front. Here's a list of some exciting bugs I'm running into! 
 
 ### The Absolute PITA (panel)
-The absolute panel in shiny is a really neat tool. Since my map takes up all of the available real estate there isn't any room for a traditional sidebar. That's where the absolute panel comes in. It can sit above my map, can show any kind of element I want from input selectors like filters or even output like entire plots! You can even drag it around so it doesnt get in the way of anything on the map. It's dope and I desperately want to use it. The problem is it really doesn't want to me to. 
+The absolute panel in shiny is a really neat tool. Since my map takes up all of the available real estate there isn't any room for a traditional sidebar. That's where the absolute panel comes in. It can sit above my map, can show input selectors like filters or output like entire plots. You can even drag it around so it doesn't get in the way of anything on the map. It's dope and I desperately want to use it. The problem is it really doesn't want me to.
 
-The first, and biggest, issue with the panel is that I cannot for the life of me satisfy its width desires. Meet the filter sidebar, it looks like this whether I give it 200 pixels of width or 500. 
+The first, and biggest, issue with the panel is that I cannot for the life of me satisfy its desires for width. Meet the filter sidebar, it looks like this whether I give it 200 pixels of width or 500. 
 
 ```{r, echo=FALSE, out.width="400px"}
 knitr::include_graphics("images/step_filter_what_are_you_doing.png")
