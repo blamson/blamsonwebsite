@@ -186,3 +186,40 @@ There's still a **LOT** I want to do here. The elephant in the room is how the g
 Unfortunately I've struggled to find a way to make the clusters pop out more, at least with what is built into R. Ideally I could make the circles bigger based on the number of degrees and have them in front of the markers, but I haven't been able to figure out how to accomplish that. I found options [here](https://github.com/Leaflet/Leaflet.markercluster), but I don't know how to implement these in R.
 
 Another thing is that I'd like to make the markers color tied to the number of degrees awarded per school, though that should be easy to accomplish. Regardless, I feel like this is coming along nicely! This is a very fun package to play around with and I can see myself continuing to jump straight to this with future data sets.
+
+## Update: Jan 29th 
+
+School has started back up and I super don't have time to work on this much anymore. I'm still trying about once a week though. I don't have much in the way of updates, though I do have some thoughts.
+
+I'm beginning to reach the point where a lot of the tutorials I rely on are running dry. I'm starting to have to figure stuff out on my own and man am I not succeeding on that front. Here's a list of some exciting bugs I'm running into! 
+
+### The Absolute PITA (panel)
+The absolute panel in shiny is a really neat tool. Since my map takes up all of the available real estate there isn't any room for a traditional sidebar. That's where the absolute panel comes in. It can sit above my map, can show any kind of element I want from input selectors like filters or even output like entire plots! You can even drag it around so it doesnt get in the way of anything on the map. It's dope and I desperately want to use it. The problem is it really doesn't want to me to. 
+
+The first, and biggest, issue with the panel is that I cannot for the life of me satisfy its width desires. Meet the filter sidebar, it looks like this whether I give it 200 pixels of width or 500. 
+
+```{r, echo=FALSE, out.width="400px"}
+knitr::include_graphics("images/step_filter_what_are_you_doing.png")
+```
+
+The only thing that can satisfy its hunger is 1000 pixels of width, which has the neat "feature" of being able to drag it from nearly anywhere on the screen! How convenient. Unfortunately that means you can't interact with much else on the map. A sacrifice the absolute panel will happily make. 
+
+The frustrating thing with anything involving the absolute panel is the lack of documentation. Like, it's [there](https://shiny.rstudio.com/reference/shiny/0.12.1/absolutePanel.html) don't get me wrong, but nothing in the docs seems to help me with my specific problem. I've scoured stackoverflow threads and have tried a variety of their fixes. One such fix involved using the relative CSS units "vw" and "vh". This is nice to know about but, while those are definitely superior means of defining length and width, they do not satisfy the hunger of the primeval beast that is *the panel*. I really do not know where to go with this bug in particular. Hopefully I can resolve it sooner rather than later because, man, does it make using this web application impossible. 
+
+### The Color of Madness
+
+This is less of a bug and more of an issue stemming from my own incompetence. See, I'm considering abandoning the cluster feature. It's really cool but, due to the how few unique latitudes and longitudes there are, isn't as visually interesting as it would typically be with a more varied data set. This is simply a limitation of the data and I want to avoid forcing a tool that I don't think is truly appropriate. 
+
+As an alternative I'm using a method that I have shamelessly taken from the [leaflet for R tutorial](https://rstudio.github.io/leaflet/markers.html). I want to change the colors of the markers based on the relative frequency of degrees awarded there. As an example, locations with low amounts of degrees compared to the total would be colored say, green, where ones with the bulk of degrees might be red. Simple enough one would think. Relative frequency also makes sure I'm not using arbitrary *magic numbers* that are either too strict or too lenient based on how you filter the data. 
+
+The problem isn't calculating the relative frequency. The problem isn't assigning the colors either. The problem is getting them assigned to the right location elegantly. I believe what's happening is that the list of colors I'm generating is just getting recycled through this ungodly large data set and is essentially being assigned at random. Below we have an example where all three colors are wrong! Also say hi to Mr. Panel again, he made getting this screenshot **very** exciting. 
+
+```{r, out.width="400px", echo=FALSE}
+knitr::include_graphics("images/color_me_frazzled.png")
+```
+
+These are the two big blocking issues I'm facing right now. I'm also experiencing a problem where I want to replace the popups with labels that show up when you hover the mouse over. The labels work perfectly but apparently they don't like to display multi-line information without some, shall we say, motivation. Apparently the fix is to use some HTML code but I don't know how to include the variables I want to include in the HTML. It also doesn't help that the extra information I want to include, like the number of degrees awarded by the school, is being assigned incorrectly just like the colors for the same reason! 
+
+Overall I think Shiny has really taken how I think through R troubleshooting and flipped it on its head. Everything is so *weird* and it makes me doubt my own confidence. Couple that with an inexperience with HTML or CSS which help you sidestep some rakes and you've got yourself someone who experienced a lot of rakes hitting me in the face today. 
+
+It is still really cool though and I know I can get this where I want it to be. Days where I just stumble around and run into walls are useful and I have to remind myself of that constantly. The tutorials and bountiful stackoverflow threads go away as your problems get more niche and I have to get comfortable with this feeling. I'll get there but gosh, this can be exhausting sometimes. 
