@@ -1,0 +1,109 @@
+---
+title: MTH-3270 Modern Data Science with R Notes (Ch. 1, 2)
+author: Brady Lamson
+date: '2022-01-30'
+slug: mth-3270-modern-data-science-chapters-1-and-2-notes
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="{{< blogdown/postref >}}index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/datatables-binding/datatables.js"></script>
+<script src="{{< blogdown/postref >}}index_files/jquery/jquery-3.6.0.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/crosstalk/js/crosstalk.min.js"></script>
+
+
+<hr />
+<div id="chapter-1-prologue-why-data-science" class="section level1">
+<h1>Chapter 1: Prologue: Why Data Science</h1>
+<div id="what-is-data-science" class="section level2">
+<h2>1.1 What is data science?</h2>
+<p>The authors define <strong>data science</strong> simply and broadly. They “see it as the science of extracting meaningful information from data” (Baumer et al, 4).</p>
+<p>This book appears to have a focus more on building <em>data acumen</em> than focusing on programming specifically. <em>Data acumen</em>, according to The National Academies of Science, Engineering, and Medicine in 2018, includes a variety of capacities such as:</p>
+<ul>
+<li><p>Foundations</p>
+<ul>
+<li><p>Mathematical</p></li>
+<li><p>Computational</p></li>
+<li><p>Statistical</p></li>
+</ul></li>
+<li><p>Data:</p>
+<ul>
+<li><p>Management</p></li>
+<li><p>Curation</p></li>
+<li><p>Description</p></li>
+<li><p>Visualization</p></li>
+<li><p>Modeling</p></li>
+<li><p>Assessment</p></li>
+</ul></li>
+<li><p>Workflow</p></li>
+<li><p>Reproducibility</p></li>
+<li><p>Communication</p></li>
+<li><p>Team-work</p></li>
+<li><p>Domain-specific considerations</p></li>
+<li><p>Ethical problem solving.</p></li>
+</ul>
+<hr />
+<p>This book will focus on techniques utilizing <strong>R</strong> and its packages <strong>dplyr</strong> and <strong>ggplot2</strong>, two packages I am all too familiar with at this point!</p>
+<p>The big hurdles to overcome with how data exists in the modern world is, according to the book, that it isn’t collected in a way that may be useful to usual statistical tests like the t-test or ANOVA for instance. A lot of data out there is observational and was not collected at random which means different techniques are more appropriate here. The book refers to things like <em>predictive models</em>, interactive visualizations and <em>web applications</em> that allow for easier data exploration for the end user.</p>
+<p>That last part in particular has me interested as I have been working on a web application over the past month (Dec 2021 - Jan 2022) that has taught me how a data scientist would deliver a web application that may allow a data analyst to better do their job. Selling web applications for this purpose is an entire industry apparently! That’s crazy.</p>
+<hr />
+</div>
+</div>
+<div id="chapter-2-data-visualization" class="section level1">
+<h1>Chapter 2: Data Visualization</h1>
+<div id="composing-data-graphics" class="section level2">
+<h2>2.2 Composing data graphics</h2>
+<p>“Former New York Times intern and <a href="FlowingData.com">FlowingData.com</a> creator Nathan Yau makes the analogy that creating data graphics is like cooking: Anyone can learn to type graphical commands and generate plots on the computer. Similarly, anyone can heat up food in a microwave. What separates a high-quality visualization from a plain one are the same elements that separate great chefs from novices: mastery of their tools, knowledge of their ingredients, insight, and creativity (Yau 2013).”</p>
+<p>Data graphics can be understood in terms of four basic elements:</p>
+<ul>
+<li><p>Visual Cues</p></li>
+<li><p>Coordinate Systems</p></li>
+<li><p>Scale</p></li>
+<li><p>Context</p></li>
+</ul>
+<div id="visual-cues" class="section level3">
+<h3>2.2.1 Visual Cues</h3>
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9],["Position","Length","Angle","Direction","Shape","Area","Volume","Shade","Color"],["numerical","numerical","numerical","numerical","categorical","numerical","numerical","either","either"],["where in relation to other things?","how big (in one dimension)?","how wide? parallel to something else?","at what slope? in a time series, going up or down?","belonging to which group?","how big (in two dimensions)?","how big (in three dimensions)?","to what extent? how severely?","to what extent? how severely?"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Ease of Perception<\/th>\n      <th>Visual Cue<\/th>\n      <th>Variable Type<\/th>\n      <th>Question<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>Apparently, according to research done back in the 80s, our ability to notice differences in scale descends in the same order as the rows of this table. (Cleaveland and McGill 1984). This explains why so many people prefer bar charts to pie charts. I’ve read enough rants on pie charts to be relatively unsurprised by this information. I’m surprised to see color so low though! I’ll have to keep that in mind.</p>
+<hr />
+<p>“The purpose of data graphics is to help the viewer make <em>meaningful</em> comparisons, but a bad data graphic can do just the opposite: It can instead focus the viewer’s attention on meaningless artifacts, or ignore crucial pieces of relevant but external knowledge.” (Baumer et al)</p>
+<hr />
+<p>There are <strong>three</strong> common ways of incorporating more variables into a two-dimensional data graphic:</p>
+<ul>
+<li><p><strong>Small multiples:</strong> Also known as <em>facets</em>, a single data graphic can be composed of several small multiples of the same basic plot, with one (discrete) variable changing in each of the small sub-images.</p></li>
+<li><p><strong>Layers:</strong> It is sometimes appropriate to draw a new layer on top of an existing data graphic. This new layer can provide context or comparison, but there is a limit to how many layers humans can reliably parse.</p></li>
+<li><p><strong>Animation:</strong> If time is the additional variable, then an animation can sometimes effectively convey changes in that variable. Of course, this doesn’t work on the printed page and makes it impossible for the user to see all the data at once.</p></li>
+</ul>
+</div>
+<div id="color" class="section level3">
+<h3>2.2.2 Color</h3>
+<p>“Color is one of the flashiest, but most misperceived and misused visual cues” (Baumer et al). You need to be careful with color and shading with visuals. If slight differences in data are important, then it is likely using shade is a bad call. It can be useful for a small number of levels of categorical variables though. That’s not to say to <em>not</em> use color though, it can be nice if you’re representing a <em>third</em> or <em>fourth</em> numeric quantity on a scatterplot.</p>
+<p>Also, probably keep in mind that a <strong>LOT</strong> of people are colorblind. What’s dope here is that a package I use a lot, <strong>RColorBrewer</strong>, has colorblind safe palettes. I didn’t know that about the package which is a very pleasant surprise. Note: This package was inspired by the work of <a href="https://en.wikipedia.org/wiki/Cynthia_Brewer">Cynthia Brewer</a> who created the <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">ColorBrewer website</a>.</p>
+<p>These palettes can prove useful for three types of single-variable numeric data.</p>
+<ul>
+<li><p><strong>Sequential:</strong> The ordering of the data has only one direction.</p></li>
+<li><p><strong>Diverging:</strong> The ordering of the data has two directions. Think political charts where solid reds represent a more republican state.</p></li>
+<li><p><strong>Qualitative:</strong> There is no ordering of the data. Color here differentiates different categories.</p></li>
+</ul>
+</div>
+</div>
+<div id="creating-effective-presentations" class="section level2">
+<h2>2.4 Creating Effective Presentations</h2>
+<p>Some things to remember when giving a presentation:</p>
+<ul>
+<li><p><strong>Budget your time</strong></p></li>
+<li><p><strong>Don’t write too much on each slide</strong></p></li>
+<li><p><strong>Put your problem in context</strong></p></li>
+<li><p><strong>Speak loudly and clearly</strong></p></li>
+<li><p><strong>Tell a story, but not necessarily the whole story</strong></p></li>
+</ul>
+</div>
+</div>
