@@ -4,10 +4,10 @@ author: Brady Lamson
 date: '2021-12-28'
 slug: fire-emblem-and-its-little-white-lies
 categories: []
-tags: [Fire Emblem, Statistics, Probability, Video Games]
+tags: [Statistics, Video Games]
+image: Fire_Emblem_logo.webp
 ---
 
-![](Fire_Emblem_logo.svg)
 
 Fire emblem is a popular strategy video game. There are currently 16 games in the franchise and I've played the majority of them. For those unfamiliar you have a roster of interesting characters that act on a field with a grid. On that grid there is an enemy army, one you're tasked with defeating. It has objectives like defeating the boss, routing the entire enemy force, or defending a point from waves of reinforcements.
 

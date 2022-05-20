@@ -7,7 +7,6 @@ categories: []
 tags: [Homework]
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="problem-1." class="section level2">
@@ -143,12 +142,12 @@ wordcloud(ex_vector, seq(1, 109),
 <p>Read in the file USCovidState.csv</p>
 <pre class="r"><code>USCovid &lt;- &quot;USCovidStates.csv&quot; %&gt;%
   readr::read_csv()</code></pre>
-<pre><code>## Rows: 51 Columns: 3</code></pre>
-<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+<pre><code>## Rows: 51 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): state
-## dbl (2): cases, deaths</code></pre>
-<pre><code>## 
+## dbl (2): cases, deaths
+## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div id="problem-5a" class="section level3">
@@ -197,12 +196,12 @@ ggplot(USCovid, aes(y=state, x=cases)) +
 <pre class="r"><code># Re-read in the data for ease of manipulation
 USCovid &lt;- &quot;USCovidStates.csv&quot; %&gt;%
   readr::read_csv()</code></pre>
-<pre><code>## Rows: 51 Columns: 3</code></pre>
-<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+<pre><code>## Rows: 51 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): state
-## dbl (2): cases, deaths</code></pre>
-<pre><code>## 
+## dbl (2): cases, deaths
+## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code># Cut dataset into percentiles

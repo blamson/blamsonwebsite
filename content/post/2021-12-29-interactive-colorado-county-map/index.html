@@ -4,10 +4,10 @@ author: Brady Lamson
 date: '2021-12-29'
 slug: interactive-colorado-county-map
 categories: []
-tags: [personal, R, leaflet]
+tags: [R]
+image: map_ss.png
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 <script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
 <script src="{{< blogdown/postref >}}index_files/pymjs/pym.v1.js"></script>
 <script src="{{< blogdown/postref >}}index_files/widgetframe-binding/widgetframe.js"></script>
@@ -16,8 +16,9 @@ tags: [personal, R, leaflet]
 <p>I’m currently working on a shiny application as a personal project alongside a fellow club officer. The app we’re using uses a <a href="https://data.colorado.gov/Higher-Education/Degrees-Awarded-to-Post-Secondary-Graduates-in-Col/hxf8-ab6k">data-set</a> containing information about post-secondary degrees awarded in Colorado. It contains a variety of demographic information spanning 2001 to 2017, so there’s a <strong>lot</strong> of information here.</p>
 <p>My current task has been an interactive map showing where all the universities are. I’ve got some cool plans for it, so I would like to showcase my progress. I’ve been using the wonderful <a href="https://leafletjs.com/">Leaflet</a> package for this and a great guide exists for those using it in <a href="https://rstudio.github.io/leaflet/">R</a>.</p>
 <p>Firstly, I knew I wanted to color the map by county so I had to figure that out. My first attempt, utilizing a lot of code from the original guide, looks as follows.</p>
-<pre class="r"><code>library(leaflet)
-colorado_counties &lt;- 
+<pre class="r"><code>library(leaflet)</code></pre>
+<pre><code>## Warning: package &#39;leaflet&#39; was built under R version 4.1.3</code></pre>
+<pre class="r"><code>colorado_counties &lt;- 
   maps::map(&quot;county&quot;, &#39;colorado&#39;, 
             fill = TRUE, 
             col = palette(),

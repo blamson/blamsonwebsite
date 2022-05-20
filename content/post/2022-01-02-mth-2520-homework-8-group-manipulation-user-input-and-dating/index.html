@@ -7,12 +7,11 @@ categories: []
 tags: [Homework]
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="problem-1" class="section level2">
 <h2>Problem 1</h2>
-<p>The  of a vector of numbers <span class="math inline">\(c(a1, a2, a3, ..., an)\)</span> is given by</p>
+<p>The of a vector of numbers <span class="math inline">\(c(a1, a2, a3, ..., an)\)</span> is given by</p>
 <p><span class="math display">\[\text{gmean} = (a_1 \cdot a_2 \cdot a_3 \cdot ... \cdot a_n)^{\frac{1}{n}}\]</span></p>
 <div id="problem-1a" class="section level3">
 <h3>Problem 1a</h3>
@@ -60,7 +59,7 @@ gmean(pr1f)</code></pre>
 <h3>Problem 2b</h3>
 <p>Use the apply() to find the geometric mean of each column</p>
 <pre class="r"><code>cat(&quot;The mean of each column is [&quot;, round(apply(A, MARGIN = 2, FUN = gmean), digits = 3), &quot;] \n&quot;)</code></pre>
-<pre><code>The mean of each column is [ 14.313 12.853 7.917 4.882 10.373 19.305 ] </code></pre>
+<pre><code>The mean of each column is [ 11.815 15.161 19.409 12.444 8.621 16.687 ] </code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -153,12 +152,12 @@ frogger &lt;- data.frame(
     Score=round(rlnorm(n=10,10), -1))</code></pre>
 <pre class="r"><code># Compute mean score
 mean(frogger$Score)</code></pre>
-<pre><code>[1] 32860</code></pre>
+<pre><code>[1] 33358</code></pre>
 <pre class="r"><code># Compute geometric mean score
 cat(&quot;The geometric mean of the frogger scores is&quot;,
   gmean(frogger$Score),
   &quot;\n&quot;)</code></pre>
-<pre><code>The geometric mean of the frogger scores is 25697.21 </code></pre>
+<pre><code>The geometric mean of the frogger scores is 21771.85 </code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="problem-5" class="section level2">
@@ -315,7 +314,7 @@ Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
 <p>Compute the time since the first moon landing. Covert this output to years.</p>
 <pre class="r"><code>age &lt;- today() - mdy(&quot;7/20/1969&quot;)
 as.duration(age)</code></pre>
-<pre><code>[1] &quot;1655337600s (~52.45 years)&quot;</code></pre>
+<pre><code>[1] &quot;1667174400s (~52.83 years)&quot;</code></pre>
 </div>
 <div id="problem-b" class="section level3">
 <h3>Problem b</h3>

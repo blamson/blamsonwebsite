@@ -4,7 +4,8 @@ author: Brady Lamson
 date: '2021-12-29'
 slug: interactive-colorado-county-map
 categories: []
-tags: [personal, R, leaflet]
+tags: [R]
+image: map_ss.png
 ---
 
 I'm currently working on a shiny application as a personal project alongside a fellow club officer. The app we're using uses a [data-set](https://data.colorado.gov/Higher-Education/Degrees-Awarded-to-Post-Secondary-Graduates-in-Col/hxf8-ab6k) containing information about post-secondary degrees awarded in Colorado. It contains a variety of demographic information spanning 2001 to 2017, so there's a **lot** of information here. 

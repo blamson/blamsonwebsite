@@ -4,13 +4,12 @@ author: Brady Lamson
 date: '2021-12-28'
 slug: fire-emblem-and-its-little-white-lies
 categories: []
-tags: [Fire Emblem, Statistics, Probability, Video Games]
+tags: [Statistics, Video Games]
+image: Fire_Emblem_logo.webp
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<p><img src="Fire_Emblem_logo.svg" /></p>
 <p>Fire emblem is a popular strategy video game. There are currently 16 games in the franchise and I’ve played the majority of them. For those unfamiliar you have a roster of interesting characters that act on a field with a grid. On that grid there is an enemy army, one you’re tasked with defeating. It has objectives like defeating the boss, routing the entire enemy force, or defending a point from waves of reinforcements.</p>
 <p><img src="map.png" /></p>
 <p>Of course, from this one can assume combat plays a large role and you’d be right. Combat works like so: you take your plucky protagonist, like prince Marth for example, and move them within attacking range of an enemy unit. You select attack from the menu and go from there. The character you select and the enemy are different though! Units on the field have, depending on the game, the following stats: Health Points (HP), Strength (Str), Magic (Mag), Skill (Skl), Speed (Spd), Luck (Luk), Defense (Def), and Resistance (Res). You have a weapon with its own stats like its attack and hit rate. This is a lot to keep track of and, thankfully, most of the games do the legwork for us. All of these numbers between you and the enemy are taken into consideration automatically and you’re presented with a battle forecast!</p>
@@ -44,13 +43,13 @@ tags: [Fire Emblem, Statistics, Probability, Video Games]
 }</code></pre>
 <p>Now that we have our function let’s test it on different hit rates! Let’s start with 50.</p>
 <pre class="r"><code>two_rn_calc(50)</code></pre>
-<pre><code>## [1] &quot;The true hit rate is:  49.34 %&quot;</code></pre>
+<pre><code>## [1] &quot;The true hit rate is:  50.68 %&quot;</code></pre>
 <p>What we can see here is that our true hit rate is right around 50, which is to be expected. It’s not exact because there’s still some randomness here, but it is very close. What if we were to use a lower value though, like 25?</p>
 <pre class="r"><code>two_rn_calc(25)</code></pre>
-<pre><code>## [1] &quot;The true hit rate is:  13.56 %&quot;</code></pre>
+<pre><code>## [1] &quot;The true hit rate is:  12.22 %&quot;</code></pre>
 <p>What we get is a true hit that is significantly lower than the displayed hit rate. That is a huge difference! We’ll see the same with a higher value, like 75, but in the other direction.</p>
 <pre class="r"><code>two_rn_calc(75)</code></pre>
-<pre><code>## [1] &quot;The true hit rate is:  87.46 %&quot;</code></pre>
+<pre><code>## [1] &quot;The true hit rate is:  87.74 %&quot;</code></pre>
 <p>If it still doesn’t make sense why maybe it will once I show you a plot of what’s happening under the hood. Let’s modify our code a little bit! We want to look at the values of ‘y’, the average of our two random numbers, over 5000 different trials and plot them!</p>
 <pre class="r"><code>plot_vector &lt;- c()
 
