@@ -7,7 +7,6 @@ categories: []
 tags: [Homework]
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <hr />
@@ -281,8 +280,9 @@ heatmap(data, Colv = NA, Rowv = NA, scale = &quot;none&quot;)</code></pre>
 <p>Modify the given code to make one or more variations of the artwork.</p>
 <pre class="r"><code>set.seed(345) #set the seed of R&#39;s random number generator
 library(ggplot2)
-library(RColorBrewer)
-ngroup=32    # changes how many groups there are in the art graph
+library(RColorBrewer)</code></pre>
+<pre><code>## Warning: package &#39;RColorBrewer&#39; was built under R version 4.1.3</code></pre>
+<pre class="r"><code>ngroup=32    # changes how many groups there are in the art graph
 names=paste(&quot;G_&quot;,seq(1,ngroup),sep=&quot;&quot;)
 DAT=data.frame()</code></pre>
 <pre class="r"><code>#creating dataframe 

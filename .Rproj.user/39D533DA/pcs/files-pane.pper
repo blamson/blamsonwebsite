@@ -2,8 +2,8 @@
     "sortOrder": [
         {
             "columnIndex": 2,
-            "ascending": true
+            "ascending": false
         }
     ],
-    "path": "~/repos/blamsonwebsite/content/post/2021-12-28-fire-emblem-random-number-showcase"
+    "path": "~/repos/blamsonwebsite/content"
 }

@@ -7,7 +7,6 @@ categories: []
 tags: [Homework]
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="problem-1." class="section level2">
@@ -24,21 +23,21 @@ tags: [Homework]
 table(example)</code></pre>
 <pre><code>example
   (0,100] (100,200] (200,300] (300,400] (400,500] 
-     3954      3861      4131      4022      3982 </code></pre>
+     3968      3917      3967      4121      3993 </code></pre>
 </div>
 <div id="section" class="section level3">
 <h3></h3>
 <p>Use tapply() to find the mean of each level in the factor</p>
 <pre class="r"><code>tapply(rvector_1a, example, mean)</code></pre>
 <pre><code>  (0,100] (100,200] (200,300] (300,400] (400,500] 
- 50.29767 151.06397 250.47301 351.03754 451.26745 </code></pre>
+ 50.30091 150.77202 250.69977 350.28949 449.85024 </code></pre>
 </div>
 <div id="section-1" class="section level3">
 <h3></h3>
 <p>Use tapply() to find the mean of each level in the factor</p>
 <pre class="r"><code>tapply(rvector_1a, example, median)</code></pre>
 <pre><code>  (0,100] (100,200] (200,300] (300,400] (400,500] 
-       50       151       251       352       451 </code></pre>
+       50       151       251       350       450 </code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -52,7 +51,7 @@ letters_2a &lt;- sample(letters, 500, replace=TRUE)
 table(letters_2a)</code></pre>
 <pre><code>letters_2a
  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z 
-15 24 32 26 14 28 23 20 22 14 23 19 12 16 24 19 22 17 18 15 11 15 18 13 20 20 </code></pre>
+23 21 17 20 25 17 20 23 21 15 17 27 22 16 17 10 19 16 19 19 22 21 16 14 18 25 </code></pre>
 </div>
 <div id="problem-2c" class="section level3">
 <h3>Problem 2c</h3>
@@ -66,7 +65,7 @@ table(letters_2a)</code></pre>
 <pre class="r"><code>table(factor_2c)</code></pre>
 <pre><code>factor_2c
  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z 
-15 24 32 26 14 28 23 20 22 14 23 19 12 16 24 19 22 17 18 15 11 15 18 13 20 20 </code></pre>
+23 21 17 20 25 17 20 23 21 15 17 27 22 16 17 10 19 16 19 19 22 21 16 14 18 25 </code></pre>
 </div>
 <div id="problem-2e." class="section level3">
 <h3>Problem 2e.</h3>

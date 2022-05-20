@@ -4,7 +4,7 @@ author: Brady Lamson
 date: '2022-01-30'
 slug: mth-3270-modern-data-science-chapters-1-and-2-notes
 categories: []
-tags: []
+tags: [R]
 ---
 
 ```{r, echo=FALSE, message=FALSE}
