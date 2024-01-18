@@ -11,15 +11,16 @@ math: ~
 license: ~
 hidden: no
 comments: no
-toc: yes
+toc: 
+  depth: 2
 output:
   blogdown::html_page:
-    toc: true
+    toc: false
 ---
 
 # Overview and Motivation
 
-Here I'll be showing a standard workflow for fine tuning a large language model using the `transformers` library in Python. I'll be fine tuning for the specific downstream task of **named entity recognition**, though many things in this setup will work for other tasks as well. 
+Here I'll be showing a standard workflow for fine tuning a large language model using the `transformers` library in Python. I'll be fine tuning for the specific downstream task of **named entity recognition**, though many things in this setup will work for other tasks as well.
 
 There are many sources online for this topic, but I found myself extremely overwhelmed by all of the information when first learning how to do this. My goal here is to consolidate all of that information and add in a lot of my own thoughts along the way to hopefully help make this area less overwhelming. 
 

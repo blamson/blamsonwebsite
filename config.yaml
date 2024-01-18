@@ -56,7 +56,7 @@ params:
 
     article:
         math: true
-        toc: true
+        toc: false
         readingTime: true
         license:
             enabled: true
@@ -219,9 +219,9 @@ markup:
             ## Set to true if you have HTML content inside Markdown
             unsafe: false
     tableOfContents:
-        endLevel: 4
+        endLevel: 2
         ordered: true
-        startLevel: 2
+        startLevel: 1
     highlight:
         noClasses: false
         codeFences: true
