@@ -5,7 +5,7 @@ date: '2024-01-18'
 slug: named-entity-recognition-a-transformers-tutorial
 categories: []
 tags: []
-description: ~
+description: A thorough walk through on fine tuning a transformer for named entity recognition.
 image: images/hugs.png
 math: ~
 license: ~
