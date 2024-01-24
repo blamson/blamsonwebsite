@@ -606,7 +606,7 @@ trainer = Trainer(
 
 ## Hyperparameter Space
 
-Here we'll be using the library `optuna` to setup a hyperparameter space we'll be doing a grid search on. Optuna in particular is helpful here as it is a free alternative to something like `weights and balances` which not all data scientists will have access to. 
+Here we'll be using the library `optuna` to setup a hyperparameter space we'll be doing a grid search on. Optuna in particular is helpful here as it is a free alternative to something like `weights and biases` which not all data scientists will have access to. 
 
 I'll be doing a very basic grid search just as a demonstration of how it's done. Low number of epochs and a very small number of trials with basically arbitrary values for grid search. You'll want to tweak these to your needs.
 
