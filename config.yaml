@@ -217,7 +217,7 @@ markup:
     goldmark:
         renderer:
             ## Set to true if you have HTML content inside Markdown
-            unsafe: false
+            unsafe: yes
     tableOfContents:
         endLevel: 2
         ordered: true
