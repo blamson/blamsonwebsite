@@ -5,8 +5,8 @@ date: '2024-02-09'
 slug: fire-emblem-project-data-collection
 categories: []
 tags: []
-description: ~
-image: ~
+description: A journey into the *wonderful* world of web scraping.
+image: images/html.png
 math: ~
 license: ~
 hidden: no
