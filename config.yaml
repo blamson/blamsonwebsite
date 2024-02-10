@@ -189,7 +189,7 @@ menu:
     main: 
         - identifier: photography
           name: Photography
-          url: https://expiredcannedbread.mypixieset.com/
+          url: https://bradylamson.mypixieset.com/
           params:
                 newTab: True
                 icon: link
