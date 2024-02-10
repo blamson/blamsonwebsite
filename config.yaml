@@ -1,7 +1,7 @@
 baseurl: https://bradylamson.com/
 languageCode: en-us
 theme: "hugo-theme-stack"
-paginate: 5
+paginate: 10
 title: Data Overflow
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 
