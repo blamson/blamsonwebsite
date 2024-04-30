@@ -25,6 +25,38 @@ My last update was utilizing Tableau but I started tinkering with PowerBI shortl
 
 Honestly I owe a lot to PowerBI and actually quite like it! It's really helped me learn the basics of data architecting and I'm grateful for that.
 
+# The Dashboard
+
+Let's start with the fun stuff. Under the hood this is powered by the semantic model but that isn't *cool* and I only discuss *cool stuff* here on this site.
+
+I've created a few basic visualizations so far. I'm not going to claim this dashboard is some achievement of graphic design. It's hideous. However, it's a proof of concept so I take pride in its hideousness. It's more about the function and learning how stuff plays together.
+
+## Bases vs. Growths Scatterplot
+
+The goal of this page is honestly just to show a neat visualization for where characters appear relative to the rest of the cast w/ regards to specific stats. You select an attribute and every character is shown on a scatterplot with a nice reference table below. 
+
+![PowerBI coming with built in hover information is really nice!](images/BaseVSGrowthsScatter.png)
+
+### Annoying Quirks
+
+There's a feature that *would* be neat where you can select a character from the table and it shows only that point on the plot. However, if you use auto plot boundaries you lose all perspective. What's irritating is that setting manual axis limits requires extremely high values due to some characters with exceptionally high (100%+) growth rates, making everything else suffer as a result. There's workarounds using PowerQuery but I'm trying not to peer into the void too deep yet, so I'll just deal with this bug. We'll be moving to Plotly Dash later anyway.
+
+## Character Comparison
+
+Okay this one's actually useful. My original vision for this visual was to allow for comparing two characters, but PowerBI is almost too intuitive and allows for arbitrary selection and, for the most part, handles it nicely in the visuals. I'm still working out the kinks of what I want to show here as I think this layout is hideous, but I think this page has a lot of potential for quick comparisons. 
+
+![You can select as many characters as you want! For better or worse.](images/CharacterComparison.png)
+
+### Annoying Quirks
+
+If you accidentally double click a character to select it deselects them and creates a monster visual with every character included. This just makes the whole thing feel clunky and unprofessional. In Plotly I'll likely set this such that if nothing is selected it defaults to a standard 2 character comparison instead, Eirika vs. Ephraim as an example.
+
+## Basic Data Tables
+
+This one used to be a lot better but got worse as I altered the general model. I will show my work but also explain my goals. I intend to create a master table that includes everything in a giant wide format, allowing for an easy to navigate table for anyone who just needs that. For now I've got two wide stat tables that are missing a lot of useful general info that I need to reinclude. So this is what I've got for now. At the very least I've included a character filter to allow trimming the tables down to relevant characters.
+
+![I cannot wait to make this match my vision. Oh well, we press on!](images/StatTables.png)
+
 # The Semantic Model
 
 ## The Issue
@@ -80,23 +112,6 @@ So this current model isn't perfect. Let me address some of its failings and bri
 5. **Non-Universal Stats**  Not every game has the same stats. Statistics like constitution and affinity for instance are constant across FE6-FE8, but aren't a given across the franchise. How will I handle that discrepancy so this won't bite me later?
 6. **Missing Information:** My current model in PowerBI is excluding data for no real reason? Previously I had decided to excluded info like class, affinity, movement and constitution and need to create a table for this information.
 
-### The Orson Example: Duplicate Characters
-
-![All my homies hate Orson.](images/orson.jpg)
-
-This Paladin from Sacred Stones is a great example of how awkward this data can be to work with. Orson joins the party early on in the game, but betrays them soon after and is no longer playable. However, he can be unlocked as a bonus character after the game is over. This guy kept triggering bugs for me. He has two sets of base stats, though his growths and weapon ranks are identical in both versions. You *need* handling for this guy as if you aren't careful his duplicated stats can combine together and provide erroneous information. This guy is what triggered the "creature_campaign" variable. 
-
-I use him as an example as duplicate characters are common. The "hard mode" duplication issue is one I'm also struggling with. Let's see an example.
-
-![](images/fe6-hard-mode-table.png)
-
-How the tables are scraped normally (for FE6) simply slaps HM onto the end of any hard mode variants. Thankfully they're labeled. I've come up with two strategies.
-
-1. Treat the HM variants as a different character. Easy to implement, but feels sloppy as the growths and weapon ranks are identical. 
-2. Create a hard mode variable. Temporarily works but FE7 will require yet another variant with campaign differences. So this feels short sighted. 
-
-For #2, I'm wondering *where* I'd put the hard mode flag. In the bases and growths tables like in the creature campaign flag? That feels sloppy but I'm not sure if it's a bad idea. Should I really be separating stuff like this every time there's a weird quirk? There'll only be more of these as we go!
-
 ## (Slightly) Better Model
 
 This model I'm working towards definitely doesn't sort everything out, but I think it's a good starting point. Let's take a look.
@@ -105,6 +120,49 @@ This model I'm working towards definitely doesn't sort everything out, but I thi
 
 This new model uses character ID as the primary key and features a 1 to many relationship between all the tables stemming from a simple `Characters` table. This doesn't handle a variety of the issues I mentioned however. It solves issues #1 and #6, but issues 2 -> 4 are all still borked here. I really need to figure out how to handle these quirks in the data.
 
-# The Dashboard
+## Updated Stats Table
 
-I was going to discuss the visualizations I had made recently but turns out a lot of my tinkering today has broken them! I'll make that its own separate write-up now or just edit this later! Yay!
+Okay so since starting this writeup yesterday I've made some modifications to get some visuals working better. The big update here is a change to the base stats and growths tables. I've combined them! I've also changed `creature_campaign` to `BonusCharacter` to better match the rest of my variable names.
+
+| Name | Attribute | BaseValue | GrowthValue| BonusCharacter |
+|---|---|---|---|---|
+| Amelia | HP | 16 | 60 |False |
+| Amelia | Power | 4 | 35 | False |
+| Amelia | Skill | 3 | 40 | False |
+| Amelia | Speed | 4 | 40 | False |
+| Amelia | Luck | 6 | 50 | False |
+
+I've also created wide versions of both the growths and bases tables as those are valuable too. So we've got a lot of tables now! 
+
+# The Orson Example: Duplicate Characters
+
+![All my homies hate Orson.](images/orson.jpg)
+
+This Paladin from Sacred Stones is a great example of how awkward this data can be to work with. Orson joins the party early on in the game, but betrays them soon after and is no longer playable. However, he can be unlocked as a bonus character after the game is over. This guy kept triggering bugs for me. He has two sets of base stats, though his growths and weapon ranks are identical in both versions. You *need* handling for this guy as if you aren't careful his duplicated stats can combine together and provide erroneous information. This guy is what triggered the "creature_campaign" variable. 
+
+What else does he break? This duplication of Orson breaks a lot. It makes joins annoying and he causes bugs in visualizations. We'll start with something that stems from my own screwup. When making the combined Stats table I wasn't strict enough with my inner join causing a ton of duplicates that ONLY affected Orson. 
+
+![Okay my bad, fine. But still, of course it only affects this prick.](images/orsonplease.png)
+
+Removing those is simple enough but ugh. He's just a landmine. Those duplicates do allow me to show an exaggerated version of a visual bug though. In the character comparison page if Orson is selected his bonus and non-bonus rows combine into one character with absurd stats.
+
+![He wishes he was this good.](images/OrsonBreaksEverything.png)
+
+Removing the duplicates makes this less hilariously insane but the root issue persists. I've implemented a "drill through" which can include or remove bonus characters, but this is a band aid solution and results in other bugs. Like if the drill through is set to no bonus characters, they still appear on the character selection list and result in an empty plot if selected. 
+
+Of note that this works differently on the scatter plot which simply treats both bonus and non-bonus Orson as separate dots. 
+
+I use him as an example as duplicate characters are common. The "hard mode" duplication issue is one I'm also struggling with. Let's see an example with data from FE6 which I have yet to implement.
+
+![](images/fe6-hard-mode-table.png)
+
+How the tables are scraped normally (for FE6) simply slaps HM onto the end of any hard mode variants. Thankfully they're labeled. I've come up with two strategies.
+
+1. Treat the HM variants as a different character. Easy to implement, but feels sloppy as the growths and weapon ranks are identical. 
+2. Create a hard mode variable. Temporarily works but FE7 will require yet another variant with campaign differences. So this feels short sighted. 
+
+For #2, I'm wondering *where* I'd put the hard mode flag. In the bases and growths tables like in the BonusCharacter flag? That feels sloppy but I'm not sure if it's a bad idea. Should I really be separating stuff like this every time there's a weird quirk? There'll only be more of these as we go!
+
+# Next Steps
+
+My next goals are based around figuring out some solutions to hard mode and duplicate characters so I can implement the FE6 data I've got sitting around. From there I'll likely build a local sql DB and start migrating this project over to python! 
