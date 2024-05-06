@@ -175,6 +175,10 @@ Some exciting news on two fronts! First thing, I have a data architecture update
 
 [This website](https://www.triangleattack.com/) is nearly identical to an idealized version of this project. It is an incredible repository of fire emblem information and it's beautifully formatted and organized. It even has detailed writeups in LaTex on the different formulas present under the hood of each FE game. I was really nervous looking at this site at first, what am I even doing?! However, all of the data in this site prioritizes showing individual character information in detail. My project is a lot more about leveraging what can be done with this data in aggregate. So if anything I may look into contributing with this site once I get a functional MVP to show them. Maybe I'll be employed before that happens, we'll see. However, incredible work by the crew over there. I'm amazed I hadn't seen that resource before.
 
+What's super exciting is since they've compiled all of the damage formulas I can use these with a feature I want to build out later! I can use these for my outcome calculator which is so rad! Look at how much they have here.
+
+![It's so beautiful](images/TriangleAttackCombat.png)
+
 ## Data Model Improvements
 
 So, earlier I was writing in this site about the woes of Orson and those like him. Well, I think I have a solution. It involves a new table and a second look at an at-a-whim change I made last week. 
