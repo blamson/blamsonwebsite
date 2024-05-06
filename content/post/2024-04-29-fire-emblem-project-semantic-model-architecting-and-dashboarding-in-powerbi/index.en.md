@@ -166,3 +166,45 @@ For #2, I'm wondering *where* I'd put the hard mode flag. In the bases and growt
 # Next Steps
 
 My next goals are based around figuring out some solutions to hard mode and duplicate characters so I can implement the FE6 data I've got sitting around. From there I'll likely build a local sql DB and start migrating this project over to python! 
+
+# May 6th Update
+
+Some exciting news on two fronts! First thing, I have a data architecture update that should fix a lot of the issues I had listed earlier. Second is that I found an amazing Fire Emblem resource that *nearly* makes my project redundant. 
+
+## Triangle Attack
+
+[This website](https://www.triangleattack.com/) is nearly identical to an idealized version of this project. It is an incredible repository of fire emblem information and it's beautifully formatted and organized. It even has detailed writeups in LaTex on the different formulas present under the hood of each FE game. I was really nervous looking at this site at first, what am I even doing?! However, all of the data in this site prioritizes showing individual character information in detail. My project is a lot more about leveraging what can be done with this data in aggregate. So if anything I may look into contributing with this site once I get a functional MVP to show them. Maybe I'll be employed before that happens, we'll see. However, incredible work by the crew over there. I'm amazed I hadn't seen that resource before.
+
+## Data Model Improvements
+
+So, earlier I was writing in this site about the woes of Orson and those like him. Well, I think I have a solution. It involves a new table and a second look at an at-a-whim change I made last week. 
+
+The over-arching logic behind this change is organizing various difficulties and bonus modes into *campaigns*. Let me show a rough example (not yet implemented).
+
+| ID | Game | Campaign |
+|---|---|---|
+| 0 | fe6 | Normal |
+| 1 | fe6 | Hard |
+| 2 | fe6 | Bonus |
+| 3 | fe7 | Lyn |
+| 4 | fe7 | Eliwood |
+| 5 | fe7 | Hector Hard |
+| 6 | fe8 | Normal |
+| 7 | fe8 | Creature Campaign |
+
+This allows me to have 1 table that can elegantly handle all sorts of game modes that change stats. This should also scale into most of the franchise as well which is huge! I've been so worried about having to add on more and more variables to handle weird game quirks, but most can be explained as different difficulty modes, character campaigns or DLC stories. What's cool is I should be able to build some really convenient slicers using this table to give the user more control over what they include in the dashboard.
+
+I'm sure this will see some modifications as we go, but I think this is a powerful start. Okay, so how would this look? Let's examine some relevant rows from a fictional bases table. Note that the names of characters and the campaign are included for clarity. In the model we'd likely only have the ID and showcase the names in visualizations generated from them. 
+
+| Character ID | Character Name | Campaign ID | Campaign Name | Attribute | Value |
+|---|---|---|---|---|---|
+| 32 | Raven | 4 | Eliwood | Strength | 8 |
+| 32 | Raven | 5 | Hector Hard |  Strength | 10 |
+| 32 | Raven | 4 | Eliwood | Skill | 11 |
+| 32 | Raven | 5 | Hector Hard |  Skill | 13 |
+
+Pretty sweet right? There are some issues that I'll need to overcome though. We still have duplicates to handle that will affect visualizations. I'll need to carefully work this campaign id into how visualizations are created to ensure nothing is added together that shouldn't be. 
+
+With this we'll also want to separate out bases and growths for now as, at least that I can think of, no campaign differences alter a characters growth rates. I might still want a wide format table including both for certain visuals in PowerBI, but it's likely not how the actual SQL DB will look when I build it. I'll need to think about which tables include campaign id and which don't. Still working through that in my head! 
+
+So next will be actually implementing these tables, might need to do some pre-processing in Python to speed stuff up. But this should allow me to finally be done with PowerBI soon. 
