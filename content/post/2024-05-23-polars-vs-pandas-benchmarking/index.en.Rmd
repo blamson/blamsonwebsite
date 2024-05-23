@@ -1,0 +1,347 @@
+---
+title: Polars vs. Pandas Benchmarking
+author: Brady Lamson
+date: '2024-05-23'
+slug: polars-vs-pandas-benchmarking
+categories: []
+tags: []
+description: ~
+image: ~
+math: ~
+license: ~
+hidden: no
+comments: no
+---
+```{r setup, warning=FALSE, message=FALSE, echo=FALSE}
+library(plotly)
+library(dplyr)
+library(readr)
+
+default_margins <- list(b=50, t=50, l=50, r=50)
+```
+
+# Overview
+
+I've been itching for an excuse to learn Polars and a friend of mine gave me the idea to find a large data file and do some basic benchmarking on it and pandas. Polars claims to be a lot faster and more efficient, so let's put it to the test eh? 
+
+# The Data
+
+Quick overview of this data taken from the source: 
+
+> This data represents police response activity. Each row is a record of a Call for Service (CfS) logged with the Seattle Police Department (SPD) Communications Center. Calls originated from the community and range from in progress or active emergencies to requests for problem solving. Additionally, officers will log calls from their observations of the field.
+
+Data Being Used: [Link](https://data.seattle.gov/Public-Safety/Call-Data/33kz-ixgy/about_data)
+
+Details of the data are a bit less important here as I'm using it entirely for benchmarking. Details in the link for the curious.
+
+| Metric | Value |
+|---|---|
+| File Size | 1.17GB |
+| Rows | 5.75 Million |
+| Columns | 13 |
+
+Here is a snapshot of the data, excluding the final column which is just the latitude.
+
+![](images/data_head.png)
+
+This datasets fits my goals well. It's over a gig in size and over 5 million rows. Perfect for what I'm trying to test. 
+
+# Test Overview
+
+I'll be testing basic functionality here, nothing extremely rigorous. We'll be examining the time it takes to read in data, perform basic filters, aggregations and selections. I collected 10 samples for data reading as it takes a while, but 100 samples for the rest of the tests. 
+
+I chose box plots for all of my visualizations as I found histograms to not be particularly informative in this specific case. All of my hypothesis tests have a pretty casual $\alpha = 0.01$ here. Though, really, these tests are mostly for fun and aren't intended to be rigorous statistical examinations of these libraries. 
+
+If you want to take a look at the script I wrote for testing it can be found [in this github repository here](https://github.com/blamson/PolarsVSPandasBenchmarking/blob/main/run_trials.py) though I will be including relevant snippets as we go.
+
+# Test 1: Reading in Data
+
+```{r, message=FALSE, echo=FALSE}
+df <- readr::read_csv("data/read_data.csv")
+```
+
+Straightforward here, just used the `.read_csv` method for each library. I won't be including the full trial function as it's not particularly relevant. I collected data on 10 separate reads as previously mentioned. I considered the possibility of read ordering mattering in some niche possibility where weird cacheing happens, but found no difference. 
+
+```
+# Pandas
+start_time = time.time()
+pd_df = pd.read_csv(path)
+pd_end = time.time() - start_time
+
+# Polars
+start_time = time.time()
+pl_df = pl.read_csv(path)
+pl_end = time.time() - start_time
+```
+
+## Pandas
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$pandas_read_duration, 
+  type="box",
+  name="",
+  color="red"
+)  %>% plotly::layout(
+  title="Pandas Time to Read Data",
+  xaxis=list(title = "Time (Seconds)"),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+## Polars
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$polars_read_duration, 
+  type="box",
+  name=""
+)  %>% plotly::layout(
+  title="Polars Time to Read Data",
+  xaxis=list(title = "Time (Seconds)"),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+## Summary Tables
+
+Pandas Read Summary
+```{r, echo=FALSE}
+summary(df$pandas_read_duration)
+```
+
+Polars Read Summary
+```{r, echo=FALSE}
+summary(df$polars_read_duration)
+```
+
+## Hypothesis Test
+
+```{r}
+t.test(df$polars_read_duration, df$pandas_read_duration)
+```
+
+Okay so the results are in. There is a lot of evidence to indicate that polars is substantially more performant for reading in data than pandas. This difference is to such a degree I'm really only doing a t-test as a formality. This on its own is enough to sell me on at least keeping polars in my back pocket.
+
+# Test 2: Filtering Data
+
+Here I performed a very basic filter, I just wanted to look at all the rows where the call priority was 4. n=100 for each.
+
+```
+# Pandas trial
+start_time = time.time()
+pd_df.loc[pd_df["Priority"] == 4]
+pd_end = time.time() - start_time
+duration_data["pandas_filtering_duration"].append(pd_end)
+
+# Polars trial
+start_time = time.time()
+pl_df.filter(pl.col("Priority") == 4)
+pl_end = time.time() - start_time
+duration_data["polars_filtering_duration"].append(pl_end)
+```
+
+```{r, message=FALSE, echo=FALSE}
+df <- readr::read_csv("data/filter_data.csv")
+```
+
+## Pandas
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$pandas_filtering_duration, 
+  type="box",
+  name="",
+  color="red"
+)  %>% plotly::layout(
+  title="Pandas Time to Filter Data",
+  xaxis=list(title = "Time (Seconds)"),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+## Polars
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$polars_filtering_duration, 
+  type="box",
+  name=""
+)  %>% plotly::layout(
+  title="Polars Time to Filter Data",
+  xaxis=list(title = "Time (Seconds)"),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+## Summary Tables
+
+Pandas Filtering Summary
+```{r, echo=FALSE}
+summary(df$pandas_filtering_duration)
+```
+
+Polars Filtering Summary
+```{r, echo=FALSE}
+summary(df$polars_filtering_duration)
+```
+
+## Hypothesis Test
+
+```{r}
+t.test(df$polars_filtering_duration, df$pandas_filtering_duration)
+```
+
+So the box plots indicate that polars is indeed faster here too and the hypothesis test results indicate that we've got sufficient evidence to support this alternative hypothesis. Of note that this isn't to an extreme degree even with such a large dataset, but yet another point for polars here.
+
+# Test 3: Aggregating Data
+
+Here I performed a simple aggregation to get the mean of the priority column. n=100 for each.
+
+```
+# Pandas trial
+start_time = time.time()
+pd_df.groupby("Call Type")["Priority"].mean()
+pd_end = time.time() - start_time
+duration_data["pandas_agg_duration"].append(pd_end)
+
+# Polars trial
+start_time = time.time()
+pl_df.group_by("Call Type").agg(pl.mean("Priority"))
+pl_end = time.time() - start_time
+duration_data["polars_agg_duration"].append(pl_end)
+```
+
+```{r, message=FALSE, echo=FALSE}
+df <- readr::read_csv("data/agg_data.csv")
+```
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$polars_agg_duration, 
+  type="box",
+  name="Polars"
+)  %>% plotly::add_trace(
+  x=df$pandas_agg_duration, 
+  type="box",
+  name="Pandas"
+) %>%
+  plotly::layout(
+  title="Pandas Time to Aggregate Data",
+  xaxis=list(title = "Time (Seconds)"),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+Pandas Aggregation Summary
+```{r, echo=FALSE}
+summary(df$pandas_agg_duration)
+```
+
+Polars Aggregation Summary
+```{r, echo=FALSE}
+summary(df$polars_agg_duration)
+```
+
+## Hypothesis Test
+
+```{r}
+t.test(df$polars_agg_duration, df$pandas_agg_duration)
+```
+
+The box plot and test actually give us some interesting info here. We do have sufficient evidence to believe that polars is still faster here but the box plot gives more nuance. From the box plots we can see they're quite close, which the confidence interval also indicates, but that pandas is far more consistent here. Polars has a surprisingly high variance when it comes to this very basic aggregation.
+
+# Test 4: Selecting Columns
+
+Here we simply select the call type and priority columns. n=100 for each.
+
+```
+# Pandas trial
+start_time = time.time()
+pd_df[["Call Type", "Priority"]]
+pd_end = time.time() - start_time
+duration_data["pandas_select_duration"].append(pd_end)
+
+# Polars trial
+start_time = time.time()
+pl_df.select(["Call Type", "Priority"])
+pl_end = time.time() - start_time
+duration_data["polars_select_duration"].append(pl_end)
+```
+
+```{r, message=FALSE, echo=FALSE}
+df <- readr::read_csv("data/select_data.csv")
+```
+
+## Pandas
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$pandas_select_duration, 
+  type="box",
+  name="",
+  color="red"
+)  %>% plotly::layout(
+  title="Pandas Time to Select Columns",
+  xaxis=list(title = "Time (Seconds)"),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+## Polars
+
+```{r, echo=FALSE, warning=FALSE}
+fig <- plotly::plot_ly(
+  x=df$polars_select_duration, 
+  type="box",
+  name=""
+)  %>% plotly::layout(
+  title="Polars Time to Select Columns",
+  xaxis=list(
+    title = "Time (Seconds)",
+    showexponent="all",
+    exponentformat="e"
+  ),
+  yaxis=list(title = ""),
+  margin=default_margins
+)
+fig
+```
+
+## Summary Tables
+
+Pandas Filtering Summary
+```{r, echo=FALSE}
+summary(df$pandas_select_duration)
+```
+
+Polars Filtering Summary
+```{r, echo=FALSE}
+summary(df$polars_select_duration)
+```
+
+## Hypothesis Test
+
+```{r}
+t.test(df$polars_select_duration, df$pandas_select_duration)
+```
+
+This one is pretty convincing much like the read data. Selection, according to the boxplots, appears lightning fast in Polars and our test results show we have significant evidence to conclude that it is faster than Pandas. Realistically, they're both very quick here so it isn't a huge difference, but these types of performance wins add up a lot in a production environment when these operations need to be carried out potentially millions of times per day. 
+
+# Conclusion
+
+This was of course a pretty casual test. All the samples were taken from my Macbook Air and no other machines and the order of operations wasn't randomized ever. I'm not intending this to be definitive proof of Polars being more performant, but these results show me that the claims Polars makes aren't entirely full of hot air. 
+
+I intend to use Polars a lot more in the future and that read speed on its own has me extremely excited.
