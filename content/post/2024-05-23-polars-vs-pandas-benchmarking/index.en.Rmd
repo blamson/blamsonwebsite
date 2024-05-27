@@ -48,7 +48,7 @@ This datasets fits my goals well. It's over a gig in size and over 5 million row
 
 # Test Overview
 
-I'll be testing basic functionality here, nothing extremely rigorous. We'll be examining the time it takes to read in data, perform basic filters, aggregations and selections. I collected 10 samples for data reading as it takes a while, but 100 samples for the rest of the tests. 
+I'll be testing basic functionality here, nothing extremely rigorous. We'll be examining the time it takes to read in data, perform basic filters, aggregations and selections. For all tests, $n=100$. 
 
 I chose box plots for all of my visualizations as I found histograms to not be particularly informative in this specific case. All of my hypothesis tests have a pretty casual $\alpha = 0.01$ here. Though, really, these tests are mostly for fun and aren't intended to be rigorous statistical examinations of these libraries. 
 
@@ -129,7 +129,7 @@ Okay so the results are in. There is a lot of evidence to indicate that polars i
 
 # Test 2: Filtering Data
 
-Here I performed a very basic filter, I just wanted to look at all the rows where the call priority was 4. n=100 for each.
+Here I performed a very basic filter, I just wanted to look at all the rows where the call priority was 4.
 
 ```
 # Pandas trial
@@ -204,7 +204,7 @@ So the box plots indicate that polars is indeed faster here too and the hypothes
 
 # Test 3: Aggregating Data
 
-Here I performed a simple aggregation to get the mean of the priority column. n=100 for each.
+Here I performed a simple aggregation to get the mean of the priority column.
 
 ```
 # Pandas trial
@@ -263,7 +263,7 @@ The box plot and test actually give us some interesting info here. We do have su
 
 # Test 4: Selecting Columns
 
-Here we simply select the call type and priority columns. n=100 for each.
+Here we simply select the call type and priority columns.
 
 ```
 # Pandas trial
