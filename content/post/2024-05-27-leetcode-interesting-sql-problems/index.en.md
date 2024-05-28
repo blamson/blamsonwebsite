@@ -81,8 +81,8 @@ Setting up this inner query involves joining the `Orders` and `Company` tables t
 
 ```
 SELECT o.sales_id
-FROM orders o
-LEFT JOIN company c ON o.com_id = c.com_id
+FROM Orders o
+LEFT JOIN Company c ON o.com_id = c.com_id
 WHERE c.name LIKE '%red%'
 ```
 
@@ -93,15 +93,14 @@ This provides us a list of all the sales ids connected to the company Red! So no
 This ones super simple. We just want the names of salespersons that are not in that list we just made. This is the easy part.
 
 ```
-select s.name
-from SalesPerson s
-where s.sales_id not in (
+SELECT s.name
+FROM SalesPerson s
+WHERE s.sales_id NOT IN (
     # Creates list of sales_id associated with company "Red"
-    select 
-        o.sales_id
-    from orders o
-    left join company c on o.com_id = c.com_id
-    where c.name like 'RED'
+    SELECT o.sales_id
+    FROM Orders o
+    LEFT JOIN company c ON o.com_id = c.com_id
+    WHERE c.name LIKE 'RED'
 )
 ```
 
