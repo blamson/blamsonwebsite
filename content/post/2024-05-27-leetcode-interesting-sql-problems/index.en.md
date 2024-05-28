@@ -30,7 +30,7 @@ This problem gives us the following db schema:
 
 The example input is as such:
 
-## Tables
+## Example Tables
 
 ### SalesPerson table:
 
@@ -105,3 +105,109 @@ WHERE s.sales_id NOT IN (
 ```
 
 And that's it! Not too bad. I'm still trying to build up intuition for nested queries so I wanted to save this one. I've got a LOT of SQL leetcode to go so I'll be progressively adding to this post over time.
+
+# Leetcode Database Problem 1965: Employees With Missing Information
+
+[Link to the problem here](https://leetcode.com/problems/employees-with-missing-information/description/)
+
+This data has such a simple schema I think it's really only two tables for the sake of fabricating this problem.
+
+![Really?](images/lc_db_1965.png)
+
+## Example Tables
+
+### Employees table:
+
+| employee_id | name     |
+|-------------|----------|
+| 2           | Crew     |
+| 4           | Haven    |
+| 5           | Kristian |
+
+### Salaries table:
+
+| employee_id | salary |
+|-------------|--------|
+| 5           | 76071  |
+| 1           | 22517  |
+| 4           | 63539  |
+
+### Output:
+
+| employee_id |
+|-------------|
+| 1           |
+| 2           |
+
+### Explanation:
+
+Employees 1, 2, 4, and 5 are working at this company.
+- The name of employee 1 is missing.
+- The salary of employee 2 is missing.
+
+## The Problem
+
+The goal here is to return the IDs of any employees with any missing information. That is, those missing salary info or names. The IDs must be ordered in ascending order.
+
+This seems fairly straightforward on its own but actually gets kind of weird. Let's dive in.
+
+## The Solution
+
+My solution here feels a little unorthodox. I tried poking around a variety of solutions but ended up back at the whiteboard pondering exactly what it was that I wanted. In the end, as is often the case in SQL, set theory saved me.
+
+### Set Visualizing
+
+Let's expand out these tables to include the employees that they're missing.
+
+| employee_id | name     |
+|-------------|----------|
+| 2           | Crew     |
+| 4           | Haven    |
+| 5           | Kristian |
+| 1           | null     |
+| 3           | null     |
+
+| employee_id | salary |
+|-------------|--------|
+| 5           | 76071  |
+| 1           | 22517  |
+| 4           | 63539  |
+| 2           | null   |
+| 3           | null   |
+
+1 and 3 are missing from `Employees`, 2 and 3 are missing from `Salaries`. Okay, cool. What does that give us? Let's try visualizing this in a slightly different way.
+
+![](images/lc_1965_diagram.png)
+
+What we want is the area containing 2 AND the area containing 1. That's because only the portion in the middle has both name and salary information. In set theory notation this is:
+
+$$(A-B) \cup (B-A)$$
+
+Thankfully, SQL has the `except` and `union` operators so we can easily build this! Of note that, based on my interpretation of the example output, Employee 3 is in neither table so does not exist. I included 3 in here purely because it was a part of my problem solving.
+
+### The Code
+
+```
+# This chunk is (A-B)
+(
+    SELECT employee_id
+    FROM salaries
+    EXCEPT
+    SELECT employee_id
+    FROM employees
+)
+
+UNION
+
+# And this is (B-A)
+(
+    SELECT employee_id
+    FROM employees
+    EXCEPT
+    SELECT employee_id
+    FROM salaries
+)
+ORDER BY employee_id
+```
+
+This seems like pretty smelly code not gonna lie. However this is an arbitrary weird problem set so I don't feel too bad. There are plenty of other solutions posted on leetcode but this is the one I organically reached and thought it was fun to solve so here we are! 
